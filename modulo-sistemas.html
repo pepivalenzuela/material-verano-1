@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sistemas · Bloque 0 · Puente a Bachillerato</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,600;0,700;1,300&family=DM+Sans:wght@300;400;500&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml.min.js"></script>
+<style>
+:root{--sol:#F5A623;--sol-claro:#FDF3E0;--oceano:#1A4A7A;--oceano-medio:#2A6BAD;--verde:#1E7B5E;--verde-claro:#E8F5F0;--arena:#FAF7F2;--blanco:#FFFFFF;--gris:#2C2C2C;--gris-s:#7A7A7A;--rojo:#C0392B;--rojo-claro:#FEF0EF;--naranja:#B7600A;--naranja-claro:#FEF3E2;--lila:#6B3FA0;--lila-claro:#F0EBF8;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'DM Sans',sans-serif;background:var(--arena);color:var(--gris);min-height:100vh;}
+.topbar{background:var(--oceano);padding:12px 24px;display:flex;justify-content:space-between;align-items:center;}
+.topbar-logo{font-family:'Fraunces',serif;font-size:.95rem;font-weight:600;color:var(--blanco);}
+.topbar-logo em{color:var(--sol);font-style:italic;font-weight:300;}
+.topbar-alumna{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:rgba(255,255,255,.6);}
+.progress-wrap{background:rgba(255,255,255,.15);height:5px;}
+.progress-bar{height:5px;background:var(--sol);transition:width .5s ease;}
+.layout{display:grid;grid-template-columns:240px 1fr;min-height:calc(100vh - 57px);}
+@media(max-width:800px){.layout{grid-template-columns:1fr;}}
+.sidebar{background:var(--blanco);border-right:1px solid #EBEBEB;padding:20px 0;position:sticky;top:0;height:calc(100vh - 57px);overflow-y:auto;}
+.sidebar-bloque{font-family:'JetBrains Mono',monospace;font-size:.65rem;letter-spacing:2px;text-transform:uppercase;color:var(--gris-s);padding:0 18px 10px;}
+.sidebar-item{display:flex;align-items:center;gap:10px;padding:10px 18px;cursor:pointer;border-left:3px solid transparent;font-size:.85rem;transition:all .15s;color:var(--gris-s);}
+.sidebar-item:hover{background:#F5F7FA;color:var(--gris);}
+.sidebar-item.activo{background:#EFF3FA;border-left-color:var(--oceano);color:var(--oceano);font-weight:500;}
+.sidebar-item.hecho{color:var(--verde);}
+.sidebar-item.hecho .s-dot{background:var(--verde);}
+.s-dot{width:8px;height:8px;border-radius:50%;background:#D0D0D0;flex-shrink:0;}
+.sidebar-sep{height:1px;background:#F0F0F0;margin:10px 16px;}
+.sidebar-nav-btns{padding:12px 18px;display:flex;flex-direction:column;gap:8px;}
+.btn-nav{width:100%;padding:9px;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:.82rem;font-weight:500;cursor:pointer;border:1.5px solid transparent;transition:all .2s;text-align:center;}
+.btn-nav.anterior{background:var(--blanco);border-color:#D0D0D0;color:var(--gris-s);}
+.btn-nav.anterior:hover{border-color:var(--oceano);color:var(--oceano);}
+.btn-nav.siguiente{background:var(--oceano);color:var(--blanco);}
+.btn-nav.siguiente:hover{background:var(--oceano-medio);}
+.btn-nav.volver{background:transparent;border-color:transparent;color:var(--gris-s);font-size:.78rem;padding:6px;}
+.btn-nav.volver:hover{color:var(--oceano);text-decoration:underline;}
+.main{padding:36px 40px;max-width:820px;}
+@media(max-width:680px){.main{padding:20px 16px;}}
+.modulo-eyebrow{font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:2px;text-transform:uppercase;color:var(--gris-s);margin-bottom:8px;}
+.modulo-titulo{font-family:'Fraunces',serif;font-size:2rem;font-weight:700;color:var(--oceano);line-height:1.2;margin-bottom:6px;}
+.modulo-desc{font-size:.9rem;color:var(--gris-s);line-height:1.6;margin-bottom:32px;}
+.seccion{display:none;}
+.seccion.visible{display:block;}
+.nav-modulos{display:flex;gap:10px;margin-bottom:28px;flex-wrap:wrap;}
+.nm-btn{padding:7px 16px;border-radius:8px;font-size:.82rem;cursor:pointer;border:1.5px solid #E0E0E0;background:var(--blanco);font-family:'DM Sans',sans-serif;color:var(--gris-s);transition:all .15s;}
+.nm-btn:hover{border-color:var(--oceano-medio);color:var(--oceano);}
+.nm-btn.nm-activo{background:var(--oceano);color:var(--blanco);border-color:var(--oceano);}
+.nm-btn.nm-ok{border-color:var(--verde);color:var(--verde);}
+.teoria-intro{background:var(--oceano);border-radius:14px;padding:24px 28px;margin-bottom:24px;color:var(--blanco);}
+.teoria-intro p{font-size:.9rem;line-height:1.7;opacity:.9;}
+.teoria-intro strong{color:var(--sol);}
+.concepto-card{background:var(--blanco);border-radius:14px;padding:28px 30px;box-shadow:0 2px 12px rgba(26,74,122,.07);margin-bottom:20px;}
+.concepto-card h3{font-family:'Fraunces',serif;font-size:1.05rem;font-weight:600;color:var(--oceano);margin-bottom:16px;}
+.concepto-body{font-size:.9rem;line-height:1.85;color:var(--gris);}
+.concepto-body p{margin-bottom:10px;}
+.formula-box{background:#F0F4FA;border-radius:10px;padding:16px 20px;margin:14px 0;text-align:center;border:1px solid #D0DFF0;font-size:1rem;}
+.formula-box.verde{background:var(--verde-claro);border-color:#9FD4C0;}
+.formula-box.naranja{background:var(--naranja-claro);border-color:#E8C07A;}
+.ejemplo-resuelto{background:var(--sol-claro);border-left:4px solid var(--sol);border-radius:0 10px 10px 0;padding:16px 20px;margin:16px 0;font-size:.88rem;}
+.ejemplo-resuelto .ej-titulo{font-weight:600;color:#7A5500;margin-bottom:8px;font-size:.82rem;text-transform:uppercase;letter-spacing:.5px;}
+.ejemplo-resuelto .paso{display:flex;gap:12px;align-items:flex-start;margin-bottom:6px;}
+.ejemplo-resuelto .paso-num{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--sol);font-weight:600;min-width:20px;margin-top:3px;}
+.alerta-card{background:var(--rojo-claro);border-left:4px solid var(--rojo);border-radius:0 10px 10px 0;padding:14px 18px;margin:14px 0;font-size:.86rem;color:var(--gris);}
+.alerta-card .al-titulo{font-weight:600;color:var(--rojo);margin-bottom:4px;}
+.resumen-tabla{width:100%;border-collapse:collapse;margin:16px 0;font-size:.85rem;}
+.resumen-tabla th{background:#EFF3FA;color:var(--oceano);padding:9px 14px;text-align:left;font-weight:600;border-bottom:2px solid #D0DFF0;}
+.resumen-tabla td{padding:9px 14px;border-bottom:1px solid #F0F0F0;}
+.resumen-tabla tr:nth-child(even) td{background:#FAFCFF;}
+.nivel-header{display:flex;align-items:center;gap:14px;margin-bottom:24px;padding:18px 22px;border-radius:12px;}
+.nivel-header.n1{background:#EFF3FA;border-left:4px solid var(--oceano-medio);}
+.nivel-header.n2{background:var(--naranja-claro);border-left:4px solid var(--naranja);}
+.nivel-header.n3{background:var(--lila-claro);border-left:4px solid var(--lila);}
+.nivel-header.ntest{background:var(--verde-claro);border-left:4px solid var(--verde);}
+.nivel-icon{font-size:1.6rem;}
+.nivel-info h3{font-family:'Fraunces',serif;font-size:1rem;font-weight:600;margin-bottom:2px;}
+.nivel-info p{font-size:.8rem;color:var(--gris-s);}
+.n1 .nivel-info h3{color:var(--oceano-medio);}
+.n2 .nivel-info h3{color:var(--naranja);}
+.n3 .nivel-info h3{color:var(--lila);}
+.ntest .nivel-info h3{color:var(--verde);}
+.ejercicio-card{background:var(--blanco);border-radius:12px;padding:24px 26px;box-shadow:0 1px 8px rgba(0,0,0,.05);margin-bottom:14px;border-top:3px solid transparent;}
+.ejercicio-card.n1-color{border-top-color:var(--oceano-medio);}
+.ejercicio-card.n2-color{border-top-color:var(--naranja);}
+.ejercicio-card.n3-color{border-top-color:var(--lila);}
+.ejercicio-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
+.ej-num{font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--gris-s);letter-spacing:1px;}
+.ej-dificultad{font-family:'JetBrains Mono',monospace;font-size:.65rem;padding:2px 9px;border-radius:10px;font-weight:600;}
+.dif-basico{background:#EFF3FA;color:var(--oceano-medio);}
+.dif-medio{background:var(--naranja-claro);color:var(--naranja);}
+.dif-avanzado{background:var(--lila-claro);color:var(--lila);}
+.ej-enunciado{font-size:.93rem;line-height:1.75;margin-bottom:20px;}
+.opciones-ej{display:grid;grid-template-columns:1fr 1fr;gap:9px;}
+@media(max-width:520px){.opciones-ej{grid-template-columns:1fr;}}
+.op-btn{background:var(--arena);border:2px solid #E8E8E8;border-radius:9px;padding:12px 15px;font-size:.88rem;cursor:pointer;transition:all .15s;text-align:left;font-family:'DM Sans',sans-serif;color:var(--gris);display:flex;align-items:center;gap:9px;}
+.op-btn:hover:not(:disabled){border-color:var(--oceano-medio);background:#EFF3FA;}
+.op-letra{font-family:'JetBrains Mono',monospace;font-size:.68rem;font-weight:600;color:var(--gris-s);min-width:16px;}
+.op-btn.ok{border-color:var(--verde);background:var(--verde-claro);}
+.op-btn.ok .op-letra{color:var(--verde);}
+.op-btn.mal{border-color:var(--rojo);background:var(--rojo-claro);}
+.op-btn.mal .op-letra{color:var(--rojo);}
+.fb-ej{font-size:.83rem;line-height:1.65;padding:11px 15px;border-radius:8px;margin-top:10px;display:none;border-left:3px solid transparent;}
+.fb-ej.ok{display:block;background:var(--verde-claro);border-left-color:var(--verde);color:var(--gris);}
+.fb-ej.ok .fb-titulo{color:var(--verde);font-weight:600;margin-bottom:3px;}
+.fb-ej.mal{display:block;background:var(--rojo-claro);border-left-color:var(--rojo);color:var(--gris);}
+.fb-ej.mal .fb-titulo{color:var(--rojo);font-weight:600;margin-bottom:3px;}
+.minitest-barra{background:#F0F0F0;border-radius:6px;height:8px;margin-bottom:20px;overflow:hidden;}
+.minitest-fill{height:8px;background:var(--verde);border-radius:6px;transition:width .4s;}
+.test-pregunta{background:var(--blanco);border-radius:14px;padding:28px 30px;box-shadow:0 2px 14px rgba(26,74,122,.08);margin-bottom:16px;}
+.test-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;}
+.test-num{font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--gris-s);}
+.test-enunciado{font-size:1rem;line-height:1.75;margin-bottom:22px;}
+.btn-siguiente-nivel{background:var(--oceano);color:var(--blanco);border:none;border-radius:10px;padding:13px 32px;font-family:'DM Sans',sans-serif;font-size:.95rem;font-weight:500;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:8px;margin-top:20px;}
+.btn-siguiente-nivel:hover{background:var(--oceano-medio);transform:translateY(-1px);}
+.btn-siguiente-nivel:disabled{background:#A0B8D0;cursor:not-allowed;transform:none;}
+.bloque-accion{text-align:right;padding:20px 0 8px;border-top:1px dashed #D8D8D8;margin-top:24px;}
+.resultado-minitest{text-align:center;padding:40px 24px;background:var(--blanco);border-radius:16px;box-shadow:0 2px 16px rgba(0,0,0,.08);}
+.resultado-minitest .res-nota{font-family:'Fraunces',serif;font-size:4rem;font-weight:700;line-height:1;}
+.resultado-minitest .res-label{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:2px;text-transform:uppercase;color:var(--gris-s);margin-bottom:16px;}
+.resultado-minitest h3{font-family:'Fraunces',serif;font-size:1.4rem;font-weight:600;margin-bottom:8px;}
+.resultado-minitest p{font-size:.9rem;color:var(--gris-s);line-height:1.6;max-width:420px;margin:0 auto 24px;}
+.btn-res{display:inline-block;border-radius:10px;padding:12px 28px;font-family:'DM Sans',sans-serif;font-size:.92rem;font-weight:500;cursor:pointer;border:none;transition:all .2s;margin:4px;}
+.btn-res.ok{background:var(--verde);color:var(--blanco);}
+.btn-res.ok:hover{background:#166B50;}
+.btn-res.repetir{background:var(--naranja-claro);color:var(--naranja);border:2px solid var(--naranja);}
+.btn-res.volver{background:var(--rojo-claro);color:var(--rojo);border:2px solid var(--rojo);}
+.repaso-errores{background:var(--blanco);border-radius:12px;padding:22px 26px;box-shadow:0 1px 8px rgba(0,0,0,.05);margin-top:20px;}
+.repaso-titulo{font-family:'Fraunces',serif;font-size:.95rem;font-weight:600;color:var(--gris);margin-bottom:14px;}
+.error-item{border-left:3px solid var(--rojo-claro);padding:10px 14px;margin-bottom:10px;border-radius:0 8px 8px 0;background:#FDF7F7;font-size:.84rem;line-height:1.6;}
+.error-correcta{color:var(--verde);font-weight:600;}
+</style>
+</head>
+<body>
+<div class="topbar"><div class="topbar-logo">Puente a <em>Bachillerato</em></div><div class="topbar-alumna" id="topbar-alumna">Módulo 4 · Sistemas</div></div>
+<div class="progress-wrap"><div class="progress-bar" id="progress-bar" style="width:0%"></div></div>
+<div class="layout">
+<aside class="sidebar">
+  <div class="sidebar-bloque">Bloque 0 · Módulo 4</div>
+  <div class="sidebar-item activo" id="s-teoria" onclick="irSeccion('teoria')"><span class="s-dot"></span> Teoría</div>
+  <div class="sidebar-item" id="s-n1" onclick="irSeccion('n1')"><span class="s-dot"></span> Nivel 1</div>
+  <div class="sidebar-item" id="s-n2" onclick="irSeccion('n2')"><span class="s-dot"></span> Nivel 2</div>
+  <div class="sidebar-item" id="s-n3" onclick="irSeccion('n3')"><span class="s-dot"></span> Nivel 3</div>
+  <div class="sidebar-item" id="s-test" onclick="irSeccion('test')"><span class="s-dot"></span> Mini-test</div>
+  <div class="sidebar-sep"></div>
+  <div class="sidebar-nav-btns">
+    <button class="btn-nav anterior" onclick="window.location.href='modulo-ecuaciones.html'">← Módulo 3</button>
+    <button class="btn-nav siguiente" onclick="window.location.href='modulo-inecuaciones.html'">Módulo 5 →</button>
+    <button class="btn-nav volver" onclick="window.location.href='bloque0-modulos.html'">📋 Volver a los módulos</button>
+  </div>
+</aside>
+<main class="main" id="main-area"></main>
+</div>
+<script>
+// ══════════════════════════════════════════════════════════
+//  MOTOR DE MÓDULOS — Bloque 0 · Puente a Bachillerato
+//  Lee el objeto global MODULO_CONFIG y construye toda la
+//  interfaz: cabecera, navegación, teoría, niveles y mini-test.
+// ══════════════════════════════════════════════════════════
+
+let alumna = {};
+try { alumna = JSON.parse(sessionStorage.getItem('alumna') || '{}'); } catch(e){}
+const APPS_SCRIPT_URL_MOD = 'https://script.google.com/macros/s/AKfycbx63xvLtRnJYFQBr7AelcusmRLFzlCN6CyqPQWtjtdZ-IVuDr6RX2v850qTnZPr19LpVA/exec';
+function enviarResultadoModulo(modulo, correctas, superado) {
+  if (!APPS_SCRIPT_URL_MOD || APPS_SCRIPT_URL_MOD.includes('TU_')) return;
+  try {
+    const params = new URLSearchParams({
+      tipo: 'modulo_b0',
+      modulo: modulo,
+      nombre: alumna.nombre || '',
+      apellidos: alumna.apellidos || '',
+      grupo: alumna.grupo || '',
+      itinerario: alumna.itinerario || '',
+      correctas: correctas,
+      total: 5,
+      superado: superado ? '1' : '0',
+      fecha: new Date().toISOString()
+    });
+    new Image().src = APPS_SCRIPT_URL_MOD + '?' + params.toString();
+  } catch(e) {}
+}
+
+
+const estadoNiveles = {
+  n1: { respondidas: new Set(), correctas: new Set() },
+  n2: { respondidas: new Set(), correctas: new Set() },
+  n3: { respondidas: new Set(), correctas: new Set() }
+};
+let testPreguntas = [];
+let testActual = 0;
+let testRespuestas = [];
+const SECCIONES = ['teoria','n1','n2','n3','test'];
+
+function iniciarModulo() {
+  const C = MODULO_CONFIG;
+
+  if (alumna.nombre) {
+    document.getElementById('topbar-alumna').textContent = `${alumna.nombre} · ${C.titulo}`;
+  }
+
+  const main = document.getElementById('main-area');
+  main.innerHTML = `
+    <div class="modulo-eyebrow">Bloque 0 · Álgebra · Módulo ${C.num} de ${C.total}</div>
+    <div class="modulo-titulo">${C.titulo}</div>
+    <div class="modulo-desc">${C.desc}</div>
+
+    <div class="nav-modulos">
+      <button class="nm-btn nm-activo" onclick="irSeccion('teoria')">📖 Teoría</button>
+      <button class="nm-btn" onclick="irSeccion('n1')">🔵 Nivel 1</button>
+      <button class="nm-btn" onclick="irSeccion('n2')">🟠 Nivel 2</button>
+      <button class="nm-btn" onclick="irSeccion('n3')">🟣 Nivel 3</button>
+      <button class="nm-btn" onclick="irSeccion('test')">✅ Mini-test</button>
+    </div>
+
+    <div class="seccion visible" id="sec-teoria">
+      ${C.teoria}
+      <div class="bloque-accion">
+        <button class="btn-siguiente-nivel" onclick="irSeccion('n1')">Ir a los ejercicios →</button>
+      </div>
+    </div>
+
+    <div class="seccion" id="sec-n1">
+      <div class="nivel-header n1"><div class="nivel-icon">🔵</div><div class="nivel-info"><h3>Nivel 1 — Básico</h3><p>Aplicación directa de las propiedades.</p></div></div>
+      <div id="ejercicios-n1"></div>
+      <div class="bloque-accion"><button class="btn-siguiente-nivel" id="btn-a-n2" onclick="irSeccion('n2')" disabled>Nivel 2 →</button></div>
+    </div>
+
+    <div class="seccion" id="sec-n2">
+      <div class="nivel-header n2"><div class="nivel-icon">🟠</div><div class="nivel-info"><h3>Nivel 2 — Intermedio</h3><p>Combinación de varias técnicas.</p></div></div>
+      <div id="ejercicios-n2"></div>
+      <div class="bloque-accion"><button class="btn-siguiente-nivel" id="btn-a-n3" onclick="irSeccion('n3')" disabled>Nivel 3 →</button></div>
+    </div>
+
+    <div class="seccion" id="sec-n3">
+      <div class="nivel-header n3"><div class="nivel-icon">🟣</div><div class="nivel-info"><h3>Nivel 3 — Avanzado</h3><p>Nivel de entrada a 1º Bachillerato.</p></div></div>
+      <div id="ejercicios-n3"></div>
+      <div class="bloque-accion"><button class="btn-siguiente-nivel" id="btn-a-test" onclick="iniciarMinitest()" disabled>Hacer el mini-test →</button></div>
+    </div>
+
+    <div class="seccion" id="sec-test">
+      <div class="nivel-header ntest"><div class="nivel-icon">✅</div><div class="nivel-info"><h3>Mini-test de superación</h3><p>5 preguntas aleatorias. Necesitas 4/5 para superar el módulo.</p></div></div>
+      <div class="minitest-barra"><div class="minitest-fill" id="mt-barra" style="width:0%"></div></div>
+      <div id="minitest-contenido"></div>
+    </div>
+  `;
+
+  renderNivel('n1');
+  renderNivel('n2');
+  renderNivel('n3');
+  MathJax && MathJax.typesetPromise();
+}
+
+// ══════════════════════════════════════════
+// NAVEGACIÓN
+// ══════════════════════════════════════════
+function irSeccion(id) {
+  if (id === 'test' && testPreguntas.length === 0) { iniciarMinitest(); return; }
+  SECCIONES.forEach(s => {
+    const sec = document.getElementById(`sec-${s}`);
+    if (sec) sec.classList.toggle('visible', s === id);
+    const si = document.getElementById(`s-${s}`);
+    if (si) si.classList.toggle('activo', s === id);
+  });
+  document.querySelectorAll('.nm-btn').forEach((btn,i) => btn.classList.toggle('nm-activo', SECCIONES[i] === id));
+  window.scrollTo(0,0);
+  MathJax && MathJax.typesetPromise();
+}
+
+// ══════════════════════════════════════════
+// EJERCICIOS POR NIVEL
+// ══════════════════════════════════════════
+function renderNivel(nivel) {
+  const cont = document.getElementById(`ejercicios-${nivel}`);
+  const letras = ['A','B','C','D'];
+  const banco = MODULO_CONFIG.banco[nivel];
+
+  cont.innerHTML = banco.map((ej, i) => {
+    const dif = nivel === 'n1' ? 'Básico' : (nivel === 'n2' ? 'Intermedio' : 'Avanzado');
+    const difCls = nivel === 'n1' ? 'dif-basico' : (nivel === 'n2' ? 'dif-medio' : 'dif-avanzado');
+    return `<div class="ejercicio-card ${nivel}-color" id="ej-${nivel}-${i}">
+      <div class="ejercicio-meta">
+        <span class="ej-num">Ejercicio ${i+1}</span>
+        <span class="ej-dificultad ${difCls}">${dif}</span>
+      </div>
+      <div class="ej-enunciado">${ej.enunciado}</div>
+      <div class="opciones-ej">
+        ${ej.opciones.map((op,oi) => `<button class="op-btn" onclick="responderEj('${nivel}',${i},${oi})"><span class="op-letra">${letras[oi]}</span><span>${op}</span></button>`).join('')}
+      </div>
+      <div class="fb-ej" id="fb-${nivel}-${i}"></div>
+    </div>`;
+  }).join('');
+}
+
+function responderEj(nivel, idx, opIdx) {
+  if (estadoNiveles[nivel].respondidas.has(idx)) return;
+  estadoNiveles[nivel].respondidas.add(idx);
+
+  const ej = MODULO_CONFIG.banco[nivel][idx];
+  const ok = opIdx === ej.correcta;
+  if (ok) estadoNiveles[nivel].correctas.add(idx);
+
+  document.getElementById(`ej-${nivel}-${idx}`).querySelectorAll('.op-btn').forEach((btn, oi) => {
+    btn.disabled = true;
+    if (oi === ej.correcta) btn.classList.add('ok');
+    else if (oi === opIdx && !ok) btn.classList.add('mal');
+  });
+
+  const fb = document.getElementById(`fb-${nivel}-${idx}`);
+  fb.className = `fb-ej ${ok ? 'ok' : 'mal'}`;
+  fb.innerHTML = `<div class="fb-titulo">${ok ? '✓ Correcto' : '✗ No es correcto'}</div>${ej.feedback}`;
+
+  if (estadoNiveles[nivel].respondidas.size === MODULO_CONFIG.banco[nivel].length) {
+    const si = document.getElementById(`s-${nivel}`);
+    if (si) si.classList.add('hecho');
+    const btns = { n1:'btn-a-n2', n2:'btn-a-n3', n3:'btn-a-test' };
+    const b = document.getElementById(btns[nivel]);
+    if (b) b.disabled = false;
+  }
+
+  actualizarProgreso();
+  MathJax && MathJax.typesetPromise();
+}
+
+// ══════════════════════════════════════════
+// MINI-TEST
+// ══════════════════════════════════════════
+function iniciarMinitest() {
+  testPreguntas = [...MODULO_CONFIG.bancoTest].sort(() => Math.random() - 0.5).slice(0,5);
+  testActual = 0;
+  testRespuestas = new Array(5).fill(null);
+  irSeccion('test');
+  mostrarPreguntaTest(0);
+}
+
+function mostrarPreguntaTest(idx) {
+  const p = testPreguntas[idx];
+  const letras = ['A','B','C','D'];
+  document.getElementById('mt-barra').style.width = ((idx/5)*100) + '%';
+  document.getElementById('minitest-contenido').innerHTML = `
+    <div class="test-pregunta">
+      <div class="test-meta"><span class="test-num">Pregunta ${idx+1} de 5</span></div>
+      <div class="test-enunciado">${p.enunciado}</div>
+      <div class="opciones-ej" id="ops-test">
+        ${p.opciones.map((op,oi) => `<button class="op-btn" onclick="responderTest(${oi})"><span class="op-letra">${letras[oi]}</span><span>${op}</span></button>`).join('')}
+      </div>
+    </div>
+    <div style="text-align:right;margin-top:8px;">
+      <button class="btn-siguiente-nivel" id="btn-test-sig" style="display:none" onclick="siguienteTest()">${idx<4 ? 'Siguiente →' : 'Ver resultado →'}</button>
+    </div>`;
+  MathJax && MathJax.typesetPromise();
+}
+
+function responderTest(opIdx) {
+  testRespuestas[testActual] = opIdx;
+  document.querySelectorAll('#ops-test .op-btn').forEach((btn,i) => {
+    btn.disabled = true;
+    if (i === opIdx) { btn.style.borderColor = 'var(--oceano-medio)'; btn.style.background = '#EFF3FA'; }
+  });
+  document.getElementById('btn-test-sig').style.display = 'inline-flex';
+}
+
+function siguienteTest() {
+  testActual++;
+  if (testActual < 5) mostrarPreguntaTest(testActual);
+  else mostrarResultadoTest();
+}
+
+function mostrarResultadoTest() {
+  document.getElementById('mt-barra').style.width = '100%';
+  const correctas = testRespuestas.filter((r,i) => r === testPreguntas[i].correcta).length;
+  const superado = correctas >= 4;
+  enviarResultadoModulo('sistemas', correctas, superado);
+  const color = superado ? 'var(--verde)' : (correctas >= 3 ? 'var(--naranja)' : 'var(--rojo)');
+  const titulo = superado ? '¡Módulo superado!' : (correctas >= 3 ? 'Por poco…' : 'Hay que repasar');
+  const C = MODULO_CONFIG;
+  const texto = superado
+    ? `Dominas ${C.titulo.toLowerCase()}. ${C.siguiente.includes('test-final') ? 'Has completado el Bloque 0. ¡Vamos al test final!' : 'Avanza al siguiente módulo.'}`
+    : (correctas >= 3 ? 'Estás cerca. Repasa los errores y vuelve a intentarlo.' : 'Repasa la teoría y los ejercicios antes de repetir el test.');
+
+  if (superado) {
+    const m = JSON.parse(sessionStorage.getItem('modulos_b0') || '[]');
+    if (!m.includes(C.clave)) m.push(C.clave);
+    sessionStorage.setItem('modulos_b0', JSON.stringify(m));
+    const si = document.getElementById('s-test');
+    if (si) si.classList.add('hecho');
+  }
+
+  const errores = testPreguntas.map((p,i) => ({...p, elegida: testRespuestas[i]})).filter(p => p.elegida !== p.correcta);
+  const letras = ['A','B','C','D'];
+
+  document.getElementById('minitest-contenido').innerHTML = `
+    <div class="resultado-minitest">
+      <div class="res-nota" style="color:${color}">${correctas}/5</div>
+      <div class="res-label">respuestas correctas</div>
+      <h3>${titulo}</h3>
+      <p>${texto}</p>
+      ${superado
+        ? `<button class="btn-res ok" onclick="window.location.href='${C.siguiente}'">${C.siguiente.includes('test-final') ? 'Ir al test final →' : 'Siguiente módulo →'}</button>
+           <button class="btn-res repetir" onclick="iniciarMinitest()">↻ Repetir test</button>`
+        : `<button class="btn-res volver" onclick="irSeccion('teoria')">← Repasar teoría</button>
+           <button class="btn-res repetir" onclick="iniciarMinitest()">↻ Intentar de nuevo</button>`
+      }
+    </div>
+    ${errores.length > 0 ? `<div class="repaso-errores"><div class="repaso-titulo">Repaso de errores</div>${errores.map(p => `
+      <div class="error-item">
+        <div>${p.enunciado}</div>
+        <div>Tu respuesta: ${p.elegida !== null ? letras[p.elegida]+') '+p.opciones[p.elegida] : '—'}</div>
+        <div class="error-correcta">✓ Correcta: ${letras[p.correcta]}) ${p.opciones[p.correcta]}</div>
+        <div style="color:var(--gris-s);font-size:.82rem;margin-top:4px;">${p.feedback}</div>
+      </div>`).join('')}</div>` : ''}`;
+
+  actualizarProgreso();
+  MathJax && MathJax.typesetPromise();
+}
+
+// ══════════════════════════════════════════
+// PROGRESO
+// ══════════════════════════════════════════
+function actualizarProgreso() {
+  const C = MODULO_CONFIG;
+  const total = C.banco.n1.length + C.banco.n2.length + C.banco.n3.length;
+  const resp = estadoNiveles.n1.respondidas.size + estadoNiveles.n2.respondidas.size + estadoNiveles.n3.respondidas.size;
+  document.getElementById('progress-bar').style.width = Math.round((resp/(total+5))*100) + '%';
+}
+</script>
+<script>
+MODULO_CONFIG = {
+  num: 4, total: 6, clave: 'sistemas', titulo: 'Sistemas de Ecuaciones',
+  desc: 'Dos ecuaciones, dos incógnitas. Los sistemas aparecen en geometría analítica, optimización y casi todos los problemas de aplicación de Bachillerato.',
+  anterior: 'modulo-ecuaciones.html', siguiente: 'modulo-inecuaciones.html',
+  teoria: `
+  <div class="teoria-intro"><p>Un sistema de ecuaciones es un conjunto de ecuaciones que deben cumplirse <strong>simultáneamente</strong>. La solución es el par \\((x,y)\\) que satisface todas las ecuaciones a la vez.</p></div>
+  <div class="concepto-card"><h3>📐 1. Método de sustitución</h3><div class="concepto-body">
+  <p>Despejar una variable en una ecuación y sustituirla en la otra.</p>
+  <div class="ejemplo-resuelto"><div class="ej-titulo">Ejemplo resuelto 1</div>
+  <div class="paso"><span class="paso-num">①</span><span>\\(\\begin{cases}y=2x-1\\\\3x+2y=12\\end{cases}\\)</span></div>
+  <div class="paso"><span class="paso-num">②</span><span>Sustituyo \\(y\\) en la 2ª: \\(3x+2(2x-1)=12\\)</span></div>
+  <div class="paso"><span class="paso-num">③</span><span>\\(7x-2=12 \\Rightarrow x=2\\)</span></div>
+  <div class="paso"><span class="paso-num">④</span><span>\\(y=2(2)-1=3\\). Solución: \\((2,3)\\)</span></div>
+  </div></div></div>
+  <div class="concepto-card"><h3>📐 2. Método de reducción</h3><div class="concepto-body">
+  <p>Multiplicar las ecuaciones para que un coeficiente sea opuesto (o igual) y sumar/restar para eliminar una variable.</p>
+  <div class="ejemplo-resuelto"><div class="ej-titulo">Ejemplo resuelto 2</div>
+  <div class="paso"><span class="paso-num">①</span><span>\\(\\begin{cases}2x+y=7\\\\x+3y=11\\end{cases}\\)</span></div>
+  <div class="paso"><span class="paso-num">②</span><span>Multiplico la 1ª por 3: \\(6x+3y=21\\)</span></div>
+  <div class="paso"><span class="paso-num">③</span><span>Resto la 2ª: \\((6x+3y)-(x+3y)=21-11 \\Rightarrow 5x=10 \\Rightarrow x=2\\)</span></div>
+  <div class="paso"><span class="paso-num">④</span><span>Sustituyo en la 1ª: \\(2(2)+y=7 \\Rightarrow y=3\\). Solución: \\((2,3)\\)</span></div>
+  </div></div></div>
+  <div class="concepto-card"><h3>📐 3. Tipos de sistemas</h3><div class="concepto-body">
+  <table class="resumen-tabla">
+  <tr><th>Tipo</th><th>Significado geométrico</th><th>Soluciones</th></tr>
+  <tr><td>Compatible determinado</td><td>Dos rectas que se cortan</td><td>Una solución \\((x,y)\\)</td></tr>
+  <tr><td>Compatible indeterminado</td><td>Dos rectas coincidentes</td><td>Infinitas soluciones</td></tr>
+  <tr><td>Incompatible</td><td>Dos rectas paralelas</td><td>Sin solución</td></tr>
+  </table>
+  <div class="alerta-card"><div class="al-titulo">⚠️ Cómo detectar cada tipo</div>
+  Si al operar el sistema obtienes una identidad (\\(0=0\\)) → indeterminado. Si obtienes una contradicción (\\(0=5\\)) → incompatible.</div>
+  </div></div>`,
+  banco: {
+    n1:[
+      {enunciado:'Resuelve: \\(\\begin{cases}x+y=5\\\\x-y=1\\end{cases}\\)',opciones:['\\(x=3,y=2\\)','\\(x=2,y=3\\)','\\(x=4,y=1\\)','\\(x=1,y=4\\)'],correcta:0,feedback:'Sumando: \\(2x=6\\Rightarrow x=3\\). Restando: \\(y=2\\).'},
+      {enunciado:'Resuelve por sustitución: \\(\\begin{cases}y=x+2\\\\2x+y=8\\end{cases}\\)',opciones:['\\(x=2,y=4\\)','\\(x=3,y=5\\)','\\(x=1,y=3\\)','\\(x=4,y=6\\)'],correcta:0,feedback:'\\(2x+(x+2)=8\\Rightarrow3x=6\\Rightarrow x=2,y=4\\).'},
+      {enunciado:'El sistema \\(\\begin{cases}2x+y=5\\\\4x+2y=10\\end{cases}\\) es...',opciones:['Incompatible','Compatible determinado','Compatible indeterminado','No tiene sentido'],correcta:2,feedback:'La 2ª ecuación es el doble de la 1ª. Son la misma recta: infinitas soluciones.'},
+      {enunciado:'¿Cuál es la solución de \\(\\begin{cases}x=3\\\\2x+y=10\\end{cases}\\)?',opciones:['\\(x=3,y=4\\)','\\(x=3,y=5\\)','\\(x=3,y=7\\)','\\(x=5,y=0\\)'],correcta:0,feedback:'\\(x=3\\) directamente. \\(2(3)+y=10\\Rightarrow y=4\\).'},
+      {enunciado:'Resuelve: \\(\\begin{cases}3x-y=7\\\\x+y=5\\end{cases}\\)',opciones:['\\(x=3,y=2\\)','\\(x=2,y=3\\)','\\(x=4,y=1\\)','\\(x=1,y=4\\)'],correcta:0,feedback:'Sumando: \\(4x=12\\Rightarrow x=3\\). Sustituyendo: \\(y=5-3=2\\).'},
+      {enunciado:'El sistema \\(\\begin{cases}x+y=3\\\\x+y=5\\end{cases}\\) es...',opciones:['Compatible determinado','Compatible indeterminado','Incompatible','No definido'],correcta:2,feedback:'Las rectas son paralelas (misma dirección, distinta ordenada). Sin solución: incompatible.'},
+      {enunciado:'Resuelve: \\(\\begin{cases}2x+3y=12\\\\x=3\\end{cases}\\)',opciones:['\\(x=3,y=2\\)','\\(x=3,y=3\\)','\\(x=3,y=1\\)','\\(x=3,y=6\\)'],correcta:0,feedback:'\\(x=3\\). \\(6+3y=12\\Rightarrow 3y=6\\Rightarrow y=2\\).'},
+      {enunciado:'Resuelve por reducción: \\(\\begin{cases}x+2y=7\\\\x-2y=1\\end{cases}\\)',opciones:['\\(x=4,y=\\frac{3}{2}\\)','\\(x=4,y=2\\)','\\(x=3,y=2\\)','\\(x=5,y=1\\)'],correcta:0,feedback:'Sumando: \\(2x=8\\Rightarrow x=4\\). Restando: \\(4y=6\\Rightarrow y=\\frac{3}{2}\\).'}
+    ],
+    n2:[
+      {enunciado:'Resuelve: \\(\\begin{cases}3x+2y=12\\\\2x-y=1\\end{cases}\\)',opciones:['\\(x=2,y=3\\)','\\(x=3,y=2\\)','\\(x=4,y=0\\)','\\(x=1,y=4.5\\)'],correcta:0,feedback:'De la 2ª: \\(y=2x-1\\). Sustituyendo: \\(3x+2(2x-1)=12 \\Rightarrow 7x-2=12 \\Rightarrow x=2,\\;y=3\\).'},
+      {enunciado:'Resuelve: \\(\\begin{cases}\\frac{x}{2}+y=7\\\\x-2y=2\\end{cases}\\)',opciones:['\\(x=8,y=3\\)','\\(x=6,y=4\\)','\\(x=4,y=5\\)','\\(x=10,y=2\\)'],correcta:0,feedback:'Multiplico la 1ª por 2: \\(x+2y=14\\). Sumo con la 2ª: \\(2x=16 \\Rightarrow x=8\\). Sustituyendo: \\(8-2y=2 \\Rightarrow y=3\\).'},
+      {enunciado:'Un cine vende entradas adulto a 8€ y niño a 5€. Con 10 entradas recauda 68€. ¿Cuántos adultos?',opciones:['4 adultos','5 adultos','6 adultos','3 adultos'],correcta:2,feedback:'\\(a+n=10\\) y \\(8a+5n=68\\). De la 1ª: \\(n=10-a\\). Sustituyendo: \\(8a+5(10-a)=68\\Rightarrow3a=18\\Rightarrow a=6\\).'},
+      {enunciado:'Resuelve: \\(\\begin{cases}2x-3y=4\\\\4x-6y=8\\end{cases}\\)',opciones:['\\(x=2,y=0\\)','Incompatible','Compatible indeterminado','\\(x=5,y=2\\)'],correcta:2,feedback:'La 2ª es exactamente el doble de la 1ª. Son la misma recta: infinitas soluciones.'},
+      {enunciado:'La diferencia de dos números es 8 y su suma es 24. ¿Cuáles son?',opciones:['16 y 8','14 y 10','20 y 4','12 y 12'],correcta:0,feedback:'\\(x-y=8\\) y \\(x+y=24\\). Sumando: \\(2x=32\\Rightarrow x=16, y=8\\).'},
+      {enunciado:'Resuelve: \\(\\begin{cases}x+y+z=6\\\\x-y=2\\\\y=1\\end{cases}\\)',opciones:['\\(x=3,y=1,z=2\\)','\\(x=2,y=1,z=3\\)','\\(x=3,y=2,z=1\\)','\\(x=1,y=2,z=3\\)'],correcta:0,feedback:'\\(y=1\\). \\(x-1=2\\Rightarrow x=3\\). \\(3+1+z=6\\Rightarrow z=2\\).'},
+      {enunciado:'Resuelve: \\(\\begin{cases}3x+y=11\\\\x+3y=9\\end{cases}\\)',opciones:['\\(x=3,y=2\\)','\\(x=2,y=3\\)','\\(x=4,y=-1\\)','\\(x=1,y=8\\)'],correcta:0,feedback:'Restando la 2ª de la 1ª: \\(2x-2y=2\\Rightarrow x-y=1\\). Con \\(x+3y=9\\): \\(4y=8\\Rightarrow y=2, x=3\\).'},
+      {enunciado:'Si \\(2x+3y=13\\) y \\(x=2\\), ¿cuánto vale \\(y\\)?',opciones:['\\(y=3\\)','\\(y=4\\)','\\(y=5\\)','\\(y=\\frac{9}{3}\\)'],correcta:0,feedback:'\\(4+3y=13\\Rightarrow3y=9\\Rightarrow y=3\\).'}
+    ],
+    n3:[
+      {enunciado:'Discute según \\(k\\): \\(\\begin{cases}x+2y=k\\\\2x+4y=6\\end{cases}\\)',opciones:['Siempre compatible determinado','Indeterminado si \\(k=3\\), incompatible si \\(k\\neq3\\)','Incompatible siempre','Determinado si \\(k\\neq3\\)'],correcta:1,feedback:'La 2ª es el doble de la 1ª solo si \\(2k=6\\Rightarrow k=3\\) (indeterminado). Si \\(k\\neq3\\), incompatible.'},
+      {enunciado:'Resuelve: \\(\\begin{cases}x^2+y^2=25\\\\x+y=7\\end{cases}\\)',opciones:['\\((3,4)\\) y \\((4,3)\\)','\\((5,0)\\) y \\((0,5)\\)','Solo \\((3,4)\\)','\\((7,0)\\) y \\((0,7)\\)'],correcta:0,feedback:'\\(y=7-x\\). Sustituyendo: \\(x^2+(7-x)^2=25\\Rightarrow2x^2-14x+24=0\\Rightarrow x^2-7x+12=0\\Rightarrow(x-3)(x-4)=0\\). Soluciones: \\((3,4)\\) y \\((4,3)\\).'},
+      {enunciado:'Un tren tarda 2h más que un AVE en recorrer 300 km. El AVE va 40 km/h más rápido que el tren. ¿A qué velocidad va el tren?',opciones:['60 km/h','80 km/h','100 km/h','40 km/h'],correcta:0,feedback:'Sea \\(v\\) la velocidad del tren. \\(\\dfrac{300}{v}-\\dfrac{300}{v+40}=2\\). Multiplicando: \\(300\\cdot40=2v(v+40) \\Rightarrow v^2+40v-6000=0\\). \\(\\Delta=1600+24000=25600=160^2\\). \\(v=\\dfrac{-40+160}{2}=60\\) km/h.'},
+      {enunciado:'Resuelve: \\(\\begin{cases}xy=6\\\\x+y=5\\end{cases}\\)',opciones:['\\(x=2,y=3\\) y \\(x=3,y=2\\)','\\(x=6,y=1\\)','\\(x=1,y=6\\) solo','\\(x=4,y=1\\)'],correcta:0,feedback:'\\(y=5-x\\). \\(x(5-x)=6\\Rightarrow x^2-5x+6=0\\Rightarrow(x-2)(x-3)=0\\). Soluciones: \\((2,3)\\) y \\((3,2)\\).'},
+      {enunciado:'¿Para qué valor de \\(a\\) es compatible determinado el sistema \\(\\begin{cases}ax+2y=3\\\\3x+6y=9\\end{cases}\\)?',opciones:['\\(a=1\\)','\\(a\\neq1\\)','\\(a=3\\)','\\(a\\neq3\\)'],correcta:1,feedback:'La 2ª simplificada es \\(x+2y=3\\). Si \\(a=1\\), las ecuaciones son iguales → indeterminado. Si \\(a\\neq1\\) → determinado.'},
+      {enunciado:'El triple del mayor de dos números menos el menor es 19. La suma de ambos es 9. ¿Cuáles son?',opciones:['6 y 3','7 y 2','5 y 4','8 y 1'],correcta:1,feedback:'Sea \\(x\\) el mayor e \\(y\\) el menor. \\(3x-y=19\\) y \\(x+y=9\\). Sumando: \\(4x=28 \\Rightarrow x=7\\). Entonces \\(y=9-7=2\\).'}
+    ]
+  },
+  bancoTest:[
+    {enunciado:'Resuelve: \\(\\begin{cases}x+y=8\\\\x-y=2\\end{cases}\\)',opciones:['\\(x=5,y=3\\)','\\(x=3,y=5\\)','\\(x=6,y=2\\)','\\(x=4,y=4\\)'],correcta:0,feedback:'Sumando: \\(2x=10\\Rightarrow x=5, y=3\\).'},
+    {enunciado:'Resuelve por sustitución: \\(\\begin{cases}y=3x-1\\\\x+2y=12\\end{cases}\\)',opciones:['\\(x=2,y=5\\)','\\(x=3,y=8\\)','\\(x=1,y=2\\)','\\(x=2,y=4\\)'],correcta:0,feedback:'\\(x+2(3x-1)=12\\Rightarrow7x=14\\Rightarrow x=2, y=5\\).'},
+    {enunciado:'¿Qué tipo de sistema es \\(\\begin{cases}2x+y=4\\\\6x+3y=12\\end{cases}\\)?',opciones:['Incompatible','Compatible determinado','Compatible indeterminado','No tiene solución'],correcta:2,feedback:'La 2ª es 3 veces la 1ª. Misma recta: infinitas soluciones.'},
+    {enunciado:'Resuelve: \\(\\begin{cases}4x-3y=5\\\\2x+y=5\\end{cases}\\)',opciones:['\\(x=2,y=3\\)','\\(x=3,y=1\\)','\\(x=1,y=5\\)','\\(x=2,y=1\\)'],correcta:3,feedback:'De la 2ª: \\(y=5-2x\\). Sustituyendo: \\(4x-3(5-2x)=5 \\Rightarrow 10x-15=5 \\Rightarrow x=2,\\;y=1\\).'},
+    {enunciado:'Dos números suman 30 y el doble del mayor menos el menor es 30. ¿Cuáles son?',opciones:['15 y 15','20 y 10','25 y 5','18 y 12'],correcta:1,feedback:'\\(x+y=30\\) y \\(2x-y=30\\). Sumando: \\(3x=60 \\Rightarrow x=20,\\;y=10\\).'},
+    {enunciado:'Resuelve: \\(\\begin{cases}x^2+y=5\\\\x+y=3\\end{cases}\\)',opciones:['\\((2,1)\\) y \\((-1,4)\\)','\\((1,2)\\)','\\((3,0)\\)','\\((2,1)\\)'],correcta:0,feedback:'\\(y=3-x\\). \\(x^2+(3-x)=5\\Rightarrow x^2-x-2=0\\Rightarrow(x-2)(x+1)=0\\). \\((2,1)\\) y \\((-1,4)\\).'},
+    {enunciado:'Resuelve: \\(\\begin{cases}3x+2y=8\\\\x-y=1\\end{cases}\\)',opciones:['\\(x=\\frac{9}{5},y=\\frac{4}{5}\\)','\\(x=2,y=1\\)','\\(x=1,y=2\\)','\\(x=3,y=0\\)'],correcta:1,feedback:'De la 2ª: \\(x=y+1\\). Sustituyendo: \\(3(y+1)+2y=8 \\Rightarrow 5y+3=8 \\Rightarrow y=1,\\;x=2\\).'},
+    {enunciado:'Un granjero tiene gallinas y conejos (100 animales, 280 patas). ¿Cuántos conejos?',opciones:['40 conejos','60 conejos','20 conejos','80 conejos'],correcta:0,feedback:'\\(g+c=100\\) y \\(2g+4c=280\\). De la 1ª: \\(g=100-c\\). \\(200-2c+4c=280\\Rightarrow2c=80\\Rightarrow c=40\\).'},
+    {enunciado:'¿Qué tipo es \\(\\begin{cases}x-2y=3\\\\-x+2y=5\\end{cases}\\)?',opciones:['Determinado','Indeterminado','Incompatible','Depende de x'],correcta:2,feedback:'Sumando: \\(0=8\\). Contradicción → incompatible.'},
+    {enunciado:'Resuelve: \\(\\begin{cases}2x+y=5\\\\x-2y=0\\end{cases}\\)',opciones:['\\(x=2,y=1\\)','\\(x=1,y=3\\)','\\(x=4,y=2\\)','\\(x=0,y=5\\)'],correcta:0,feedback:'De la 2ª: \\(x=2y\\). Sustituyendo: \\(2(2y)+y=5 \\Rightarrow 5y=5 \\Rightarrow y=1,\\;x=2\\).'},
+    {enunciado:'Resuelve: \\(\\begin{cases}\\frac{x+y}{2}=4\\\\x-y=2\\end{cases}\\)',opciones:['\\(x=5,y=3\\)','\\(x=6,y=2\\)','\\(x=4,y=4\\)','\\(x=3,y=5\\)'],correcta:0,feedback:'1ª: \\(x+y=8\\). Con \\(x-y=2\\): sumando \\(2x=10\\Rightarrow x=5, y=3\\).'},
+    {enunciado:'Si \\(3x+ky=6\\) y \\(kx+3y=6\\) es incompatible, ¿qué valor tiene \\(k\\)?',opciones:['\\(k=3\\)','\\(k=-3\\)','\\(k=\\pm3\\)','\\(k=0\\)'],correcta:1,feedback:'Incompatible cuando las rectas son paralelas: \\(\\frac{3}{k}=\\frac{k}{3}\\neq\\frac{6}{6}\\). \\(k^2=9\\Rightarrow k=\\pm3\\). Pero \\(k=3\\) daría indeterminado. Entonces \\(k=-3\\).'}
+  ]
+};
+iniciarModulo();
+</script>
+</body>
+</html>

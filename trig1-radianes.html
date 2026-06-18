@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Radianes · Trigonometría · Ruta A · Puente a Bachillerato</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,600;0,700;1,300&family=DM+Sans:wght@300;400;500&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml.min.js"></script>
+<style>
+:root{--sol:#F5A623;--sol-claro:#FDF3E0;--oceano:#1A4A7A;--oceano-medio:#2A6BAD;--verde:#1E7B5E;--verde-claro:#E8F5F0;--arena:#FAF7F2;--blanco:#FFFFFF;--gris:#2C2C2C;--gris-s:#7A7A7A;--rojo:#C0392B;--rojo-claro:#FEF0EF;--naranja:#B7600A;--naranja-claro:#FEF3E2;--lila:#6B3FA0;--lila-claro:#F0EBF8;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'DM Sans',sans-serif;background:var(--arena);color:var(--gris);min-height:100vh;}
+.topbar{background:var(--oceano);padding:12px 24px;display:flex;justify-content:space-between;align-items:center;}
+.topbar-logo{font-family:'Fraunces',serif;font-size:.95rem;font-weight:600;color:var(--blanco);}
+.topbar-logo em{color:var(--sol);font-style:italic;font-weight:300;}
+.topbar-alumna{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:rgba(255,255,255,.6);}
+.progress-wrap{background:rgba(255,255,255,.15);height:5px;}
+.progress-bar{height:5px;background:var(--sol);transition:width .5s ease;}
+.layout{display:grid;grid-template-columns:240px 1fr;min-height:calc(100vh - 57px);}
+@media(max-width:800px){.layout{grid-template-columns:1fr;}}
+.sidebar{background:var(--blanco);border-right:1px solid #EBEBEB;padding:20px 0;position:sticky;top:0;height:calc(100vh - 57px);overflow-y:auto;}
+.sidebar-bloque{font-family:'JetBrains Mono',monospace;font-size:.65rem;letter-spacing:2px;text-transform:uppercase;color:var(--gris-s);padding:0 18px 10px;}
+.sidebar-item{display:flex;align-items:center;gap:10px;padding:10px 18px;cursor:pointer;border-left:3px solid transparent;font-size:.85rem;transition:all .15s;color:var(--gris-s);}
+.sidebar-item:hover{background:#F5F7FA;color:var(--gris);}
+.sidebar-item.activo{background:#EFF3FA;border-left-color:var(--oceano);color:var(--oceano);font-weight:500;}
+.sidebar-item.hecho{color:var(--verde);}
+.sidebar-item.hecho .s-dot{background:var(--verde);}
+.s-dot{width:8px;height:8px;border-radius:50%;background:#D0D0D0;flex-shrink:0;}
+.sidebar-sep{height:1px;background:#F0F0F0;margin:10px 16px;}
+.sidebar-nav-btns{padding:12px 18px;display:flex;flex-direction:column;gap:8px;}
+.btn-nav{width:100%;padding:9px;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:.82rem;font-weight:500;cursor:pointer;border:1.5px solid transparent;transition:all .2s;text-align:center;}
+.btn-nav.anterior{background:var(--blanco);border-color:#D0D0D0;color:var(--gris-s);}
+.btn-nav.anterior:hover{border-color:var(--oceano);color:var(--oceano);}
+.btn-nav.siguiente{background:var(--oceano);color:var(--blanco);}
+.btn-nav.siguiente:hover{background:var(--oceano-medio);}
+.btn-nav.volver{background:transparent;border-color:transparent;color:var(--gris-s);font-size:.78rem;padding:6px;}
+.btn-nav.volver:hover{color:var(--oceano);text-decoration:underline;}
+.main{padding:36px 40px;max-width:820px;}
+@media(max-width:680px){.main{padding:20px 16px;}}
+.modulo-eyebrow{font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:2px;text-transform:uppercase;color:var(--gris-s);margin-bottom:8px;}
+.modulo-titulo{font-family:'Fraunces',serif;font-size:2rem;font-weight:700;color:var(--oceano);line-height:1.2;margin-bottom:6px;}
+.modulo-desc{font-size:.9rem;color:var(--gris-s);line-height:1.6;margin-bottom:32px;}
+.seccion{display:none;}
+.seccion.visible{display:block;}
+.nav-modulos{display:flex;gap:10px;margin-bottom:28px;flex-wrap:wrap;}
+.nm-btn{padding:7px 16px;border-radius:8px;font-size:.82rem;cursor:pointer;border:1.5px solid #E0E0E0;background:var(--blanco);font-family:'DM Sans',sans-serif;color:var(--gris-s);transition:all .15s;}
+.nm-btn:hover{border-color:var(--oceano-medio);color:var(--oceano);}
+.nm-btn.nm-activo{background:var(--oceano);color:var(--blanco);border-color:var(--oceano);}
+.nm-btn.nm-ok{border-color:var(--verde);color:var(--verde);}
+.teoria-intro{background:var(--oceano);border-radius:14px;padding:24px 28px;margin-bottom:24px;color:var(--blanco);}
+.teoria-intro p{font-size:.9rem;line-height:1.7;opacity:.9;}
+.teoria-intro strong{color:var(--sol);}
+.concepto-card{background:var(--blanco);border-radius:14px;padding:28px 30px;box-shadow:0 2px 12px rgba(26,74,122,.07);margin-bottom:20px;}
+.concepto-card h3{font-family:'Fraunces',serif;font-size:1.05rem;font-weight:600;color:var(--oceano);margin-bottom:16px;}
+.concepto-body{font-size:.9rem;line-height:1.85;color:var(--gris);}
+.concepto-body p{margin-bottom:10px;}
+.formula-box{background:#F0F4FA;border-radius:10px;padding:16px 20px;margin:14px 0;text-align:center;border:1px solid #D0DFF0;font-size:1rem;}
+.formula-box.verde{background:var(--verde-claro);border-color:#9FD4C0;}
+.formula-box.naranja{background:var(--naranja-claro);border-color:#E8C07A;}
+.ejemplo-resuelto{background:var(--sol-claro);border-left:4px solid var(--sol);border-radius:0 10px 10px 0;padding:16px 20px;margin:16px 0;font-size:.88rem;}
+.ejemplo-resuelto .ej-titulo{font-weight:600;color:#7A5500;margin-bottom:8px;font-size:.82rem;text-transform:uppercase;letter-spacing:.5px;}
+.ejemplo-resuelto .paso{display:flex;gap:12px;align-items:flex-start;margin-bottom:6px;}
+.ejemplo-resuelto .paso-num{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--sol);font-weight:600;min-width:20px;margin-top:3px;}
+.alerta-card{background:var(--rojo-claro);border-left:4px solid var(--rojo);border-radius:0 10px 10px 0;padding:14px 18px;margin:14px 0;font-size:.86rem;color:var(--gris);}
+.alerta-card .al-titulo{font-weight:600;color:var(--rojo);margin-bottom:4px;}
+.resumen-tabla{width:100%;border-collapse:collapse;margin:16px 0;font-size:.85rem;}
+.resumen-tabla th{background:#EFF3FA;color:var(--oceano);padding:9px 14px;text-align:left;font-weight:600;border-bottom:2px solid #D0DFF0;}
+.resumen-tabla td{padding:9px 14px;border-bottom:1px solid #F0F0F0;}
+.resumen-tabla tr:nth-child(even) td{background:#FAFCFF;}
+.nivel-header{display:flex;align-items:center;gap:14px;margin-bottom:24px;padding:18px 22px;border-radius:12px;}
+.nivel-header.n1{background:#EFF3FA;border-left:4px solid var(--oceano-medio);}
+.nivel-header.n2{background:var(--naranja-claro);border-left:4px solid var(--naranja);}
+.nivel-header.n3{background:var(--lila-claro);border-left:4px solid var(--lila);}
+.nivel-header.ntest{background:var(--verde-claro);border-left:4px solid var(--verde);}
+.nivel-icon{font-size:1.6rem;}
+.nivel-info h3{font-family:'Fraunces',serif;font-size:1rem;font-weight:600;margin-bottom:2px;}
+.nivel-info p{font-size:.8rem;color:var(--gris-s);}
+.n1 .nivel-info h3{color:var(--oceano-medio);}
+.n2 .nivel-info h3{color:var(--naranja);}
+.n3 .nivel-info h3{color:var(--lila);}
+.ntest .nivel-info h3{color:var(--verde);}
+.ejercicio-card{background:var(--blanco);border-radius:12px;padding:24px 26px;box-shadow:0 1px 8px rgba(0,0,0,.05);margin-bottom:14px;border-top:3px solid transparent;}
+.ejercicio-card.n1-color{border-top-color:var(--oceano-medio);}
+.ejercicio-card.n2-color{border-top-color:var(--naranja);}
+.ejercicio-card.n3-color{border-top-color:var(--lila);}
+.ejercicio-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
+.ej-num{font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--gris-s);letter-spacing:1px;}
+.ej-dificultad{font-family:'JetBrains Mono',monospace;font-size:.65rem;padding:2px 9px;border-radius:10px;font-weight:600;}
+.dif-basico{background:#EFF3FA;color:var(--oceano-medio);}
+.dif-medio{background:var(--naranja-claro);color:var(--naranja);}
+.dif-avanzado{background:var(--lila-claro);color:var(--lila);}
+.ej-enunciado{font-size:.93rem;line-height:1.75;margin-bottom:20px;}
+.opciones-ej{display:grid;grid-template-columns:1fr 1fr;gap:9px;}
+@media(max-width:520px){.opciones-ej{grid-template-columns:1fr;}}
+.op-btn{background:var(--arena);border:2px solid #E8E8E8;border-radius:9px;padding:12px 15px;font-size:.88rem;cursor:pointer;transition:all .15s;text-align:left;font-family:'DM Sans',sans-serif;color:var(--gris);display:flex;align-items:center;gap:9px;}
+.op-btn:hover:not(:disabled){border-color:var(--oceano-medio);background:#EFF3FA;}
+.op-letra{font-family:'JetBrains Mono',monospace;font-size:.68rem;font-weight:600;color:var(--gris-s);min-width:16px;}
+.op-btn.ok{border-color:var(--verde);background:var(--verde-claro);}
+.op-btn.ok .op-letra{color:var(--verde);}
+.op-btn.mal{border-color:var(--rojo);background:var(--rojo-claro);}
+.op-btn.mal .op-letra{color:var(--rojo);}
+.fb-ej{font-size:.83rem;line-height:1.65;padding:11px 15px;border-radius:8px;margin-top:10px;display:none;border-left:3px solid transparent;}
+.fb-ej.ok{display:block;background:var(--verde-claro);border-left-color:var(--verde);color:var(--gris);}
+.fb-ej.ok .fb-titulo{color:var(--verde);font-weight:600;margin-bottom:3px;}
+.fb-ej.mal{display:block;background:var(--rojo-claro);border-left-color:var(--rojo);color:var(--gris);}
+.fb-ej.mal .fb-titulo{color:var(--rojo);font-weight:600;margin-bottom:3px;}
+.minitest-barra{background:#F0F0F0;border-radius:6px;height:8px;margin-bottom:20px;overflow:hidden;}
+.minitest-fill{height:8px;background:var(--verde);border-radius:6px;transition:width .4s;}
+.test-pregunta{background:var(--blanco);border-radius:14px;padding:28px 30px;box-shadow:0 2px 14px rgba(26,74,122,.08);margin-bottom:16px;}
+.test-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;}
+.test-num{font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--gris-s);}
+.test-enunciado{font-size:1rem;line-height:1.75;margin-bottom:22px;}
+.btn-siguiente-nivel{background:var(--oceano);color:var(--blanco);border:none;border-radius:10px;padding:13px 32px;font-family:'DM Sans',sans-serif;font-size:.95rem;font-weight:500;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:8px;margin-top:20px;}
+.btn-siguiente-nivel:hover{background:var(--oceano-medio);transform:translateY(-1px);}
+.btn-siguiente-nivel:disabled{background:#A0B8D0;cursor:not-allowed;transform:none;}
+.bloque-accion{text-align:right;padding:20px 0 8px;border-top:1px dashed #D8D8D8;margin-top:24px;}
+.resultado-minitest{text-align:center;padding:40px 24px;background:var(--blanco);border-radius:16px;box-shadow:0 2px 16px rgba(0,0,0,.08);}
+.resultado-minitest .res-nota{font-family:'Fraunces',serif;font-size:4rem;font-weight:700;line-height:1;}
+.resultado-minitest .res-label{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:2px;text-transform:uppercase;color:var(--gris-s);margin-bottom:16px;}
+.resultado-minitest h3{font-family:'Fraunces',serif;font-size:1.4rem;font-weight:600;margin-bottom:8px;}
+.resultado-minitest p{font-size:.9rem;color:var(--gris-s);line-height:1.6;max-width:420px;margin:0 auto 24px;}
+.btn-res{display:inline-block;border-radius:10px;padding:12px 28px;font-family:'DM Sans',sans-serif;font-size:.92rem;font-weight:500;cursor:pointer;border:none;transition:all .2s;margin:4px;}
+.btn-res.ok{background:var(--verde);color:var(--blanco);}
+.btn-res.ok:hover{background:#166B50;}
+.btn-res.repetir{background:var(--naranja-claro);color:var(--naranja);border:2px solid var(--naranja);}
+.btn-res.volver{background:var(--rojo-claro);color:var(--rojo);border:2px solid var(--rojo);}
+.repaso-errores{background:var(--blanco);border-radius:12px;padding:22px 26px;box-shadow:0 1px 8px rgba(0,0,0,.05);margin-top:20px;}
+.repaso-titulo{font-family:'Fraunces',serif;font-size:.95rem;font-weight:600;color:var(--gris);margin-bottom:14px;}
+.error-item{border-left:3px solid var(--rojo-claro);padding:10px 14px;margin-bottom:10px;border-radius:0 8px 8px 0;background:#FDF7F7;font-size:.84rem;line-height:1.6;}
+.error-correcta{color:var(--verde);font-weight:600;}
+</style>
+</head>
+<body>
+<div class="topbar"><div class="topbar-logo">Puente a <em>Bachillerato</em></div><div class="topbar-alumna" id="topbar-alumna">Trigonometría · Radianes</div></div>
+<div class="progress-wrap"><div class="progress-bar" id="progress-bar" style="width:0%"></div></div>
+<div class="layout">
+<aside class="sidebar">
+  <div class="sidebar-bloque">Trigonometría · Parte 1 de 5</div>
+  <div class="sidebar-item activo" id="s-teoria" onclick="irSeccion('teoria')"><span class="s-dot"></span> Teoría</div>
+  <div class="sidebar-item" id="s-n1" onclick="irSeccion('n1')"><span class="s-dot"></span> Nivel 1</div>
+  <div class="sidebar-item" id="s-n2" onclick="irSeccion('n2')"><span class="s-dot"></span> Nivel 2</div>
+  <div class="sidebar-item" id="s-n3" onclick="irSeccion('n3')"><span class="s-dot"></span> Nivel 3</div>
+  <div class="sidebar-item" id="s-test" onclick="irSeccion('test')"><span class="s-dot"></span> Mini-test</div>
+  <div class="sidebar-sep"></div>
+  <div class="sidebar-nav-btns">
+    <button class="btn-nav anterior" onclick="window.location.href='ruta-a-trigonometria.html'">← Ruta A</button>
+    <button class="btn-nav siguiente" onclick="window.location.href='trig2-razones.html'">Parte 2 →</button>
+    <button class="btn-nav volver" onclick="window.location.href='ruta-a-trigonometria.html'">📋 Volver a Trigonometría</button>
+  </div>
+</aside>
+<main class="main" id="main-area"></main>
+</div>
+<script>
+// ══════════════════════════════════════════════════════════
+//  MOTOR DE MÓDULOS — Ruta A · Puente a Bachillerato
+//  Lee el objeto global MODULO_CONFIG y construye toda la
+//  interfaz: cabecera, navegación, teoría, niveles y mini-test.
+// ══════════════════════════════════════════════════════════
+
+let alumna = {};
+try { alumna = JSON.parse(sessionStorage.getItem('alumna') || '{}'); } catch(e){}
+const APPS_SCRIPT_URL_MOD = 'https://script.google.com/macros/s/AKfycbx63xvLtRnJYFQBr7AelcusmRLFzlCN6CyqPQWtjtdZ-IVuDr6RX2v850qTnZPr19LpVA/exec';
+function enviarResultadoModulo(modulo, correctas, superado) {
+  if (!APPS_SCRIPT_URL_MOD || APPS_SCRIPT_URL_MOD.includes('TU_')) return;
+  try {
+    const params = new URLSearchParams({
+      tipo: 'modulo_rutaA',
+      modulo: modulo,
+      nombre: alumna.nombre || '',
+      apellidos: alumna.apellidos || '',
+      grupo: alumna.grupo || '',
+      itinerario: alumna.itinerario || '',
+      correctas: correctas,
+      total: 5,
+      superado: superado ? '1' : '0',
+      fecha: new Date().toISOString()
+    });
+    new Image().src = APPS_SCRIPT_URL_MOD + '?' + params.toString();
+  } catch(e) {}
+}
+
+
+const estadoNiveles = {
+  n1: { respondidas: new Set(), correctas: new Set() },
+  n2: { respondidas: new Set(), correctas: new Set() },
+  n3: { respondidas: new Set(), correctas: new Set() }
+};
+let testPreguntas = [];
+let testActual = 0;
+let testRespuestas = [];
+const SECCIONES = ['teoria','n1','n2','n3','test'];
+
+function iniciarModulo() {
+  const C = MODULO_CONFIG;
+
+  if (alumna.nombre) {
+    document.getElementById('topbar-alumna').textContent = `${alumna.nombre} · ${C.titulo}`;
+  }
+
+  const main = document.getElementById('main-area');
+  main.innerHTML = `
+    <div class="modulo-eyebrow">${C.eyebrow}</div>
+    <div class="modulo-titulo">${C.titulo}</div>
+    <div class="modulo-desc">${C.desc}</div>
+
+    <div class="nav-modulos">
+      <button class="nm-btn nm-activo" onclick="irSeccion('teoria')">📖 Teoría</button>
+      <button class="nm-btn" onclick="irSeccion('n1')">🔵 Nivel 1</button>
+      <button class="nm-btn" onclick="irSeccion('n2')">🟠 Nivel 2</button>
+      <button class="nm-btn" onclick="irSeccion('n3')">🟣 Nivel 3</button>
+      <button class="nm-btn" onclick="irSeccion('test')">✅ Mini-test</button>
+    </div>
+
+    <div class="seccion visible" id="sec-teoria">
+      ${C.teoria}
+      <div class="bloque-accion">
+        <button class="btn-siguiente-nivel" onclick="irSeccion('n1')">Ir a los ejercicios →</button>
+      </div>
+    </div>
+
+    <div class="seccion" id="sec-n1">
+      <div class="nivel-header n1"><div class="nivel-icon">🔵</div><div class="nivel-info"><h3>Nivel 1 — Básico</h3><p>Aplicación directa de definiciones y conversiones.</p></div></div>
+      <div id="ejercicios-n1"></div>
+      <div class="bloque-accion"><button class="btn-siguiente-nivel" id="btn-a-n2" onclick="irSeccion('n2')" disabled>Nivel 2 →</button></div>
+    </div>
+
+    <div class="seccion" id="sec-n2">
+      <div class="nivel-header n2"><div class="nivel-icon">🟠</div><div class="nivel-info"><h3>Nivel 2 — Intermedio</h3><p>Combinación de varias técnicas.</p></div></div>
+      <div id="ejercicios-n2"></div>
+      <div class="bloque-accion"><button class="btn-siguiente-nivel" id="btn-a-n3" onclick="irSeccion('n3')" disabled>Nivel 3 →</button></div>
+    </div>
+
+    <div class="seccion" id="sec-n3">
+      <div class="nivel-header n3"><div class="nivel-icon">🟣</div><div class="nivel-info"><h3>Nivel 3 — Avanzado</h3><p>Resolución de triángulos y ecuaciones trigonométricas.</p></div></div>
+      <div id="ejercicios-n3"></div>
+      <div class="bloque-accion"><button class="btn-siguiente-nivel" id="btn-a-test" onclick="iniciarMinitest()" disabled>Hacer el mini-test →</button></div>
+    </div>
+
+    <div class="seccion" id="sec-test">
+      <div class="nivel-header ntest"><div class="nivel-icon">✅</div><div class="nivel-info"><h3>Mini-test de superación</h3><p>5 preguntas aleatorias. Necesitas 4/5 para superar el módulo.</p></div></div>
+      <div class="minitest-barra"><div class="minitest-fill" id="mt-barra" style="width:0%"></div></div>
+      <div id="minitest-contenido"></div>
+    </div>
+  `;
+
+  renderNivel('n1');
+  renderNivel('n2');
+  renderNivel('n3');
+  MathJax && MathJax.typesetPromise();
+}
+
+// ══════════════════════════════════════════
+// NAVEGACIÓN
+// ══════════════════════════════════════════
+function irSeccion(id) {
+  if (id === 'test' && testPreguntas.length === 0) { iniciarMinitest(); return; }
+  SECCIONES.forEach(s => {
+    const sec = document.getElementById(`sec-${s}`);
+    if (sec) sec.classList.toggle('visible', s === id);
+    const si = document.getElementById(`s-${s}`);
+    if (si) si.classList.toggle('activo', s === id);
+  });
+  document.querySelectorAll('.nm-btn').forEach((btn,i) => btn.classList.toggle('nm-activo', SECCIONES[i] === id));
+  window.scrollTo(0,0);
+  MathJax && MathJax.typesetPromise();
+}
+
+// ══════════════════════════════════════════
+// EJERCICIOS POR NIVEL
+// ══════════════════════════════════════════
+function renderNivel(nivel) {
+  const cont = document.getElementById(`ejercicios-${nivel}`);
+  const letras = ['A','B','C','D'];
+  const banco = MODULO_CONFIG.banco[nivel];
+
+  cont.innerHTML = banco.map((ej, i) => {
+    const dif = nivel === 'n1' ? 'Básico' : (nivel === 'n2' ? 'Intermedio' : 'Avanzado');
+    const difCls = nivel === 'n1' ? 'dif-basico' : (nivel === 'n2' ? 'dif-medio' : 'dif-avanzado');
+    return `<div class="ejercicio-card ${nivel}-color" id="ej-${nivel}-${i}">
+      <div class="ejercicio-meta">
+        <span class="ej-num">Ejercicio ${i+1}</span>
+        <span class="ej-dificultad ${difCls}">${dif}</span>
+      </div>
+      <div class="ej-enunciado">${ej.enunciado}</div>
+      <div class="opciones-ej">
+        ${ej.opciones.map((op,oi) => `<button class="op-btn" onclick="responderEj('${nivel}',${i},${oi})"><span class="op-letra">${letras[oi]}</span><span>${op}</span></button>`).join('')}
+      </div>
+      <div class="fb-ej" id="fb-${nivel}-${i}"></div>
+    </div>`;
+  }).join('');
+}
+
+function responderEj(nivel, idx, opIdx) {
+  if (estadoNiveles[nivel].respondidas.has(idx)) return;
+  estadoNiveles[nivel].respondidas.add(idx);
+
+  const ej = MODULO_CONFIG.banco[nivel][idx];
+  const ok = opIdx === ej.correcta;
+  if (ok) estadoNiveles[nivel].correctas.add(idx);
+
+  document.getElementById(`ej-${nivel}-${idx}`).querySelectorAll('.op-btn').forEach((btn, oi) => {
+    btn.disabled = true;
+    if (oi === ej.correcta) btn.classList.add('ok');
+    else if (oi === opIdx && !ok) btn.classList.add('mal');
+  });
+
+  const fb = document.getElementById(`fb-${nivel}-${idx}`);
+  fb.className = `fb-ej ${ok ? 'ok' : 'mal'}`;
+  fb.innerHTML = `<div class="fb-titulo">${ok ? '✓ Correcto' : '✗ No es correcto'}</div>${ej.feedback}`;
+
+  if (estadoNiveles[nivel].respondidas.size === MODULO_CONFIG.banco[nivel].length) {
+    const si = document.getElementById(`s-${nivel}`);
+    if (si) si.classList.add('hecho');
+    const btns = { n1:'btn-a-n2', n2:'btn-a-n3', n3:'btn-a-test' };
+    const b = document.getElementById(btns[nivel]);
+    if (b) b.disabled = false;
+  }
+
+  actualizarProgreso();
+  MathJax && MathJax.typesetPromise();
+}
+
+// ══════════════════════════════════════════
+// MINI-TEST
+// ══════════════════════════════════════════
+function iniciarMinitest() {
+  testPreguntas = [...MODULO_CONFIG.bancoTest].sort(() => Math.random() - 0.5).slice(0,5);
+  testActual = 0;
+  testRespuestas = new Array(5).fill(null);
+  irSeccion('test');
+  mostrarPreguntaTest(0);
+}
+
+function mostrarPreguntaTest(idx) {
+  const p = testPreguntas[idx];
+  const letras = ['A','B','C','D'];
+  document.getElementById('mt-barra').style.width = ((idx/5)*100) + '%';
+  document.getElementById('minitest-contenido').innerHTML = `
+    <div class="test-pregunta">
+      <div class="test-meta"><span class="test-num">Pregunta ${idx+1} de 5</span></div>
+      <div class="test-enunciado">${p.enunciado}</div>
+      <div class="opciones-ej" id="ops-test">
+        ${p.opciones.map((op,oi) => `<button class="op-btn" onclick="responderTest(${oi})"><span class="op-letra">${letras[oi]}</span><span>${op}</span></button>`).join('')}
+      </div>
+    </div>
+    <div style="text-align:right;margin-top:8px;">
+      <button class="btn-siguiente-nivel" id="btn-test-sig" style="display:none" onclick="siguienteTest()">${idx<4 ? 'Siguiente →' : 'Ver resultado →'}</button>
+    </div>`;
+  MathJax && MathJax.typesetPromise();
+}
+
+function responderTest(opIdx) {
+  testRespuestas[testActual] = opIdx;
+  document.querySelectorAll('#ops-test .op-btn').forEach((btn,i) => {
+    btn.disabled = true;
+    if (i === opIdx) { btn.style.borderColor = 'var(--oceano-medio)'; btn.style.background = '#EFF3FA'; }
+  });
+  document.getElementById('btn-test-sig').style.display = 'inline-flex';
+}
+
+function siguienteTest() {
+  testActual++;
+  if (testActual < 5) mostrarPreguntaTest(testActual);
+  else mostrarResultadoTest();
+}
+
+function mostrarResultadoTest() {
+  document.getElementById('mt-barra').style.width = '100%';
+  const correctas = testRespuestas.filter((r,i) => r === testPreguntas[i].correcta).length;
+  const superado = correctas >= 4;
+  enviarResultadoModulo(MODULO_CONFIG.clave, correctas, superado);
+  const color = superado ? 'var(--verde)' : (correctas >= 3 ? 'var(--naranja)' : 'var(--rojo)');
+  const titulo = superado ? '¡Módulo superado!' : (correctas >= 3 ? 'Por poco…' : 'Hay que repasar');
+  const C = MODULO_CONFIG;
+  const texto = superado
+    ? `Dominas ${C.titulo.toLowerCase()}. Avanza al siguiente módulo de Ruta A.`
+    : (correctas >= 3 ? 'Estás cerca. Repasa los errores y vuelve a intentarlo.' : 'Repasa la teoría y los ejercicios antes de repetir el test.');
+
+  if (superado) {
+    const m = JSON.parse(sessionStorage.getItem('modulos_rutaA') || '[]');
+    if (!m.includes(C.clave)) m.push(C.clave);
+    sessionStorage.setItem('modulos_rutaA', JSON.stringify(m));
+    const si = document.getElementById('s-test');
+    if (si) si.classList.add('hecho');
+  }
+
+  const errores = testPreguntas.map((p,i) => ({...p, elegida: testRespuestas[i]})).filter(p => p.elegida !== p.correcta);
+  const letras = ['A','B','C','D'];
+
+  document.getElementById('minitest-contenido').innerHTML = `
+    <div class="resultado-minitest">
+      <div class="res-nota" style="color:${color}">${correctas}/5</div>
+      <div class="res-label">respuestas correctas</div>
+      <h3>${titulo}</h3>
+      <p>${texto}</p>
+      ${superado
+        ? `<button class="btn-res ok" onclick="window.location.href='${C.siguiente}'">${C.siguiente.includes('test-final') ? 'Ir al test final →' : 'Siguiente módulo →'}</button>
+           <button class="btn-res repetir" onclick="iniciarMinitest()">↻ Repetir test</button>`
+        : `<button class="btn-res volver" onclick="irSeccion('teoria')">← Repasar teoría</button>
+           <button class="btn-res repetir" onclick="iniciarMinitest()">↻ Intentar de nuevo</button>`
+      }
+    </div>
+    ${errores.length > 0 ? `<div class="repaso-errores"><div class="repaso-titulo">Repaso de errores</div>${errores.map(p => `
+      <div class="error-item">
+        <div>${p.enunciado}</div>
+        <div>Tu respuesta: ${p.elegida !== null ? letras[p.elegida]+') '+p.opciones[p.elegida] : '—'}</div>
+        <div class="error-correcta">✓ Correcta: ${letras[p.correcta]}) ${p.opciones[p.correcta]}</div>
+        <div style="color:var(--gris-s);font-size:.82rem;margin-top:4px;">${p.feedback}</div>
+      </div>`).join('')}</div>` : ''}`;
+
+  actualizarProgreso();
+  MathJax && MathJax.typesetPromise();
+}
+
+// ══════════════════════════════════════════
+// PROGRESO
+// ══════════════════════════════════════════
+function actualizarProgreso() {
+  const C = MODULO_CONFIG;
+  const total = C.banco.n1.length + C.banco.n2.length + C.banco.n3.length;
+  const resp = estadoNiveles.n1.respondidas.size + estadoNiveles.n2.respondidas.size + estadoNiveles.n3.respondidas.size;
+  document.getElementById('progress-bar').style.width = Math.round((resp/(total+5))*100) + '%';
+}
+</script>
+<script>
+MODULO_CONFIG = {
+  num: 1, total: 5, clave: 'trig-radianes', titulo: 'Radianes: definición y conversión',
+  eyebrow: 'Ruta A · Trigonometría · Parte 1 de 5',
+  desc: 'Antes de trabajar con razones trigonométricas, ecuaciones o la circunferencia goniométrica, necesitas moverte con total soltura entre grados y radianes. Es la base de todo lo que viene después.',
+  anterior: 'ruta-a-trigonometria.html', siguiente: 'trig2-razones.html',
+  teoria: `
+  <div class="teoria-intro"><p>Hasta ahora has medido los ángulos en <strong>grados</strong> (\\(°\\)), donde una vuelta completa son \\(360°\\). En Bachillerato y en el resto de tu vida matemática, vas a usar mucho los <strong>radianes</strong> — son la unidad "natural" para medir ángulos, especialmente en trigonometría, derivadas e integrales.</p></div>
+
+  <div class="concepto-card"><h3>📐 1. ¿Qué es un radián?</h3><div class="concepto-body">
+  <p>Un <strong>radián</strong> es el ángulo central de una circunferencia cuyo arco tiene la misma longitud que el radio.</p>
+  <div class="formula-box">\\(\\theta \\text{ (en radianes)} = \\dfrac{\\text{longitud del arco } s}{\\text{radio } r}\\)</div>
+  <p>Si recorremos toda la circunferencia (longitud \\(2\\pi r\\)), el ángulo correspondiente es:</p>
+  <div class="formula-box verde">\\(\\theta = \\dfrac{2\\pi r}{r} = 2\\pi \\text{ rad} = 360°\\)</div>
+  <p>De aquí sale la equivalencia más importante de todo el tema:</p>
+  <div class="formula-box verde" style="font-size:1.15rem;">\\(180° = \\pi \\text{ rad}\\)</div>
+  <div class="ejemplo-resuelto"><div class="ej-titulo">Ejemplo resuelto 1 — Radián a partir de un arco</div>
+  <div class="paso"><span class="paso-num">①</span><span>Un arco de \\(8\\) cm corresponde a una circunferencia de radio \\(4\\) cm. ¿Cuál es el ángulo en radianes?</span></div>
+  <div class="paso"><span class="paso-num">②</span><span>\\(\\theta = \\dfrac{s}{r} = \\dfrac{8}{4} = 2\\) rad</span></div>
+  </div>
+  </div></div>
+
+  <div class="concepto-card"><h3>📐 2. Conversión entre grados y radianes</h3><div class="concepto-body">
+  <p>Partiendo de \\(180° = \\pi\\) rad, obtenemos un factor de conversión en cada sentido:</p>
+  <div class="formula-box">
+  Grados \\(\\rightarrow\\) Radianes: \\(\\quad \\text{rad} = \\text{grados} \\cdot \\dfrac{\\pi}{180}\\)<br><br>
+  Radianes \\(\\rightarrow\\) Grados: \\(\\quad \\text{grados} = \\text{rad} \\cdot \\dfrac{180}{\\pi}\\)
+  </div>
+  <div class="alerta-card"><div class="al-titulo">⚠️ Truco para no liarte</div>
+  Si el resultado debe ser en <strong>grados</strong> (un número "normal", sin \\(\\pi\\)), multiplica por \\(\\dfrac{180}{\\pi}\\) — el \\(\\pi\\) se cancela. Si el resultado debe llevar \\(\\pi\\) (radianes), multiplica por \\(\\dfrac{\\pi}{180}\\) y simplifica la fracción.</div>
+  <div class="ejemplo-resuelto"><div class="ej-titulo">Ejemplo resuelto 2 — Grados a radianes</div>
+  <div class="paso"><span class="paso-num">①</span><span>Convierte \\(150°\\) a radianes</span></div>
+  <div class="paso"><span class="paso-num">②</span><span>\\(150 \\cdot \\dfrac{\\pi}{180} = \\dfrac{150\\pi}{180}\\)</span></div>
+  <div class="paso"><span class="paso-num">③</span><span>Simplifica la fracción \\(\\dfrac{150}{180}\\) dividiendo por \\(30\\): \\(\\dfrac{5}{6}\\)</span></div>
+  <div class="paso"><span class="paso-num">④</span><span>Resultado: \\(\\dfrac{5\\pi}{6}\\) rad</span></div>
+  </div>
+  <div class="ejemplo-resuelto"><div class="ej-titulo">Ejemplo resuelto 3 — Radianes a grados</div>
+  <div class="paso"><span class="paso-num">①</span><span>Convierte \\(\\dfrac{3\\pi}{4}\\) rad a grados</span></div>
+  <div class="paso"><span class="paso-num">②</span><span>\\(\\dfrac{3\\pi}{4} \\cdot \\dfrac{180}{\\pi} = \\dfrac{3\\cdot180}{4}\\)</span></div>
+  <div class="paso"><span class="paso-num">③</span><span>\\(\\dfrac{540}{4}=135°\\)</span></div>
+  </div>
+  <div class="ejemplo-resuelto"><div class="ej-titulo">Ejemplo resuelto 4 — Ángulo "no notable"</div>
+  <div class="paso"><span class="paso-num">①</span><span>Convierte \\(100°\\) a radianes</span></div>
+  <div class="paso"><span class="paso-num">②</span><span>\\(100\\cdot\\dfrac{\\pi}{180}=\\dfrac{100\\pi}{180}\\)</span></div>
+  <div class="paso"><span class="paso-num">③</span><span>Simplifica dividiendo por \\(20\\): \\(\\dfrac{5\\pi}{9}\\)</span></div>
+  </div>
+  </div></div>
+
+  <div class="concepto-card"><h3>📐 3. Tabla de ángulos notables</h3><div class="concepto-body">
+  <p>Estos valores aparecen constantemente — merece la pena memorizarlos bien. Fíjate en el patrón: todos tienen \\(\\pi\\) dividido entre el mismo número que su "familia".</p>
+  <table class="resumen-tabla">
+  <tr><th>Grados</th><th>\\(0°\\)</th><th>\\(30°\\)</th><th>\\(45°\\)</th><th>\\(60°\\)</th><th>\\(90°\\)</th><th>\\(180°\\)</th><th>\\(270°\\)</th><th>\\(360°\\)</th></tr>
+  <tr><td>Radianes</td><td>\\(0\\)</td><td>\\(\\dfrac{\\pi}{6}\\)</td><td>\\(\\dfrac{\\pi}{4}\\)</td><td>\\(\\dfrac{\\pi}{3}\\)</td><td>\\(\\dfrac{\\pi}{2}\\)</td><td>\\(\\pi\\)</td><td>\\(\\dfrac{3\\pi}{2}\\)</td><td>\\(2\\pi\\)</td></tr>
+  </table>
+  <p>Y los ángulos del segundo, tercer y cuarto cuadrante (que usaremos mucho en la Parte 4):</p>
+  <table class="resumen-tabla">
+  <tr><th>Grados</th><th>\\(120°\\)</th><th>\\(135°\\)</th><th>\\(150°\\)</th><th>\\(210°\\)</th><th>\\(225°\\)</th><th>\\(240°\\)</th><th>\\(300°\\)</th><th>\\(315°\\)</th><th>\\(330°\\)</th></tr>
+  <tr><td>Radianes</td><td>\\(\\dfrac{2\\pi}{3}\\)</td><td>\\(\\dfrac{3\\pi}{4}\\)</td><td>\\(\\dfrac{5\\pi}{6}\\)</td><td>\\(\\dfrac{7\\pi}{6}\\)</td><td>\\(\\dfrac{5\\pi}{4}\\)</td><td>\\(\\dfrac{4\\pi}{3}\\)</td><td>\\(\\dfrac{5\\pi}{3}\\)</td><td>\\(\\dfrac{7\\pi}{4}\\)</td><td>\\(\\dfrac{11\\pi}{6}\\)</td></tr>
+  </table>
+  <div class="alerta-card"><div class="al-titulo">⚠️ Un radián "a ojo"</div>
+  Un radián no es un número redondo en grados: \\(1 \\text{ rad} = \\dfrac{180}{\\pi} \\approx 57.3°\\). Por eso casi siempre trabajamos con radianes <strong>como múltiplos de \\(\\pi\\)</strong> (fracciones), no como números decimales.</div>
+  </div></div>`,
+
+  banco: {
+    n1:[
+      {enunciado:'Convierte \\(60°\\) a radianes',opciones:['\\(\\dfrac{\\pi}{3}\\)','\\(\\dfrac{\\pi}{6}\\)','\\(\\dfrac{\\pi}{2}\\)','\\(\\dfrac{2\\pi}{3}\\)'],correcta:0,feedback:'\\(60\\cdot\\dfrac{\\pi}{180}=\\dfrac{60\\pi}{180}=\\dfrac{\\pi}{3}\\) (dividiendo por \\(60\\)).'},
+      {enunciado:'Convierte \\(45°\\) a radianes',opciones:['\\(\\dfrac{\\pi}{4}\\)','\\(\\dfrac{\\pi}{3}\\)','\\(\\dfrac{\\pi}{2}\\)','\\(\\dfrac{3\\pi}{4}\\)'],correcta:0,feedback:'\\(45\\cdot\\dfrac{\\pi}{180}=\\dfrac{45\\pi}{180}=\\dfrac{\\pi}{4}\\) (dividiendo por \\(45\\)).'},
+      {enunciado:'Convierte \\(90°\\) a radianes',opciones:['\\(\\dfrac{\\pi}{2}\\)','\\(\\pi\\)','\\(\\dfrac{\\pi}{4}\\)','\\(\\dfrac{3\\pi}{2}\\)'],correcta:0,feedback:'\\(90\\cdot\\dfrac{\\pi}{180}=\\dfrac{90\\pi}{180}=\\dfrac{\\pi}{2}\\) (dividiendo por \\(90\\)).'},
+      {enunciado:'Convierte \\(\\pi\\) rad a grados',opciones:['\\(180°\\)','\\(90°\\)','\\(360°\\)','\\(270°\\)'],correcta:0,feedback:'\\(\\pi\\cdot\\dfrac{180}{\\pi}=180°\\). El \\(\\pi\\) se cancela.'},
+      {enunciado:'Convierte \\(\\dfrac{\\pi}{6}\\) rad a grados',opciones:['\\(30°\\)','\\(45°\\)','\\(60°\\)','\\(15°\\)'],correcta:0,feedback:'\\(\\dfrac{\\pi}{6}\\cdot\\dfrac{180}{\\pi}=\\dfrac{180}{6}=30°\\).'},
+      {enunciado:'Convierte \\(\\dfrac{\\pi}{3}\\) rad a grados',opciones:['\\(60°\\)','\\(30°\\)','\\(90°\\)','\\(120°\\)'],correcta:0,feedback:'\\(\\dfrac{\\pi}{3}\\cdot\\dfrac{180}{\\pi}=\\dfrac{180}{3}=60°\\).'},
+      {enunciado:'Convierte \\(180°\\) a radianes',opciones:['\\(\\pi\\)','\\(\\dfrac{\\pi}{2}\\)','\\(2\\pi\\)','\\(\\dfrac{3\\pi}{2}\\)'],correcta:0,feedback:'\\(180°=\\pi\\) rad es la equivalencia fundamental — no hace falta ni calcular.'},
+      {enunciado:'Convierte \\(\\dfrac{\\pi}{2}\\) rad a grados',opciones:['\\(90°\\)','\\(180°\\)','\\(45°\\)','\\(60°\\)'],correcta:0,feedback:'\\(\\dfrac{\\pi}{2}\\cdot\\dfrac{180}{\\pi}=\\dfrac{180}{2}=90°\\).'},
+      {enunciado:'Convierte \\(360°\\) a radianes',opciones:['\\(2\\pi\\)','\\(\\pi\\)','\\(\\dfrac{\\pi}{2}\\)','\\(4\\pi\\)'],correcta:0,feedback:'Una vuelta completa: \\(360°=2\\pi\\) rad.'},
+      {enunciado:'Convierte \\(30°\\) a radianes',opciones:['\\(\\dfrac{\\pi}{6}\\)','\\(\\dfrac{\\pi}{3}\\)','\\(\\dfrac{\\pi}{12}\\)','\\(\\dfrac{\\pi}{2}\\)'],correcta:0,feedback:'\\(30\\cdot\\dfrac{\\pi}{180}=\\dfrac{30\\pi}{180}=\\dfrac{\\pi}{6}\\) (dividiendo por \\(30\\)).'}
+    ],
+    n2:[
+      {enunciado:'Convierte \\(120°\\) a radianes',opciones:['\\(\\dfrac{2\\pi}{3}\\)','\\(\\dfrac{\\pi}{3}\\)','\\(\\dfrac{3\\pi}{2}\\)','\\(\\dfrac{4\\pi}{3}\\)'],correcta:0,feedback:'\\(120\\cdot\\dfrac{\\pi}{180}=\\dfrac{120\\pi}{180}=\\dfrac{2\\pi}{3}\\) (dividiendo por \\(60\\)).'},
+      {enunciado:'Convierte \\(\\dfrac{3\\pi}{4}\\) rad a grados',opciones:['\\(135°\\)','\\(120°\\)','\\(150°\\)','\\(90°\\)'],correcta:0,feedback:'\\(\\dfrac{3\\pi}{4}\\cdot\\dfrac{180}{\\pi}=\\dfrac{3\\cdot180}{4}=135°\\).'},
+      {enunciado:'Convierte \\(210°\\) a radianes',opciones:['\\(\\dfrac{7\\pi}{6}\\)','\\(\\dfrac{5\\pi}{6}\\)','\\(\\dfrac{7\\pi}{4}\\)','\\(\\dfrac{4\\pi}{3}\\)'],correcta:0,feedback:'\\(210\\cdot\\dfrac{\\pi}{180}=\\dfrac{210\\pi}{180}=\\dfrac{7\\pi}{6}\\) (dividiendo por \\(30\\)).'},
+      {enunciado:'Convierte \\(\\dfrac{5\\pi}{3}\\) rad a grados',opciones:['\\(300°\\)','\\(240°\\)','\\(315°\\)','\\(330°\\)'],correcta:0,feedback:'\\(\\dfrac{5\\pi}{3}\\cdot\\dfrac{180}{\\pi}=\\dfrac{5\\cdot180}{3}=300°\\).'},
+      {enunciado:'Convierte \\(240°\\) a radianes',opciones:['\\(\\dfrac{4\\pi}{3}\\)','\\(\\dfrac{2\\pi}{3}\\)','\\(\\dfrac{5\\pi}{3}\\)','\\(\\dfrac{7\\pi}{6}\\)'],correcta:0,feedback:'\\(240\\cdot\\dfrac{\\pi}{180}=\\dfrac{240\\pi}{180}=\\dfrac{4\\pi}{3}\\) (dividiendo por \\(60\\)).'},
+      {enunciado:'Convierte \\(\\dfrac{11\\pi}{6}\\) rad a grados',opciones:['\\(330°\\)','\\(300°\\)','\\(315°\\)','\\(345°\\)'],correcta:0,feedback:'\\(\\dfrac{11\\pi}{6}\\cdot\\dfrac{180}{\\pi}=\\dfrac{11\\cdot180}{6}=11\\cdot30=330°\\).'},
+      {enunciado:'Convierte \\(315°\\) a radianes',opciones:['\\(\\dfrac{7\\pi}{4}\\)','\\(\\dfrac{5\\pi}{4}\\)','\\(\\dfrac{3\\pi}{4}\\)','\\(\\dfrac{7\\pi}{6}\\)'],correcta:0,feedback:'\\(315\\cdot\\dfrac{\\pi}{180}=\\dfrac{315\\pi}{180}=\\dfrac{7\\pi}{4}\\) (dividiendo por \\(45\\)).'},
+      {enunciado:'Convierte \\(\\dfrac{5\\pi}{4}\\) rad a grados',opciones:['\\(225°\\)','\\(200°\\)','\\(250°\\)','\\(135°\\)'],correcta:0,feedback:'\\(\\dfrac{5\\pi}{4}\\cdot\\dfrac{180}{\\pi}=\\dfrac{5\\cdot180}{4}=225°\\).'}
+    ],
+    n3:[
+      {enunciado:'Convierte \\(100°\\) a radianes',opciones:['\\(\\dfrac{5\\pi}{9}\\)','\\(\\dfrac{5\\pi}{18}\\)','\\(\\dfrac{10\\pi}{9}\\)','\\(\\dfrac{9\\pi}{5}\\)'],correcta:0,feedback:'\\(100\\cdot\\dfrac{\\pi}{180}=\\dfrac{100\\pi}{180}\\). Simplificando dividiendo por \\(20\\): \\(\\dfrac{5\\pi}{9}\\).'},
+      {enunciado:'Convierte \\(\\dfrac{7\\pi}{5}\\) rad a grados',opciones:['\\(252°\\)','\\(245°\\)','\\(220°\\)','\\(260°\\)'],correcta:0,feedback:'\\(\\dfrac{7\\pi}{5}\\cdot\\dfrac{180}{\\pi}=\\dfrac{7\\cdot180}{5}=7\\cdot36=252°\\).'},
+      {enunciado:'Convierte \\(75°\\) a radianes',opciones:['\\(\\dfrac{5\\pi}{12}\\)','\\(\\dfrac{5\\pi}{9}\\)','\\(\\dfrac{4\\pi}{9}\\)','\\(\\dfrac{7\\pi}{12}\\)'],correcta:0,feedback:'\\(75\\cdot\\dfrac{\\pi}{180}=\\dfrac{75\\pi}{180}\\). Simplificando dividiendo por \\(15\\): \\(\\dfrac{5\\pi}{12}\\).'},
+      {enunciado:'Un arco de \\(8\\) cm corresponde a una circunferencia de radio \\(4\\) cm. ¿Cuál es el ángulo en radianes?',opciones:['\\(2\\) rad','\\(0.5\\) rad','\\(32\\) rad','\\(4\\) rad'],correcta:0,feedback:'\\(\\theta=\\dfrac{s}{r}=\\dfrac{8}{4}=2\\) rad.'},
+      {enunciado:'¿A cuántos grados equivale aproximadamente \\(1\\) radián?',opciones:['\\(\\approx57.3°\\)','\\(\\approx100°\\)','\\(\\approx45°\\)','\\(\\approx180°\\)'],correcta:0,feedback:'\\(1 \\text{ rad}=\\dfrac{180}{\\pi}°\\approx57.3°\\). Por eso casi siempre trabajamos en radianes como fracciones de \\(\\pi\\), no en decimales.'},
+      {enunciado:'Convierte \\(\\dfrac{4\\pi}{9}\\) rad a grados',opciones:['\\(80°\\)','\\(72°\\)','\\(90°\\)','\\(100°\\)'],correcta:0,feedback:'\\(\\dfrac{4\\pi}{9}\\cdot\\dfrac{180}{\\pi}=\\dfrac{4\\cdot180}{9}=4\\cdot20=80°\\).'}
+    ]
+  },
+
+  bancoTest:[
+    {enunciado:'Convierte \\(60°\\) a radianes',opciones:['\\(\\dfrac{\\pi}{3}\\)','\\(\\dfrac{\\pi}{6}\\)','\\(\\dfrac{2\\pi}{3}\\)','\\(\\dfrac{\\pi}{2}\\)'],correcta:0,feedback:'\\(60\\cdot\\dfrac{\\pi}{180}=\\dfrac{\\pi}{3}\\).'},
+    {enunciado:'Convierte \\(\\dfrac{\\pi}{2}\\) rad a grados',opciones:['\\(90°\\)','\\(180°\\)','\\(45°\\)','\\(60°\\)'],correcta:0,feedback:'\\(\\dfrac{\\pi}{2}\\cdot\\dfrac{180}{\\pi}=90°\\).'},
+    {enunciado:'Convierte \\(150°\\) a radianes',opciones:['\\(\\dfrac{5\\pi}{6}\\)','\\(\\dfrac{5\\pi}{3}\\)','\\(\\dfrac{3\\pi}{5}\\)','\\(\\dfrac{6\\pi}{5}\\)'],correcta:0,feedback:'\\(150\\cdot\\dfrac{\\pi}{180}=\\dfrac{150\\pi}{180}=\\dfrac{5\\pi}{6}\\) (dividiendo por \\(30\\)).'},
+    {enunciado:'Convierte \\(\\dfrac{7\\pi}{6}\\) rad a grados',opciones:['\\(210°\\)','\\(200°\\)','\\(180°\\)','\\(220°\\)'],correcta:0,feedback:'\\(\\dfrac{7\\pi}{6}\\cdot\\dfrac{180}{\\pi}=\\dfrac{7\\cdot180}{6}=7\\cdot30=210°\\).'},
+    {enunciado:'Convierte \\(45°\\) a radianes',opciones:['\\(\\dfrac{\\pi}{4}\\)','\\(\\dfrac{\\pi}{2}\\)','\\(\\dfrac{3\\pi}{4}\\)','\\(\\dfrac{\\pi}{8}\\)'],correcta:0,feedback:'\\(45\\cdot\\dfrac{\\pi}{180}=\\dfrac{\\pi}{4}\\).'},
+    {enunciado:'Convierte \\(\\dfrac{3\\pi}{2}\\) rad a grados',opciones:['\\(270°\\)','\\(180°\\)','\\(360°\\)','\\(90°\\)'],correcta:0,feedback:'\\(\\dfrac{3\\pi}{2}\\cdot\\dfrac{180}{\\pi}=\\dfrac{3\\cdot180}{2}=270°\\).'},
+    {enunciado:'Convierte \\(120°\\) a radianes',opciones:['\\(\\dfrac{2\\pi}{3}\\)','\\(\\dfrac{3\\pi}{2}\\)','\\(\\dfrac{\\pi}{3}\\)','\\(\\dfrac{4\\pi}{3}\\)'],correcta:0,feedback:'\\(120\\cdot\\dfrac{\\pi}{180}=\\dfrac{2\\pi}{3}\\) (dividiendo por \\(60\\)).'},
+    {enunciado:'Convierte \\(\\dfrac{5\\pi}{4}\\) rad a grados',opciones:['\\(225°\\)','\\(200°\\)','\\(250°\\)','\\(135°\\)'],correcta:0,feedback:'\\(\\dfrac{5\\pi}{4}\\cdot\\dfrac{180}{\\pi}=225°\\).'},
+    {enunciado:'Convierte \\(90°\\) a radianes',opciones:['\\(\\dfrac{\\pi}{2}\\)','\\(\\pi\\)','\\(\\dfrac{\\pi}{4}\\)','\\(2\\pi\\)'],correcta:0,feedback:'\\(90°=\\dfrac{180°}{2}\\), así que en radianes es \\(\\dfrac{\\pi}{2}\\).'},
+    {enunciado:'Convierte \\(\\dfrac{5\\pi}{3}\\) rad a grados',opciones:['\\(300°\\)','\\(240°\\)','\\(280°\\)','\\(320°\\)'],correcta:0,feedback:'\\(\\dfrac{5\\pi}{3}\\cdot\\dfrac{180}{\\pi}=\\dfrac{5\\cdot180}{3}=300°\\).'},
+    {enunciado:'Convierte \\(50°\\) a radianes',opciones:['\\(\\dfrac{5\\pi}{18}\\)','\\(\\dfrac{5\\pi}{9}\\)','\\(\\dfrac{18\\pi}{5}\\)','\\(\\dfrac{\\pi}{50}\\)'],correcta:0,feedback:'\\(50\\cdot\\dfrac{\\pi}{180}=\\dfrac{50\\pi}{180}\\). Simplificando dividiendo por \\(10\\): \\(\\dfrac{5\\pi}{18}\\).'},
+    {enunciado:'Convierte \\(\\dfrac{11\\pi}{6}\\) rad a grados',opciones:['\\(330°\\)','\\(300°\\)','\\(345°\\)','\\(315°\\)'],correcta:0,feedback:'\\(\\dfrac{11\\pi}{6}\\cdot\\dfrac{180}{\\pi}=11\\cdot30=330°\\).'}
+  ]
+};
+iniciarModulo();
+</script>
+</body>
+</html>

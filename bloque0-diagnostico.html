@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diagnóstico · Bloque 0 Álgebra · Puente a Bachillerato</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,600;0,700;1,300&family=DM+Sans:wght@300;400;500&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml.min.js"></script>
+<style>
+  :root {
+    --sol: #F5A623;
+    --oceano: #1A4A7A;
+    --oceano-medio: #2A6BAD;
+    --verde: #1E7B5E;
+    --arena: #FAF7F2;
+    --gris-texto: #2C2C2C;
+    --gris-suave: #7A7A7A;
+    --blanco: #FFFFFF;
+    --rojo: #C0392B;
+    --verde-ok: #1E7B5E;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--arena);
+    color: var(--gris-texto);
+    min-height: 100vh;
+  }
+
+  /* ── TOPBAR ── */
+  .topbar {
+    background: var(--oceano);
+    padding: 14px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .topbar-logo {
+    font-family: 'Fraunces', serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--blanco);
+  }
+
+  .topbar-logo em { color: var(--sol); font-style: italic; font-weight: 300; }
+
+  .topbar-info {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.6);
+    text-align: right;
+  }
+
+  /* ── BARRA DE PROGRESO ── */
+  .progress-wrap {
+    background: rgba(255,255,255,0.15);
+    height: 4px;
+  }
+
+  .progress-bar {
+    height: 4px;
+    background: var(--sol);
+    transition: width 0.4s ease;
+    width: 0%;
+  }
+
+  /* ── INTRO ── */
+  #pantalla-intro {
+    max-width: 640px;
+    margin: 60px auto;
+    padding: 0 24px;
+    text-align: center;
+  }
+
+  .bloque-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    background: #E8F5F0;
+    color: var(--verde);
+    padding: 5px 14px;
+    border-radius: 20px;
+    display: inline-block;
+    margin-bottom: 20px;
+    font-weight: 600;
+  }
+
+  #pantalla-intro h1 {
+    font-family: 'Fraunces', serif;
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--oceano);
+    margin-bottom: 14px;
+    line-height: 1.2;
+  }
+
+  #pantalla-intro h1 em {
+    font-style: italic;
+    font-weight: 300;
+    color: var(--verde);
+  }
+
+  #pantalla-intro p {
+    font-size: 0.95rem;
+    color: var(--gris-suave);
+    line-height: 1.7;
+    margin-bottom: 12px;
+  }
+
+  .info-chips {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 28px 0;
+  }
+
+  .chip {
+    background: var(--blanco);
+    border: 1.5px solid #E0E0E0;
+    border-radius: 8px;
+    padding: 10px 18px;
+    font-size: 0.85rem;
+    color: var(--gris-texto);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .chip strong { color: var(--oceano); }
+
+  .btn-primary {
+    background: var(--verde);
+    color: var(--blanco);
+    border: none;
+    border-radius: 10px;
+    padding: 14px 40px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+    margin-top: 8px;
+  }
+
+  .btn-primary:hover { background: #166B50; transform: translateY(-1px); }
+
+  /* ── ÁREA DE PREGUNTA ── */
+  #pantalla-test { display: none; }
+
+  .test-wrap {
+    max-width: 680px;
+    margin: 40px auto;
+    padding: 0 24px;
+  }
+
+  .pregunta-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+  }
+
+  .pregunta-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--gris-suave);
+    letter-spacing: 1px;
+  }
+
+  .tema-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    background: #EFF3FA;
+    color: var(--oceano-medio);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-weight: 600;
+  }
+
+  .pregunta-card {
+    background: var(--blanco);
+    border-radius: 16px;
+    padding: 36px 36px 28px;
+    box-shadow: 0 2px 16px rgba(26,74,122,0.08);
+    margin-bottom: 16px;
+  }
+
+  .pregunta-enunciado {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: var(--gris-texto);
+    margin-bottom: 32px;
+  }
+
+  .opciones {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  @media(max-width: 540px) {
+    .opciones { grid-template-columns: 1fr; }
+  }
+
+  .opcion {
+    background: var(--arena);
+    border: 2px solid #E8E8E8;
+    border-radius: 10px;
+    padding: 14px 18px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: border-color 0.15s, background 0.15s, transform 0.1s;
+    text-align: left;
+    font-family: 'DM Sans', sans-serif;
+    color: var(--gris-texto);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .opcion:hover:not(:disabled) {
+    border-color: var(--oceano-medio);
+    background: #EFF3FA;
+    transform: translateY(-1px);
+  }
+
+  .opcion-letra {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--gris-suave);
+    min-width: 20px;
+  }
+
+  .opcion.correcta {
+    border-color: var(--verde-ok);
+    background: #E8F5F0;
+  }
+
+  .opcion.incorrecta {
+    border-color: var(--rojo);
+    background: #FEF0EF;
+  }
+
+  .opcion.correcta .opcion-letra { color: var(--verde-ok); }
+  .opcion.incorrecta .opcion-letra { color: var(--rojo); }
+
+  .feedback {
+    background: var(--blanco);
+    border-radius: 12px;
+    padding: 16px 20px;
+    font-size: 0.88rem;
+    line-height: 1.6;
+    margin-bottom: 16px;
+    display: none;
+    border-left: 3px solid transparent;
+  }
+
+  .feedback.correcto {
+    display: block;
+    border-left-color: var(--verde-ok);
+    color: var(--verde-ok);
+  }
+
+  .feedback.incorrecto {
+    display: block;
+    border-left-color: var(--rojo);
+    color: var(--gris-texto);
+  }
+
+  .feedback .feedback-titulo {
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  .btn-siguiente {
+    display: none;
+    background: var(--oceano);
+    color: var(--blanco);
+    border: none;
+    border-radius: 10px;
+    padding: 12px 28px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+    float: right;
+  }
+
+  .btn-siguiente:hover { background: var(--oceano-medio); }
+  .clearfix::after { content:''; display:table; clear:both; }
+
+  /* ── RESULTADOS ── */
+  #pantalla-resultados { display: none; }
+
+  .resultados-wrap {
+    max-width: 680px;
+    margin: 50px auto;
+    padding: 0 24px;
+  }
+
+  .resultados-header {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .resultados-header h2 {
+    font-family: 'Fraunces', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--oceano);
+    margin-bottom: 8px;
+  }
+
+  .resultados-header p {
+    font-size: 0.9rem;
+    color: var(--gris-suave);
+  }
+
+  .score-circle {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: var(--oceano);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 32px;
+    box-shadow: 0 4px 24px rgba(26,74,122,0.2);
+  }
+
+  .score-num {
+    font-family: 'Fraunces', serif;
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--sol);
+    line-height: 1;
+  }
+
+  .score-label {
+    font-size: 0.7rem;
+    color: rgba(255,255,255,0.7);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .temas-resultado {
+    display: grid;
+    gap: 12px;
+    margin-bottom: 32px;
+  }
+
+  .tema-row {
+    background: var(--blanco);
+    border-radius: 10px;
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    box-shadow: 0 1px 8px rgba(0,0,0,0.05);
+  }
+
+  .tema-nombre {
+    flex: 1;
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+
+  .tema-estado {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 4px 12px;
+    border-radius: 20px;
+    letter-spacing: 0.5px;
+  }
+
+  .estado-ok { background: #E8F5F0; color: var(--verde-ok); }
+  .estado-refuerzo { background: #FEF3E2; color: #B7600A; }
+  .estado-urgente { background: #FEF0EF; color: var(--rojo); }
+
+  .acciones-resultados {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 8px;
+  }
+
+  @media(max-width: 480px) { .acciones-resultados { grid-template-columns: 1fr; } }
+
+  .btn-accion {
+    border-radius: 10px;
+    padding: 14px 20px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all 0.2s;
+    text-align: center;
+  }
+
+  .btn-accion.primario {
+    background: var(--verde);
+    color: var(--blanco);
+  }
+
+  .btn-accion.primario:hover { background: #166B50; }
+
+  .btn-accion.secundario {
+    background: var(--blanco);
+    color: var(--oceano);
+    border-color: var(--oceano);
+  }
+
+  .btn-accion.secundario:hover { background: #EFF3FA; }
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="topbar-logo">Puente a <em>Bachillerato</em></div>
+  <div class="topbar-info" id="topbar-alumna">Bloque 0 · Álgebra</div>
+</div>
+<div class="progress-wrap">
+  <div class="progress-bar" id="progress-bar"></div>
+</div>
+
+<!-- ── PANTALLA INTRO ── -->
+<div id="pantalla-intro">
+  <div class="bloque-badge">Bloque 0 · Álgebra común</div>
+  <h1>Diagnóstico<br><em>inicial</em></h1>
+  <p>Antes de empezar a estudiar, vamos a ver qué dominas y qué necesitas reforzar. Son <strong>12 preguntas</strong> de opción múltiple, dos por cada tema del bloque.</p>
+  <p>No te preocupes si no sabes alguna — es exactamente para eso el diagnóstico.</p>
+  <div class="info-chips">
+    <div class="chip">⏱ <strong>~10 min</strong> aprox.</div>
+    <div class="chip">❓ <strong>12</strong> preguntas</div>
+    <div class="chip">📚 <strong>6</strong> temas</div>
+    <div class="chip">✅ Autocorrección</div>
+  </div>
+  <button class="btn-primary" onclick="iniciarTest()">Empezar el diagnóstico →</button>
+</div>
+
+<!-- ── PANTALLA TEST ── -->
+<div id="pantalla-test">
+  <div class="test-wrap">
+    <div class="pregunta-meta">
+      <span class="pregunta-num" id="pregunta-num">Pregunta 1 / 12</span>
+      <span class="tema-badge" id="tema-badge">Potencias</span>
+    </div>
+    <div class="pregunta-card">
+      <div class="pregunta-enunciado" id="enunciado"></div>
+      <div class="opciones" id="opciones"></div>
+    </div>
+    <div class="feedback" id="feedback">
+      <div class="feedback-titulo" id="feedback-titulo"></div>
+      <div id="feedback-texto"></div>
+    </div>
+    <div class="clearfix">
+      <button class="btn-siguiente" id="btn-siguiente" onclick="siguiente()">Siguiente →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── PANTALLA RESULTADOS ── -->
+<div id="pantalla-resultados">
+  <div class="resultados-wrap">
+    <div class="resultados-header">
+      <div class="score-circle">
+        <div class="score-num" id="score-num">0</div>
+        <div class="score-label">de 12</div>
+      </div>
+      <h2 id="resultado-titulo">Diagnóstico completado</h2>
+      <p id="resultado-subtitulo"></p>
+    </div>
+    <div class="temas-resultado" id="temas-resultado"></div>
+    <div class="acciones-resultados" id="acciones-resultados"></div>
+  </div>
+</div>
+
+<!-- HIDDEN MATHJAX DIVS -->
+<div style="display:none">
+  <span id="mj_q0a">$$2^3 \cdot 2^{-1}$$</span>
+  <span id="mj_q0b">$$2^4$$</span>
+  <span id="mj_q0c">$$2^2$$</span>
+  <span id="mj_q0d">$$2^{-3}$$</span>
+  <span id="mj_q0e">$$2^3$$</span>
+
+  <span id="mj_q1a">$$\sqrt{50}$$</span>
+  <span id="mj_q1b">$$25\sqrt{2}$$</span>
+  <span id="mj_q1c">$$5\sqrt{2}$$</span>
+  <span id="mj_q1d">$$10\sqrt{5}$$</span>
+  <span id="mj_q1e">$$5\sqrt{10}$$</span>
+
+  <span id="mj_q2a">$$x^2 - 9$$</span>
+  <span id="mj_q2b">$$(x-3)(x+3)$$</span>
+  <span id="mj_q2c">$$(x-3)^2$$</span>
+  <span id="mj_q2d">$$(x+9)(x-1)$$</span>
+  <span id="mj_q2e">$$x(x-9)$$</span>
+
+  <span id="mj_q3a">$$2x^3 - 4x^2 + 6x$$</span>
+  <span id="mj_q3b">$$2x(x^2 - 2x + 3)$$</span>
+  <span id="mj_q3c">$$2(x^3 - 2x^2 + 3)$$</span>
+  <span id="mj_q3d">$$x(2x^2 - 4x + 6)$$</span>
+  <span id="mj_q3e">$$2x^2(x - 2 + 3)$$</span>
+
+  <span id="mj_q4a">$$2x^2 - 3x + 1 = 0$$</span>
+  <span id="mj_q4b">$$x = 1 \text{ y } x = \tfrac{1}{2}$$</span>
+  <span id="mj_q4c">$$x = -1 \text{ y } x = -\tfrac{1}{2}$$</span>
+  <span id="mj_q4d">$$x = 1 \text{ y } x = -\tfrac{1}{2}$$</span>
+  <span id="mj_q4e">$$x = 3 \text{ y } x = \tfrac{1}{3}$$</span>
+
+  <span id="mj_q5a">$$x^2 - 5x + 6 = 0$$</span>
+  <span id="mj_q5b">$$x=2 \text{ y } x=3$$</span>
+  <span id="mj_q5c">$$x=-2 \text{ y } x=-3$$</span>
+  <span id="mj_q5d">$$x=1 \text{ y } x=6$$</span>
+  <span id="mj_q5e">$$x=5 \text{ y } x=1$$</span>
+
+  <span id="mj_q6a">sistema_lineal</span>
+  <span id="mj_q6b">$$x=2,\; y=1$$</span>
+  <span id="mj_q6c">$$x=1,\; y=2$$</span>
+  <span id="mj_q6d">$$x=3,\; y=0$$</span>
+  <span id="mj_q6e">$$x=0,\; y=3$$</span>
+
+  <span id="mj_q7a">sistema_sustitución</span>
+  <span id="mj_q7b">$$x=4,\; y=-1$$</span>
+  <span id="mj_q7c">$$x=-4,\; y=1$$</span>
+  <span id="mj_q7d">$$x=2,\; y=0$$</span>
+  <span id="mj_q7e">$$x=3,\; y=-2$$</span>
+
+  <span id="mj_q8a">$$2x - 1 > 5$$</span>
+  <span id="mj_q8b">$$x > 3$$</span>
+  <span id="mj_q8c">$$x > 2$$</span>
+  <span id="mj_q8d">$$x > 6$$</span>
+  <span id="mj_q8e">$$x \geq 3$$</span>
+
+  <span id="mj_q9a">$$x^2 - 4 \leq 0$$</span>
+  <span id="mj_q9b">$$-2 \leq x \leq 2$$</span>
+  <span id="mj_q9c">$$x \leq 2$$</span>
+  <span id="mj_q9d">$$x \geq -2$$</span>
+  <span id="mj_q9e">$$x \leq -2 \text{ o } x \geq 2$$</span>
+
+  <span id="mj_q10a">frac_suma</span>
+  <span id="mj_q10b">$$\dfrac{2x+1}{x(x+1)}$$</span>
+  <span id="mj_q10c">$$\dfrac{3x+1}{x(x+1)}$$</span>
+  <span id="mj_q10d">$$\dfrac{1}{x(x+1)}$$</span>
+  <span id="mj_q10e">$$\dfrac{2}{x^2+x}$$</span>
+
+  <span id="mj_q11a">frac_simplif</span>
+  <span id="mj_q11b">$$\dfrac{x+2}{x+3}$$</span>
+  <span id="mj_q11c">$$\dfrac{x-2}{x-3}$$</span>
+  <span id="mj_q11d">$$\dfrac{x+2}{x-3}$$</span>
+  <span id="mj_q11e">$$\dfrac{x-2}{x+3}$$</span>
+</div>
+
+<script>
+// ── DATOS ALUMNA
+let alumna = {};
+try {
+  alumna = JSON.parse(sessionStorage.getItem('alumna') || '{}');
+} catch(e) {}
+
+// Mostrar nombre en topbar
+if (alumna.nombre) {
+  document.getElementById('topbar-alumna').textContent =
+    `${alumna.nombre} · Bloque 0 · Álgebra`;
+}
+
+// ── BANCO DE PREGUNTAS (12 preguntas, 6 temas × 2)
+const PREGUNTAS = [
+  // 0. POTENCIAS
+  {
+    tema: 'Potencias y radicales',
+    temaKey: 'potencias',
+    enunciado: 'Calcula: \\(2^3 \\cdot 2^{-1}\\)',
+    opciones: ['\\(2^4\\)', '\\(2^2\\)', '\\(2^{-3}\\)', '\\(2^3\\)'],
+    correcta: 1,
+    feedback: 'Al multiplicar potencias de la misma base se suman los exponentes: \\(2^3 \\cdot 2^{-1} = 2^{3+(-1)} = 2^2 = 4\\).'
+  },
+  {
+    tema: 'Potencias y radicales',
+    temaKey: 'potencias',
+    enunciado: 'Simplifica: \\(\\sqrt{50}\\)',
+    opciones: ['\\(25\\sqrt{2}\\)', '\\(5\\sqrt{2}\\)', '\\(10\\sqrt{5}\\)', '\\(5\\sqrt{10}\\)'],
+    correcta: 1,
+    feedback: '\\(\\sqrt{50} = \\sqrt{25 \\cdot 2} = 5\\sqrt{2}\\). Se saca el factor perfecto de debajo de la raíz.'
+  },
+  // 2. POLINOMIOS
+  {
+    tema: 'Polinomios y factorización',
+    temaKey: 'polinomios',
+    enunciado: 'Factoriza: \\(x^2 - 9\\)',
+    opciones: ['\\((x-3)^2\\)', '\\((x+9)(x-1)\\)', '\\(x(x-9)\\)', '\\((x-3)(x+3)\\)'],
+    correcta: 3,
+    feedback: '\\(x^2 - 9\\) es una diferencia de cuadrados: \\(a^2 - b^2 = (a-b)(a+b)\\), por lo tanto \\((x-3)(x+3)\\).'
+  },
+  {
+    tema: 'Polinomios y factorización',
+    temaKey: 'polinomios',
+    enunciado: 'Factoriza sacando factor común: \\(2x^3 - 4x^2 + 6x\\)',
+    opciones: ['\\(2(x^3 - 2x^2 + 3)\\)', '\\(x(2x^2 - 4x + 6)\\)', '\\(2x^2(x - 2 + 3)\\)', '\\(2x(x^2 - 2x + 3)\\)'],
+    correcta: 3,
+    feedback: 'El factor común de \\(2x^3, -4x^2, 6x\\) es \\(2x\\). Dividiendo: \\(2x(x^2 - 2x + 3)\\).'
+  },
+  // 4. ECUACIONES
+  {
+    tema: 'Ecuaciones 1º y 2º grado',
+    temaKey: 'ecuaciones',
+    enunciado: 'Resuelve: \\(2x^2 - 3x + 1 = 0\\)',
+    opciones: ['\\(x = -1\\) y \\(x = -\\tfrac{1}{2}\\)', '\\(x = 1\\) y \\(x = -\\tfrac{1}{2}\\)', '\\(x = 3\\) y \\(x = \\tfrac{1}{3}\\)', '\\(x = 1\\) y \\(x = \\tfrac{1}{2}\\)'],
+    correcta: 3,
+    feedback: 'Con la fórmula general: \\(x = \\dfrac{3 \\pm \\sqrt{9 - 8}}{4} = \\dfrac{3 \\pm 1}{4}\\), por tanto \\(x=1\\) y \\(x=\\tfrac{1}{2}\\).'
+  },
+  {
+    tema: 'Ecuaciones 1º y 2º grado',
+    temaKey: 'ecuaciones',
+    enunciado: 'Resuelve: \\(x^2 - 5x + 6 = 0\\)',
+    opciones: ['\\(x=-2\\) y \\(x=-3\\)', '\\(x=1\\) y \\(x=6\\)', '\\(x=5\\) y \\(x=1\\)', '\\(x=2\\) y \\(x=3\\)'],
+    correcta: 3,
+    feedback: 'Buscamos dos números cuyo producto sea 6 y suma sea 5: son 2 y 3. Por tanto \\((x-2)(x-3)=0 \\Rightarrow x=2, x=3\\).'
+  },
+  // 6. SISTEMAS
+  {
+    tema: 'Sistemas de ecuaciones',
+    temaKey: 'sistemas',
+    enunciado: 'Resuelve el sistema:\\[\\begin{cases}x + y = 3\\\\x - y = 1\\end{cases}\\]',
+    opciones: ['\\(x=1,\\; y=2\\)', '\\(x=3,\\; y=0\\)', '\\(x=0,\\; y=3\\)', '\\(x=2,\\; y=1\\)'],
+    correcta: 3,
+    feedback: 'Sumando las dos ecuaciones: \\(2x=4 \\Rightarrow x=2\\). Sustituyendo: \\(y=1\\).'
+  },
+  {
+    tema: 'Sistemas de ecuaciones',
+    temaKey: 'sistemas',
+    enunciado: 'Resuelve por sustitución:\\[\\begin{cases}y = x - 5\\\\2x + y = 7\\end{cases}\\]',
+    opciones: ['\\(x=-4,\\; y=1\\)', '\\(x=2,\\; y=0\\)', '\\(x=3,\\; y=-2\\)', '\\(x=4,\\; y=-1\\)'],
+    correcta: 3,
+    feedback: 'Sustituyendo \\(y = x-5\\) en la segunda: \\(2x + x - 5 = 7 \\Rightarrow 3x = 12 \\Rightarrow x=4,\\; y=-1\\).'
+  },
+  // 8. INECUACIONES
+  {
+    tema: 'Inecuaciones',
+    temaKey: 'inecuaciones',
+    enunciado: 'Resuelve: \\(2x - 1 > 5\\)',
+    opciones: ['\\(x > 2\\)', '\\(x > 6\\)', '\\(x \\geq 3\\)', '\\(x > 3\\)'],
+    correcta: 3,
+    feedback: '\\(2x > 6 \\Rightarrow x > 3\\). La desigualdad es estricta porque el símbolo es \\(>\\).'
+  },
+  {
+    tema: 'Inecuaciones',
+    temaKey: 'inecuaciones',
+    enunciado: 'Resuelve: \\(x^2 - 4 \\leq 0\\)',
+    opciones: ['\\(x \\leq 2\\)', '\\(x \\geq -2\\)', '\\(x \\leq -2\\) o \\(x \\geq 2\\)', '\\(-2 \\leq x \\leq 2\\)'],
+    correcta: 3,
+    feedback: '\\(x^2 \\leq 4 \\Rightarrow |x| \\leq 2\\), es decir, \\(-2 \\leq x \\leq 2\\). La parábola queda por debajo del eje entre las raíces.'
+  },
+  // 10. FRACCIONES ALGEBRAICAS
+  {
+    tema: 'Fracciones algebraicas',
+    temaKey: 'fracciones',
+    enunciado: 'Suma: \\(\\dfrac{1}{x} + \\dfrac{1}{x+1}\\)',
+    opciones: ['\\(\\dfrac{3x+1}{x(x+1)}\\)', '\\(\\dfrac{1}{x(x+1)}\\)', '\\(\\dfrac{2}{x^2+x}\\)', '\\(\\dfrac{2x+1}{x(x+1)}\\)'],
+    correcta: 3,
+    feedback: 'MCM = \\(x(x+1)\\). Entonces: \\(\\dfrac{x+1 + x}{x(x+1)} = \\dfrac{2x+1}{x(x+1)}\\).'
+  },
+  {
+    tema: 'Fracciones algebraicas',
+    temaKey: 'fracciones',
+    enunciado: 'Simplifica: \\(\\dfrac{x^2-4}{x^2-x-6}\\)',
+    opciones: ['\\(\\dfrac{x-2}{x-3}\\)', '\\(\\dfrac{x+2}{x-3}\\)', '\\(\\dfrac{x-2}{x+3}\\)', '\\(\\dfrac{x+2}{x+3}\\)'],
+    correcta: 1,
+    feedback: 'Numerador: \\((x-2)(x+2)\\). Denominador: \\((x-3)(x+2)\\). Se simplifica \\((x+2)\\), quedando \\(\\dfrac{x-2}{x-3}\\).'
+  }
+];
+
+// ── ESTADO
+let preguntaActual = 0;
+let respuestaDada = false;
+const puntajes = {}; // temaKey → {correctas, total}
+const resultados = []; // {correcta: bool, temaKey}
+
+PREGUNTAS.forEach(p => {
+  if (!puntajes[p.temaKey]) puntajes[p.temaKey] = {correctas: 0, total: 0, nombre: p.tema};
+});
+
+// ── FUNCIONES
+function iniciarTest() {
+  document.getElementById('pantalla-intro').style.display = 'none';
+  document.getElementById('pantalla-test').style.display = 'block';
+  mostrarPregunta(0);
+}
+
+function mostrarPregunta(idx) {
+  respuestaDada = false;
+  const p = PREGUNTAS[idx];
+  const total = PREGUNTAS.length;
+
+  // progreso
+  document.getElementById('progress-bar').style.width = ((idx / total) * 100) + '%';
+  document.getElementById('pregunta-num').textContent = `Pregunta ${idx+1} / ${total}`;
+  document.getElementById('tema-badge').textContent = p.tema;
+
+  // enunciado
+  document.getElementById('enunciado').innerHTML = p.enunciado;
+
+  // opciones
+  const letras = ['A', 'B', 'C', 'D'];
+  const opcionesEl = document.getElementById('opciones');
+  opcionesEl.innerHTML = '';
+  p.opciones.forEach((op, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'opcion';
+    btn.innerHTML = `<span class="opcion-letra">${letras[i]}</span><span>${op}</span>`;
+    btn.onclick = () => responder(i);
+    opcionesEl.appendChild(btn);
+  });
+
+  // limpiar feedback
+  const fb = document.getElementById('feedback');
+  fb.className = 'feedback';
+  fb.style.display = 'none';
+  document.getElementById('btn-siguiente').style.display = 'none';
+
+  // re-renderizar MathJax
+  if (window.MathJax) MathJax.typesetPromise();
+}
+
+function responder(idx) {
+  if (respuestaDada) return;
+  respuestaDada = true;
+
+  const p = PREGUNTAS[preguntaActual];
+  const botones = document.querySelectorAll('.opcion');
+  const esCorrecto = (idx === p.correcta);
+
+  // estilos
+  botones.forEach((btn, i) => {
+    btn.disabled = true;
+    if (i === p.correcta) btn.classList.add('correcta');
+    else if (i === idx && !esCorrecto) btn.classList.add('incorrecta');
+  });
+
+  // puntaje
+  puntajes[p.temaKey].total++;
+  if (esCorrecto) puntajes[p.temaKey].correctas++;
+  resultados.push({ correcta: esCorrecto, temaKey: p.temaKey });
+
+  // feedback
+  const fb = document.getElementById('feedback');
+  fb.style.display = 'block';
+  if (esCorrecto) {
+    fb.className = 'feedback correcto';
+    document.getElementById('feedback-titulo').textContent = '✓ Correcto';
+    document.getElementById('feedback-texto').innerHTML = p.feedback;
+  } else {
+    fb.className = 'feedback incorrecto';
+    document.getElementById('feedback-titulo').textContent = '✗ No es correcto';
+    document.getElementById('feedback-texto').innerHTML = p.feedback;
+  }
+
+  document.getElementById('btn-siguiente').style.display = 'block';
+  if (window.MathJax) MathJax.typesetPromise();
+}
+
+function siguiente() {
+  preguntaActual++;
+  if (preguntaActual < PREGUNTAS.length) {
+    mostrarPregunta(preguntaActual);
+  } else {
+    mostrarResultados();
+  }
+}
+
+function mostrarResultados() {
+  document.getElementById('pantalla-test').style.display = 'none';
+  document.getElementById('pantalla-resultados').style.display = 'block';
+  document.getElementById('progress-bar').style.width = '100%';
+
+  const totalCorrectas = resultados.filter(r => r.correcta).length;
+  document.getElementById('score-num').textContent = totalCorrectas;
+
+  // título
+  let titulo, subtitulo;
+  if (totalCorrectas >= 10) {
+    titulo = '¡Excelente base!';
+    subtitulo = 'Tienes una base de álgebra muy sólida. Puedes avanzar directamente a los módulos de tu ruta.';
+  } else if (totalCorrectas >= 6) {
+    titulo = 'Buena base con huecos';
+    subtitulo = 'Tienes buenos conocimientos pero hay temas que conviene repasar antes de seguir.';
+  } else {
+    titulo = 'Necesitas refuerzo';
+    subtitulo = 'No te preocupes — para eso está el portal. Trabaja los módulos indicados y lo recuperarás.';
+  }
+  document.getElementById('resultado-titulo').textContent = titulo;
+  document.getElementById('resultado-subtitulo').textContent = subtitulo;
+
+  // temas
+  const temasEl = document.getElementById('temas-resultado');
+  temasEl.innerHTML = '';
+
+  const TEMAS_ORDEN = ['potencias','polinomios','ecuaciones','sistemas','inecuaciones','fracciones'];
+  TEMAS_ORDEN.forEach(key => {
+    const d = puntajes[key];
+    if (!d) return;
+    const pct = d.total > 0 ? d.correctas / d.total : 0;
+    let estado, estadoClass;
+    if (pct >= 1)        { estado = 'Dominado ✓';    estadoClass = 'estado-ok'; }
+    else if (pct >= 0.5) { estado = 'Refuerzo ligero'; estadoClass = 'estado-refuerzo'; }
+    else                 { estado = 'Necesita trabajo'; estadoClass = 'estado-urgente'; }
+
+    temasEl.innerHTML += `
+      <div class="tema-row">
+        <div class="tema-nombre">${d.nombre}</div>
+        <div style="font-family:JetBrains Mono,monospace;font-size:0.75rem;color:var(--gris-suave);">${d.correctas}/${d.total}</div>
+        <span class="tema-estado ${estadoClass}">${estado}</span>
+      </div>`;
+  });
+
+  // botones acción
+  const accionesEl = document.getElementById('acciones-resultados');
+  accionesEl.innerHTML = `
+    <button class="btn-accion primario" onclick="window.location.href='bloque0-modulos.html'">
+      Ir a los módulos de repaso →
+    </button>
+    <button class="btn-accion secundario" onclick="window.location.href='index.html'">
+      ← Volver al inicio
+    </button>`;
+
+  // guardar resultados en sessionStorage
+  sessionStorage.setItem('diagnostico_b0', JSON.stringify({
+    score: totalCorrectas,
+    puntajes,
+    alumna
+  }));
+
+  // enviar al servidor
+  enviarResultados(totalCorrectas);
+
+  if (window.MathJax) MathJax.typesetPromise();
+}
+
+// ── ENVÍO Apps Script (GET via Image)
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx63xvLtRnJYFQBr7AelcusmRLFzlCN6CyqPQWtjtdZ-IVuDr6RX2v850qTnZPr19LpVA/exec';
+
+function enviarResultados(score) {
+  if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL.includes('TU_')) return;
+  try {
+    const params = new URLSearchParams({
+      tipo: 'diagnostico_b0',
+      nombre: alumna.nombre || '',
+      apellidos: alumna.apellidos || '',
+      grupo: alumna.grupo || '',
+      itinerario: alumna.itinerario || '',
+      score: score,
+      total: PREGUNTAS.length,
+      puntajes: JSON.stringify(puntajes),
+      fecha: new Date().toISOString()
+    });
+    new Image().src = APPS_SCRIPT_URL + '?' + params.toString();
+  } catch(e) { console.log('Error envío:', e); }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Módulos · Bloque 0 · Puente a Bachillerato</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,600;0,700;1,300&family=DM+Sans:wght@300;400;500&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --sol:#F5A623; --sol-claro:#FDF3E0;
+  --oceano:#1A4A7A; --oceano-medio:#2A6BAD;
+  --verde:#1E7B5E; --verde-claro:#E8F5F0;
+  --arena:#FAF7F2; --blanco:#FFFFFF;
+  --gris:#2C2C2C; --gris-s:#7A7A7A;
+  --rojo:#C0392B; --rojo-claro:#FEF0EF;
+  --naranja:#B7600A; --naranja-claro:#FEF3E2;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'DM Sans',sans-serif;background:var(--arena);color:var(--gris);min-height:100vh;}
+
+.topbar{background:var(--oceano);padding:12px 24px;display:flex;justify-content:space-between;align-items:center;}
+.topbar-logo{font-family:'Fraunces',serif;font-size:.95rem;font-weight:600;color:var(--blanco);}
+.topbar-logo em{color:var(--sol);font-style:italic;font-weight:300;}
+.topbar-info{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:rgba(255,255,255,.6);}
+.progress-wrap{background:rgba(255,255,255,.15);height:5px;}
+.progress-bar{height:5px;background:var(--sol);transition:width .5s ease;}
+
+.contenedor{max-width:900px;margin:0 auto;padding:40px 24px 60px;}
+
+.cabecera{text-align:center;margin-bottom:36px;}
+.cabecera .badge{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;background:#E8F5F0;color:var(--verde);padding:5px 14px;border-radius:20px;display:inline-block;margin-bottom:16px;font-weight:600;}
+.cabecera h1{font-family:'Fraunces',serif;font-size:2.2rem;font-weight:700;color:var(--oceano);margin-bottom:10px;line-height:1.2;}
+.cabecera h1 em{font-style:italic;font-weight:300;color:var(--verde);}
+.cabecera p{font-size:.92rem;color:var(--gris-s);max-width:560px;margin:0 auto;line-height:1.7;}
+
+.resumen-progreso{background:var(--blanco);border-radius:14px;padding:22px 28px;box-shadow:0 2px 12px rgba(26,74,122,.07);margin-bottom:32px;display:flex;align-items:center;gap:24px;flex-wrap:wrap;}
+.resumen-num{font-family:'Fraunces',serif;font-size:2.4rem;font-weight:700;color:var(--oceano);line-height:1;}
+.resumen-texto{flex:1;}
+.resumen-texto h3{font-family:'Fraunces',serif;font-size:1rem;font-weight:600;color:var(--gris);margin-bottom:4px;}
+.resumen-texto p{font-size:.85rem;color:var(--gris-s);}
+.resumen-barra-wrap{flex:2;min-width:200px;}
+.resumen-barra{background:#F0F0F0;border-radius:8px;height:10px;overflow:hidden;margin-bottom:6px;}
+.resumen-barra-fill{height:10px;background:var(--verde);border-radius:8px;transition:width .6s ease;}
+.resumen-barra-label{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--gris-s);text-align:right;}
+
+.modulos-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+@media(max-width:680px){.modulos-grid{grid-template-columns:1fr;}}
+
+.modulo-card{background:var(--blanco);border-radius:14px;padding:24px 26px;box-shadow:0 2px 12px rgba(0,0,0,.06);text-decoration:none;color:inherit;display:block;transition:transform .15s, box-shadow .15s;border-top:4px solid #E0E0E0;position:relative;}
+.modulo-card:hover{transform:translateY(-2px);box-shadow:0 4px 20px rgba(26,74,122,.12);}
+
+.modulo-card.dominado{border-top-color:var(--verde);}
+.modulo-card.pendiente{border-top-color:var(--naranja);}
+.modulo-card.urgente{border-top-color:var(--rojo);}
+.modulo-card.superado{border-top-color:var(--verde);background:linear-gradient(135deg, var(--blanco) 0%, #F4FBF8 100%);}
+
+.modulo-num{font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:2px;text-transform:uppercase;color:var(--gris-s);margin-bottom:8px;}
+.modulo-nombre{font-family:'Fraunces',serif;font-size:1.15rem;font-weight:600;color:var(--oceano);margin-bottom:10px;line-height:1.3;}
+
+.modulo-estado{display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:.7rem;font-weight:600;padding:4px 12px;border-radius:20px;letter-spacing:.5px;}
+.estado-dominado{background:var(--verde-claro);color:var(--verde);}
+.estado-pendiente{background:var(--naranja-claro);color:var(--naranja);}
+.estado-urgente{background:var(--rojo-claro);color:var(--rojo);}
+.estado-superado{background:var(--verde-claro);color:var(--verde);}
+
+.modulo-flecha{position:absolute;top:24px;right:24px;font-size:1.2rem;color:#D0D0D0;transition:color .15s;}
+.modulo-card:hover .modulo-flecha{color:var(--oceano);}
+
+.test-final-card{background:var(--oceano);border-radius:14px;padding:28px 30px;margin-top:24px;text-align:center;transition:opacity .3s;}
+.test-final-card.bloqueado{opacity:.5;pointer-events:none;}
+.test-final-card h3{font-family:'Fraunces',serif;font-size:1.3rem;font-weight:700;color:var(--blanco);margin-bottom:8px;}
+.test-final-card p{font-size:.88rem;color:rgba(255,255,255,.75);margin-bottom:18px;}
+.btn-test-final{display:inline-block;background:var(--sol);color:var(--oceano);border:none;border-radius:10px;padding:13px 32px;font-family:'DM Sans',sans-serif;font-size:.95rem;font-weight:600;cursor:pointer;text-decoration:none;transition:all .2s;}
+.btn-test-final:hover{background:#FFB940;transform:translateY(-1px);}
+.test-final-card.bloqueado .btn-test-final{background:rgba(255,255,255,.3);color:rgba(255,255,255,.6);}
+
+.aviso-diagnostico{background:var(--sol-claro);border:1.5px solid #E8C46A;border-radius:12px;padding:16px 20px;margin-bottom:24px;font-size:.87rem;color:#7A5500;line-height:1.6;text-align:center;}
+.aviso-diagnostico a{color:var(--oceano);font-weight:600;text-decoration:underline;}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-logo">Puente a <em>Bachillerato</em></div>
+  <div class="topbar-info" id="topbar-info">Bloque 0 · Álgebra</div>
+</div>
+<div class="progress-wrap"><div class="progress-bar" id="progress-bar" style="width:0%"></div></div>
+
+<div class="contenedor">
+
+  <div class="cabecera">
+    <div class="badge">Bloque 0 · Álgebra</div>
+    <h1>Tus módulos de<br><em>repaso</em></h1>
+    <p id="cabecera-texto">Cada módulo tiene teoría, ejercicios en tres niveles y un mini-test final. Trabaja primero los marcados en rojo o naranja — son los que el diagnóstico detectó como prioritarios.</p>
+  </div>
+
+  <div id="aviso-sin-diagnostico" style="display:none">
+    <div class="aviso-diagnostico">
+      Todavía no has hecho el diagnóstico inicial. Te recomendamos <a href="bloque0-diagnostico.html">hacerlo primero</a> para que el portal te indique qué módulos son prioritarios para ti.
+    </div>
+  </div>
+
+  <div class="resumen-progreso">
+    <div class="resumen-num" id="resumen-num">0/6</div>
+    <div class="resumen-texto">
+      <h3>Módulos superados</h3>
+      <p id="resumen-detalle">Completa el mini-test de cada módulo para avanzar.</p>
+    </div>
+    <div class="resumen-barra-wrap">
+      <div class="resumen-barra"><div class="resumen-barra-fill" id="resumen-barra-fill" style="width:0%"></div></div>
+      <div class="resumen-barra-label" id="resumen-barra-label">0% completado</div>
+    </div>
+  </div>
+
+  <div class="modulos-grid" id="modulos-grid"></div>
+
+  <div class="test-final-card" id="test-final-card">
+    <h3>🎯 Test Final del Bloque 0</h3>
+    <p id="test-final-texto">Completa los 6 módulos para desbloquear el test de superación.</p>
+    <a href="bloque0-test-final.html" class="btn-test-final" id="btn-test-final">Ir al test final →</a>
+  </div>
+
+</div>
+
+<script>
+const MODULOS = [
+  { key:'potencias',    nombre:'Potencias y Radicales',         archivo:'modulo-potencias.html' },
+  { key:'polinomios',   nombre:'Polinomios y Factorización',    archivo:'modulo-polinomios.html' },
+  { key:'ecuaciones',   nombre:'Ecuaciones de 1º y 2º grado',    archivo:'modulo-ecuaciones.html' },
+  { key:'sistemas',     nombre:'Sistemas de Ecuaciones',         archivo:'modulo-sistemas.html' },
+  { key:'inecuaciones', nombre:'Inecuaciones',                   archivo:'modulo-inecuaciones.html' },
+  { key:'fracciones',   nombre:'Fracciones Algebraicas',         archivo:'modulo-fracciones.html' }
+];
+
+const ETIQUETAS = {
+  dominado:  { texto:'Dominado',    clase:'dominado',  estadoClase:'estado-dominado' },
+  pendiente: { texto:'Refuerzo',    clase:'pendiente', estadoClase:'estado-pendiente' },
+  urgente:   { texto:'Prioritario', clase:'urgente',   estadoClase:'estado-urgente' },
+  superado:  { texto:'Superado ✓',  clase:'superado',  estadoClase:'estado-superado' }
+};
+
+function estadoDiagnostico(puntajesDiag, key) {
+  const d = puntajesDiag[key];
+  if (!d || d.total === 0) return 'pendiente';
+  const pct = d.correctas / d.total;
+  if (pct >= 1)   return 'dominado';
+  if (pct >= 0.5) return 'pendiente';
+  return 'urgente';
+}
+
+function renderHub() {
+  let alumna = {};
+  let diagData = {};
+  try { alumna = JSON.parse(sessionStorage.getItem('alumna') || '{}'); } catch(e){}
+  try { diagData = JSON.parse(sessionStorage.getItem('diagnostico_b0') || '{}'); } catch(e){}
+
+  if (alumna.nombre) {
+    document.getElementById('topbar-info').textContent = `${alumna.nombre} · Bloque 0 · Álgebra`;
+  }
+
+  const puntajesDiag = diagData.puntajes || {};
+  const hayDiagnostico = Object.keys(puntajesDiag).length > 0;
+  document.getElementById('aviso-sin-diagnostico').style.display = hayDiagnostico ? 'none' : 'block';
+
+  const modulosSuperados = JSON.parse(sessionStorage.getItem('modulos_b0') || '[]');
+
+  const grid = document.getElementById('modulos-grid');
+  grid.innerHTML = MODULOS.map((m, i) => {
+    const superado = modulosSuperados.includes(m.key);
+    const estadoKey = superado ? 'superado' : estadoDiagnostico(puntajesDiag, m.key);
+    const et = ETIQUETAS[estadoKey];
+
+    return `<a href="${m.archivo}" class="modulo-card ${et.clase}">
+      <span class="modulo-flecha">→</span>
+      <div class="modulo-num">Módulo ${i+1} de 6</div>
+      <div class="modulo-nombre">${m.nombre}</div>
+      <span class="modulo-estado ${et.estadoClase}">${et.texto}</span>
+    </a>`;
+  }).join('');
+
+  const totalSuperados = modulosSuperados.length;
+  const pct = Math.round((totalSuperados / 6) * 100);
+
+  document.getElementById('resumen-num').textContent = `${totalSuperados}/6`;
+  document.getElementById('resumen-barra-fill').style.width = pct + '%';
+  document.getElementById('resumen-barra-label').textContent = `${pct}% completado`;
+  document.getElementById('progress-bar').style.width = pct + '%';
+
+  if (totalSuperados === 0) {
+    document.getElementById('resumen-detalle').textContent = 'Completa el mini-test de cada módulo para avanzar.';
+  } else if (totalSuperados < 6) {
+    document.getElementById('resumen-detalle').textContent = `Te ${totalSuperados === 1 ? 'falta' : 'faltan'} ${6-totalSuperados} módulo${6-totalSuperados===1?'':'s'} para desbloquear el test final.`;
+  } else {
+    document.getElementById('resumen-detalle').textContent = '¡Has completado todos los módulos! Ya puedes hacer el test final.';
+  }
+
+  const testCard = document.getElementById('test-final-card');
+  const testTexto = document.getElementById('test-final-texto');
+  const btnTest = document.getElementById('btn-test-final');
+
+  if (totalSuperados < 6) {
+    testCard.classList.add('bloqueado');
+    testTexto.textContent = `Completa los 6 módulos para desbloquear el test de superación (${totalSuperados}/6 completados).`;
+    btnTest.removeAttribute('href');
+    btnTest.style.cursor = 'not-allowed';
+  } else {
+    testCard.classList.remove('bloqueado');
+    testTexto.textContent = '¡Enhorabuena! Has trabajado los 6 módulos. Demuestra lo que has aprendido en el test final.';
+    btnTest.setAttribute('href', 'bloque0-test-final.html');
+    btnTest.style.cursor = 'pointer';
+  }
+}
+
+// Render inicial
+renderHub();
+
+// Si el usuario vuelve a esta página con el botón "atrás" del navegador,
+// algunos navegadores restauran la página desde caché (bfcache) sin volver
+// a ejecutar el script — esto re-renderiza con los datos actualizados.
+window.addEventListener('pageshow', function(e) {
+  if (e.persisted) renderHub();
+});
+</script>
+</body>
+</html>

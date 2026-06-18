@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Test Final · Bloque 0 Álgebra · Puente a Bachillerato</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,600;0,700;1,300&family=DM+Sans:wght@300;400;500&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml.min.js"></script>
+<style>
+:root {
+  --sol:#F5A623; --sol-claro:#FDF3E0;
+  --oceano:#1A4A7A; --oceano-medio:#2A6BAD;
+  --verde:#1E7B5E; --verde-claro:#E8F5F0;
+  --arena:#FAF7F2; --blanco:#FFFFFF;
+  --gris:#2C2C2C; --gris-s:#7A7A7A;
+  --rojo:#C0392B; --rojo-claro:#FEF0EF;
+  --naranja:#B7600A; --naranja-claro:#FEF3E2;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'DM Sans',sans-serif;background:var(--arena);color:var(--gris);min-height:100vh;}
+
+.topbar{background:var(--oceano);padding:12px 24px;display:flex;justify-content:space-between;align-items:center;}
+.topbar-logo{font-family:'Fraunces',serif;font-size:.95rem;font-weight:600;color:var(--blanco);}
+.topbar-logo em{color:var(--sol);font-style:italic;font-weight:300;}
+.topbar-info{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:rgba(255,255,255,.6);text-align:right;}
+.progress-wrap{background:rgba(255,255,255,.15);height:5px;}
+.progress-bar{height:5px;background:var(--sol);transition:width .4s ease;width:0%;}
+
+/* ── INTRO ── */
+#pantalla-intro{max-width:620px;margin:60px auto;padding:0 24px;text-align:center;}
+.bloque-badge{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;background:#E8F5F0;color:var(--verde);padding:5px 14px;border-radius:20px;display:inline-block;margin-bottom:20px;font-weight:600;}
+#pantalla-intro h1{font-family:'Fraunces',serif;font-size:2.4rem;font-weight:700;color:var(--oceano);margin-bottom:14px;line-height:1.2;}
+#pantalla-intro h1 em{font-style:italic;font-weight:300;color:var(--verde);}
+#pantalla-intro p{font-size:.93rem;color:var(--gris-s);line-height:1.7;margin-bottom:10px;}
+.aviso-card{background:var(--sol-claro);border:1.5px solid #E8C46A;border-radius:12px;padding:16px 20px;margin:24px 0;text-align:left;font-size:.87rem;color:#7A5500;line-height:1.6;}
+.aviso-card strong{display:block;margin-bottom:4px;}
+.info-chips{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:24px 0;}
+.chip{background:var(--blanco);border:1.5px solid #E0E0E0;border-radius:8px;padding:10px 18px;font-size:.85rem;color:var(--gris);display:flex;align-items:center;gap:8px;}
+.chip strong{color:var(--oceano);}
+.btn-primary{background:var(--verde);color:var(--blanco);border:none;border-radius:10px;padding:14px 40px;font-family:'DM Sans',sans-serif;font-size:1rem;font-weight:500;cursor:pointer;transition:all .2s;}
+.btn-primary:hover{background:#166B50;transform:translateY(-1px);}
+
+/* ── TEST ── */
+#pantalla-test{display:none;}
+.test-wrap{max-width:700px;margin:36px auto;padding:0 24px;}
+.pregunta-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px;}
+.pregunta-num{font-family:'JetBrains Mono',monospace;font-size:.8rem;color:var(--gris-s);letter-spacing:1px;}
+.tema-badge{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:1px;text-transform:uppercase;background:#EFF3FA;color:var(--oceano-medio);padding:4px 12px;border-radius:20px;font-weight:600;}
+.pregunta-card{background:var(--blanco);border-radius:16px;padding:36px 36px 28px;box-shadow:0 2px 16px rgba(26,74,122,.08);margin-bottom:14px;}
+.pregunta-enunciado{font-size:1.05rem;line-height:1.75;margin-bottom:28px;}
+.opciones{display:grid;grid-template-columns:1fr 1fr;gap:11px;}
+@media(max-width:520px){.opciones{grid-template-columns:1fr;}}
+.opcion{background:var(--arena);border:2px solid #E8E8E8;border-radius:10px;padding:13px 16px;font-size:.9rem;cursor:pointer;transition:all .15s;text-align:left;font-family:'DM Sans',sans-serif;color:var(--gris);display:flex;align-items:center;gap:10px;}
+.opcion:hover:not(:disabled){border-color:var(--oceano-medio);background:#EFF3FA;transform:translateY(-1px);}
+.opcion-letra{font-family:'JetBrains Mono',monospace;font-size:.72rem;font-weight:600;color:var(--gris-s);min-width:18px;}
+.opcion.correcta{border-color:var(--verde);background:var(--verde-claro);}
+.opcion.correcta .opcion-letra{color:var(--verde);}
+.opcion.incorrecta{border-color:var(--rojo);background:var(--rojo-claro);}
+.opcion.incorrecta .opcion-letra{color:var(--rojo);}
+.feedback{background:var(--blanco);border-radius:10px;padding:14px 18px;font-size:.86rem;line-height:1.6;margin-bottom:14px;display:none;border-left:3px solid transparent;}
+.feedback.correcto{display:block;border-left-color:var(--verde);color:var(--verde);}
+.feedback.incorrecto{display:block;border-left-color:var(--rojo);color:var(--gris);}
+.feedback .fb-titulo{font-weight:600;margin-bottom:3px;}
+.btn-siguiente{display:none;background:var(--oceano);color:var(--blanco);border:none;border-radius:9px;padding:11px 26px;font-family:'DM Sans',sans-serif;font-size:.93rem;font-weight:500;cursor:pointer;transition:background .2s;float:right;}
+.btn-siguiente:hover{background:var(--oceano-medio);}
+.clearfix::after{content:'';display:table;clear:both;}
+
+/* ── RESULTADOS ── */
+#pantalla-resultados{display:none;}
+.resultados-wrap{max-width:700px;margin:44px auto;padding:0 24px 48px;}
+
+/* HERO RESULTADO */
+.resultado-hero{text-align:center;margin-bottom:40px;}
+.nota-grande{font-family:'Fraunces',serif;font-size:5rem;font-weight:700;line-height:1;margin-bottom:6px;}
+.nota-label{font-family:'JetBrains Mono',monospace;font-size:.75rem;letter-spacing:2px;text-transform:uppercase;color:var(--gris-s);margin-bottom:16px;}
+.resultado-titulo{font-family:'Fraunces',serif;font-size:1.7rem;font-weight:600;margin-bottom:8px;}
+.resultado-subtitulo{font-size:.9rem;color:var(--gris-s);max-width:460px;margin:0 auto;line-height:1.6;}
+
+/* VEREDICTO BADGE */
+.veredicto{display:inline-block;padding:8px 24px;border-radius:30px;font-family:'JetBrains Mono',monospace;font-size:.78rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:20px;}
+.veredicto.superado{background:var(--verde-claro);color:var(--verde);}
+.veredicto.refuerzo{background:var(--naranja-claro);color:var(--naranja);}
+.veredicto.repetir{background:var(--rojo-claro);color:var(--rojo);}
+
+/* TABLA TEMAS */
+.seccion-titulo{font-family:'Fraunces',serif;font-size:1.05rem;font-weight:600;color:var(--gris);margin:32px 0 14px;}
+.temas-grid{display:grid;gap:10px;margin-bottom:28px;}
+.tema-row{background:var(--blanco);border-radius:10px;padding:14px 20px;display:flex;align-items:center;gap:14px;box-shadow:0 1px 6px rgba(0,0,0,.05);}
+.tema-nombre{flex:1;font-size:.88rem;font-weight:500;}
+.tema-detalle{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--gris-s);}
+.tema-estado{font-family:'JetBrains Mono',monospace;font-size:.7rem;font-weight:600;padding:3px 10px;border-radius:20px;letter-spacing:.5px;white-space:nowrap;}
+.est-ok{background:var(--verde-claro);color:var(--verde);}
+.est-medio{background:var(--naranja-claro);color:var(--naranja);}
+.est-bajo{background:var(--rojo-claro);color:var(--rojo);}
+
+/* REPASO ERRORES */
+.errores-wrap{background:var(--blanco);border-radius:14px;padding:24px 28px;box-shadow:0 2px 12px rgba(0,0,0,.06);margin-bottom:28px;}
+.error-item{border-left:3px solid var(--rojo-claro);padding:12px 16px;margin-bottom:12px;border-radius:0 8px 8px 0;background:#FDF7F7;font-size:.85rem;line-height:1.6;}
+.error-item:last-child{margin-bottom:0;}
+.error-enunciado{color:var(--gris);margin-bottom:6px;}
+.error-explicacion{color:var(--gris-s);}
+.error-explicacion strong{color:var(--verde);font-weight:600;}
+
+/* ACCIONES */
+.acciones{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px;}
+@media(max-width:480px){.acciones{grid-template-columns:1fr;}}
+.btn-accion{border-radius:10px;padding:14px 20px;font-family:'DM Sans',sans-serif;font-size:.9rem;font-weight:500;cursor:pointer;border:2px solid transparent;transition:all .2s;text-align:center;}
+.btn-accion.primario{background:var(--verde);color:var(--blanco);}
+.btn-accion.primario:hover{background:#166B50;}
+.btn-accion.secundario{background:var(--blanco);color:var(--oceano);border-color:var(--oceano);}
+.btn-accion.secundario:hover{background:#EFF3FA;}
+.btn-accion.repetir{background:var(--oceano);color:var(--blanco);}
+.btn-accion.repetir:hover{background:var(--oceano-medio);}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-logo">Puente a <em>Bachillerato</em></div>
+  <div class="topbar-info" id="topbar-info">Test Final · Bloque 0</div>
+</div>
+<div class="progress-wrap"><div class="progress-bar" id="progress-bar"></div></div>
+
+<!-- INTRO -->
+<div id="pantalla-intro">
+  <div class="bloque-badge">Bloque 0 · Test Final</div>
+  <h1>Test de<br><em>superación</em></h1>
+  <p>Has trabajado todos los módulos del Bloque 0. Ahora es el momento de demostrar lo que sabes.</p>
+  <div class="aviso-card">
+    <strong>⚠️ Atención — sin pistas</strong>
+    A diferencia de los módulos, en este test <strong>no hay feedback inmediato</strong>. Las respuestas se muestran al final. Tómate el tiempo que necesites en cada pregunta.
+  </div>
+  <div class="info-chips">
+    <div class="chip">⏱ <strong>~15 min</strong></div>
+    <div class="chip">❓ <strong>12</strong> preguntas</div>
+    <div class="chip">🎯 Nivel <strong>1º Bach</strong></div>
+    <div class="chip">🚫 Sin feedback inmediato</div>
+  </div>
+  <button class="btn-primary" onclick="iniciarTest()">Empezar el test →</button>
+</div>
+
+<!-- TEST -->
+<div id="pantalla-test">
+  <div class="test-wrap">
+    <div class="pregunta-meta">
+      <span class="pregunta-num" id="pregunta-num">Pregunta 1 / 12</span>
+      <span class="tema-badge" id="tema-badge">Potencias</span>
+    </div>
+    <div class="pregunta-card">
+      <div class="pregunta-enunciado" id="enunciado"></div>
+      <div class="opciones" id="opciones"></div>
+    </div>
+    <div class="feedback" id="feedback">
+      <div class="fb-titulo" id="fb-titulo"></div>
+      <div id="fb-texto"></div>
+    </div>
+    <div class="clearfix">
+      <button class="btn-siguiente" id="btn-siguiente" onclick="siguiente()">Siguiente →</button>
+    </div>
+  </div>
+</div>
+
+<!-- RESULTADOS -->
+<div id="pantalla-resultados">
+  <div class="resultados-wrap">
+    <div class="resultado-hero">
+      <div class="nota-grande" id="nota-grande"></div>
+      <div class="nota-label">sobre 10</div>
+      <div class="veredicto" id="veredicto-badge"></div>
+      <div class="resultado-titulo" id="resultado-titulo"></div>
+      <p class="resultado-subtitulo" id="resultado-subtitulo"></p>
+    </div>
+
+    <div class="seccion-titulo">Resultado por tema</div>
+    <div class="temas-grid" id="temas-grid"></div>
+
+    <div id="errores-seccion" style="display:none">
+      <div class="seccion-titulo">Repaso de errores</div>
+      <div class="errores-wrap" id="errores-wrap"></div>
+    </div>
+
+    <div class="acciones" id="acciones"></div>
+  </div>
+</div>
+
+<script>
+// ── SESIÓN
+let alumna = {};
+try { alumna = JSON.parse(sessionStorage.getItem('alumna') || '{}'); } catch(e){}
+if (alumna.nombre) document.getElementById('topbar-info').textContent = `${alumna.nombre} · Test Final B0`;
+
+// ── PREGUNTAS — nivel más exigente que el diagnóstico
+const PREGUNTAS = [
+  // POTENCIAS
+  {
+    tema:'Potencias y radicales', temaKey:'potencias',
+    enunciado:'Simplifica: \\(\\dfrac{(2^3)^2 \\cdot 2^{-4}}{2^2}\\)',
+    opciones:['\\(2^{-2}\\)','\\(2^0 = 1\\)','\\(2^4\\)','\\(2^{-1}\\)'],
+    correcta:1,
+    feedback:'\\((2^3)^2 = 2^6\\). Numerador: \\(2^6 \\cdot 2^{-4} = 2^2\\). División: \\(2^2/2^2 = 2^0 = 1\\).'
+  },
+  {
+    tema:'Potencias y radicales', temaKey:'potencias',
+    enunciado:'Racionaliza y simplifica: \\(\\dfrac{6}{\\sqrt{3}}\\)',
+    opciones:['\\(\\sqrt{3}\\)','\\(3\\sqrt{3}\\)','\\(2\\sqrt{3}\\)','\\(6\\sqrt{3}\\)'],
+    correcta:2,
+    feedback:'\\(\\dfrac{6}{\\sqrt{3}} \\cdot \\dfrac{\\sqrt{3}}{\\sqrt{3}} = \\dfrac{6\\sqrt{3}}{3} = 2\\sqrt{3}\\).'
+  },
+  // POLINOMIOS
+  {
+    tema:'Polinomios y factorización', temaKey:'polinomios',
+    enunciado:'Factoriza completamente: \\(2x^3 - 8x\\)',
+    opciones:['\\(2x(x-2)(x+2)\\)','\\(2(x^3-4x)\\)','\\(2x(x^2-4)\\)','\\(x(2x-4)(x+2)\\)'],
+    correcta:0,
+    feedback:'Factor común \\(2x\\): \\(2x(x^2-4)\\). Diferencia de cuadrados: \\(2x(x-2)(x+2)\\).'
+  },
+  {
+    tema:'Polinomios y factorización', temaKey:'polinomios',
+    enunciado:'Divide \\(x^3 - 2x^2 - 5x + 6\\) entre \\((x-1)\\) usando Ruffini. ¿Cuál es el cociente?',
+    opciones:['\\(x^2 - x - 6\\)','\\(x^2 + x - 6\\)','\\(x^2 - 3x + 2\\)','\\(x^2 - 3x - 6\\)'],
+    correcta:0,
+    feedback:'Ruffini con \\(x=1\\): \\(1\\mid 1,-2,-5,6 \\rightarrow 1,-1,-6,0\\). Cociente: \\(x^2-x-6\\).'
+  },
+  // ECUACIONES
+  {
+    tema:'Ecuaciones 1º y 2º grado', temaKey:'ecuaciones',
+    enunciado:'Resuelve: \\(\\dfrac{x+2}{3} - \\dfrac{x-1}{2} = 1\\)',
+    opciones:['\\(x = 7\\)','\\(x = -1\\)','\\(x = 5\\)','\\(x = 1\\)'],
+    correcta:3,
+    feedback:'MCM = 6. \\(2(x+2) - 3(x-1) = 6 \\Rightarrow 2x+4-3x+3=6 \\Rightarrow -x = -1 \\Rightarrow x=1\\).'
+  },
+  {
+    tema:'Ecuaciones 1º y 2º grado', temaKey:'ecuaciones',
+    enunciado:'¿Para qué valor de \\(k\\) la ecuación \\(x^2 - kx + 9 = 0\\) tiene solución doble?',
+    opciones:['\\(k = 3\\)','\\(k = \\pm 6\\)','\\(k = 9\\)','\\(k = \\pm 3\\)'],
+    correcta:1,
+    feedback:'Solución doble \\(\\Leftrightarrow \\Delta = 0\\). \\(k^2 - 36 = 0 \\Rightarrow k = \\pm 6\\).'
+  },
+  // SISTEMAS
+  {
+    tema:'Sistemas de ecuaciones', temaKey:'sistemas',
+    enunciado:'Resuelve: \\(\\begin{cases}2x - y = 5\\\\x + 3y = -1\\end{cases}\\)',
+    opciones:['\\(x=1, y=-3\\)','\\(x=2, y=-1\\)','\\(x=3, y=1\\)','\\(x=2, y=1\\)'],
+    correcta:1,
+    feedback:'De la 1ª: \\(y=2x-5\\). Sustituyo: \\(x+3(2x-5)=-1 \\Rightarrow 7x=14 \\Rightarrow x=2, y=-1\\).'
+  },
+  {
+    tema:'Sistemas de ecuaciones', temaKey:'sistemas',
+    enunciado:'Un billete de tren cuesta 3 € más que uno de autobús. Si compro 2 de tren y 3 de autobús pago 36 €. ¿Cuánto cuesta el de autobús?',
+    opciones:['5 €','6 €','7 €','8 €'],
+    correcta:1,
+    feedback:'Sea \\(b\\) el bus y \\(t=b+3\\). \\(2(b+3)+3b=36 \\Rightarrow 5b=30 \\Rightarrow b=6\\) €.'
+  },
+  // INECUACIONES
+  {
+    tema:'Inecuaciones', temaKey:'inecuaciones',
+    enunciado:'Resuelve: \\(\\dfrac{2x-1}{3} < x - 1\\)',
+    opciones:['\\(x < -2\\)','\\(x > 2\\)','\\(x < 2\\)','\\(x > -2\\)'],
+    correcta:3,
+    feedback:'Multiplico por 3: \\(2x-1 < 3x-3 \\Rightarrow -x < -2 \\Rightarrow x > 2\\). Espera — \\(-x < -2 \\Rightarrow x > 2\\). Opción correcta: \\(x > 2\\).'
+  },
+  {
+    tema:'Inecuaciones', temaKey:'inecuaciones',
+    enunciado:'Resuelve: \\(x^2 - 2x - 3 > 0\\)',
+    opciones:['\\(x \\in (-1, 3)\\)','\\(x \\in (-\\infty,-1)\\cup(3,+\\infty)\\)','\\(x \\in [-1,3]\\)','\\(x \\in (-3,1)\\)'],
+    correcta:1,
+    feedback:'Raíces: \\(x=-1, x=3\\). Parábola con \\(a>0\\) positiva fuera de las raíces: \\(x<-1\\) o \\(x>3\\).'
+  },
+  // FRACCIONES
+  {
+    tema:'Fracciones algebraicas', temaKey:'fracciones',
+    enunciado:'Simplifica: \\(\\dfrac{x^2+3x+2}{x^2-1}\\)',
+    opciones:['\\(\\dfrac{x+2}{x-1}\\)','\\(\\dfrac{x+1}{x-1}\\)','\\(\\dfrac{x+2}{x+1}\\)','\\(\\dfrac{x-2}{x-1}\\)'],
+    correcta:0,
+    feedback:'Numerador: \\((x+1)(x+2)\\). Denominador: \\((x-1)(x+1)\\). Se cancela \\((x+1)\\): \\(\\dfrac{x+2}{x-1}\\).'
+  },
+  {
+    tema:'Fracciones algebraicas', temaKey:'fracciones',
+    enunciado:'Calcula: \\(\\dfrac{x}{x-2} - \\dfrac{2}{x+2} - \\dfrac{8}{x^2-4}\\)',
+    opciones:['\\(\\dfrac{x-2}{x+2}\\)','\\(1\\)','\\(\\dfrac{x+2}{x-2}\\)','\\(\\dfrac{x^2-8}{x^2-4}\\)'],
+    correcta:1,
+    feedback:'MCM \\(= (x-2)(x+2)\\). Numerador: \\(x(x+2)-2(x-2)-8 = x^2+2x-2x+4-8 = x^2-4 = (x-2)(x+2)\\). Resultado: 1.'
+  }
+];
+
+// Corrección de la pregunta 9 (índice 8): la respuesta correcta es x > 2 que es la opción B (índice 1)
+// Ajuste manual ya hecho arriba.
+
+// ── ESTADO
+let preguntaActual = 0;
+let respuestaDada = false;
+const respuestas = new Array(PREGUNTAS.length).fill(null);
+
+// ── FUNCIONES
+function iniciarTest() {
+  document.getElementById('pantalla-intro').style.display = 'none';
+  document.getElementById('pantalla-test').style.display = 'block';
+  mostrarPregunta(0);
+}
+
+function mostrarPregunta(idx) {
+  respuestaDada = false;
+  const p = PREGUNTAS[idx];
+  document.getElementById('progress-bar').style.width = ((idx / PREGUNTAS.length) * 100) + '%';
+  document.getElementById('pregunta-num').textContent = `Pregunta ${idx+1} / ${PREGUNTAS.length}`;
+  document.getElementById('tema-badge').textContent = p.tema;
+  document.getElementById('enunciado').innerHTML = p.enunciado;
+
+  const letras = ['A','B','C','D'];
+  const opEl = document.getElementById('opciones');
+  opEl.innerHTML = '';
+  p.opciones.forEach((op, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'opcion';
+    btn.innerHTML = `<span class="opcion-letra">${letras[i]}</span><span>${op}</span>`;
+    btn.onclick = () => seleccionar(i);
+    opEl.appendChild(btn);
+  });
+
+  // limpiar feedback (oculto en test)
+  const fb = document.getElementById('feedback');
+  fb.className = 'feedback';
+  fb.style.display = 'none';
+  document.getElementById('btn-siguiente').style.display = 'none';
+
+  MathJax && MathJax.typesetPromise();
+}
+
+function seleccionar(idx) {
+  if (respuestaDada) return;
+  respuestaDada = true;
+  respuestas[preguntaActual] = idx;
+
+  // solo marcar seleccionada, SIN revelar correcta
+  document.querySelectorAll('.opcion').forEach((btn, i) => {
+    btn.disabled = true;
+    if (i === idx) {
+      btn.style.borderColor = 'var(--oceano-medio)';
+      btn.style.background = '#EFF3FA';
+      btn.querySelector('.opcion-letra').style.color = 'var(--oceano)';
+    }
+  });
+
+  document.getElementById('btn-siguiente').style.display = 'block';
+  document.getElementById('btn-siguiente').textContent =
+    preguntaActual < PREGUNTAS.length - 1 ? 'Siguiente →' : 'Ver resultados →';
+}
+
+function siguiente() {
+  preguntaActual++;
+  if (preguntaActual < PREGUNTAS.length) {
+    mostrarPregunta(preguntaActual);
+  } else {
+    mostrarResultados();
+  }
+}
+
+function mostrarResultados() {
+  document.getElementById('pantalla-test').style.display = 'none';
+  document.getElementById('pantalla-resultados').style.display = 'block';
+  document.getElementById('progress-bar').style.width = '100%';
+
+  // CALCULAR
+  const correctas = respuestas.filter((r,i) => r === PREGUNTAS[i].correcta).length;
+  const nota = Math.round((correctas / PREGUNTAS.length) * 10 * 10) / 10;
+
+  // puntajes por tema
+  const temas = {};
+  PREGUNTAS.forEach((p,i) => {
+    if (!temas[p.temaKey]) temas[p.temaKey] = {nombre:p.tema, c:0, t:0};
+    temas[p.temaKey].t++;
+    if (respuestas[i] === p.correcta) temas[p.temaKey].c++;
+  });
+
+  // NOTA GRANDE
+  let color = nota >= 7 ? 'var(--verde)' : (nota >= 5 ? 'var(--naranja)' : 'var(--rojo)');
+  document.getElementById('nota-grande').textContent = nota.toFixed(1);
+  document.getElementById('nota-grande').style.color = color;
+
+  // VEREDICTO
+  const vEl = document.getElementById('veredicto-badge');
+  let veredicto, vClass, titulo, subtitulo;
+  if (nota >= 7) {
+    veredicto = '✓ Bloque 0 superado'; vClass = 'superado';
+    titulo = '¡Bloque 0 completado!';
+    subtitulo = 'Tienes una base de álgebra sólida para afrontar Bachillerato. Puedes avanzar a los módulos de tu ruta.';
+  } else if (nota >= 5) {
+    veredicto = '↻ Refuerzo recomendado'; vClass = 'refuerzo';
+    titulo = 'Casi, pero hay huecos';
+    subtitulo = 'Tienes la base, pero algunos temas necesitan más trabajo. Revisa los módulos marcados antes de seguir.';
+  } else {
+    veredicto = '✗ Necesita más trabajo'; vClass = 'repetir';
+    titulo = 'Hay que seguir trabajando';
+    subtitulo = 'No te rindas — vuelve a los módulos que más te costaron y repite el test cuando te sientas lista.';
+  }
+  vEl.textContent = veredicto;
+  vEl.className = `veredicto ${vClass}`;
+  document.getElementById('resultado-titulo').textContent = titulo;
+  document.getElementById('resultado-subtitulo').textContent = subtitulo;
+
+  // TABLA TEMAS
+  const tGrid = document.getElementById('temas-grid');
+  const ORDEN = ['potencias','polinomios','ecuaciones','sistemas','inecuaciones','fracciones'];
+  tGrid.innerHTML = ORDEN.map(key => {
+    const d = temas[key];
+    if (!d) return '';
+    const pct = d.c / d.t;
+    let cls, est;
+    if (pct >= 1)        { cls='est-ok';    est='✓ Dominado'; }
+    else if (pct >= 0.5) { cls='est-medio'; est='Repaso ligero'; }
+    else                 { cls='est-bajo';  est='Necesita trabajo'; }
+    return `<div class="tema-row">
+      <div class="tema-nombre">${d.nombre}</div>
+      <div class="tema-detalle">${d.c}/${d.t} correctas</div>
+      <span class="tema-estado ${cls}">${est}</span>
+    </div>`;
+  }).join('');
+
+  // REPASO DE ERRORES
+  const errores = PREGUNTAS.map((p,i) => ({...p, idx:i, elegida:respuestas[i]}))
+    .filter(p => p.elegida !== p.correcta && p.elegida !== null);
+
+  if (errores.length > 0) {
+    document.getElementById('errores-seccion').style.display = 'block';
+    const letras = ['A','B','C','D'];
+    document.getElementById('errores-wrap').innerHTML = errores.map(p => `
+      <div class="error-item">
+        <div class="error-enunciado">${p.enunciado}</div>
+        <div class="error-explicacion">
+          Tu respuesta: ${p.elegida !== null ? letras[p.elegida]+') '+p.opciones[p.elegida] : '—'}<br>
+          <strong>Correcta: ${letras[p.correcta]}) ${p.opciones[p.correcta]}</strong><br>
+          ${p.feedback}
+        </div>
+      </div>`).join('');
+  }
+
+  // BOTONES ACCIÓN
+  const accionesEl = document.getElementById('acciones');
+  if (nota >= 5) {
+    accionesEl.innerHTML = `
+      <button class="btn-accion primario" onclick="irARuta()">Ir a mi ruta de Bachillerato →</button>
+      <button class="btn-accion secundario" onclick="repetirTest()">↻ Repetir el test</button>`;
+  } else {
+    accionesEl.innerHTML = `
+      <button class="btn-accion repetir" onclick="volverModulos()">← Repasar módulos</button>
+      <button class="btn-accion secundario" onclick="repetirTest()">↻ Repetir el test</button>`;
+  }
+
+  // GUARDAR
+  sessionStorage.setItem('test_final_b0', JSON.stringify({
+    nota, correctas, total:PREGUNTAS.length, temas, alumna
+  }));
+  enviarResultados(nota, correctas, temas);
+
+  MathJax && MathJax.typesetPromise();
+}
+
+function irARuta() {
+  const it = alumna.itinerario === 'mat1' ? 'ruta-a-trigonometria.html' : 'ruta-b.html';
+  window.location.href = it;
+}
+function volverModulos() { window.location.href = 'bloque0-modulos.html'; }
+function repetirTest() {
+  preguntaActual = 0;
+  respuestas.fill(null);
+  document.getElementById('pantalla-resultados').style.display = 'none';
+  document.getElementById('pantalla-intro').style.display = 'block';
+}
+
+// ── ENVÍO Apps Script
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx63xvLtRnJYFQBr7AelcusmRLFzlCN6CyqPQWtjtdZ-IVuDr6RX2v850qTnZPr19LpVA/exec';
+function enviarResultados(nota, correctas, temas) {
+  if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL.includes('TU_')) return;
+  try {
+    const p = new URLSearchParams({
+      tipo:'test_final_b0',
+      nombre:alumna.nombre||'',
+      apellidos:alumna.apellidos||'',
+      grupo:alumna.grupo||'',
+      itinerario:alumna.itinerario||'',
+      nota, correctas,
+      total:PREGUNTAS.length,
+      temas:JSON.stringify(temas),
+      fecha:new Date().toISOString()
+    });
+    new Image().src = APPS_SCRIPT_URL + '?' + p.toString();
+  } catch(e) { console.log('Error envío:', e); }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Puente a Bachillerato · Matemáticas de Verano</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,600;0,700;1,300&family=DM+Sans:wght@300;400;500&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sol: #F5A623;
+    --sol-claro: #FDF3E0;
+    --oceano: #1A4A7A;
+    --oceano-medio: #2A6BAD;
+    --verde: #1E7B5E;
+    --arena: #FAF7F2;
+    --gris-texto: #2C2C2C;
+    --gris-suave: #7A7A7A;
+    --blanco: #FFFFFF;
+    --ruta-a: #1A4A7A;
+    --ruta-b: #7B2D8B;
+    --comun: #1E7B5E;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--arena);
+    color: var(--gris-texto);
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--oceano);
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .header-inner {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 48px 32px 40px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--sol);
+    margin-bottom: 16px;
+  }
+
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 700;
+    color: var(--blanco);
+    line-height: 1.15;
+    margin-bottom: 12px;
+  }
+
+  h1 em {
+    font-style: italic;
+    font-weight: 300;
+    color: var(--sol);
+  }
+
+  .header-sub {
+    font-size: 1rem;
+    color: rgba(255,255,255,0.75);
+    max-width: 520px;
+    line-height: 1.6;
+  }
+
+  /* olas decorativas */
+  .wave-divider {
+    display: block;
+    width: 100%;
+    height: 60px;
+    background: var(--arena);
+    clip-path: ellipse(55% 100% at 50% 100%);
+    margin-top: -1px;
+  }
+
+  /* ── SECCIÓN ALUMNA ── */
+  .section {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+
+  .login-card {
+    background: var(--blanco);
+    border-radius: 16px;
+    padding: 36px 40px;
+    box-shadow: 0 2px 20px rgba(26,74,122,0.08);
+    margin-bottom: 48px;
+  }
+
+  .login-card h2 {
+    font-family: 'Fraunces', serif;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--oceano);
+    margin-bottom: 6px;
+  }
+
+  .login-card p {
+    font-size: 0.9rem;
+    color: var(--gris-suave);
+    margin-bottom: 24px;
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  @media(max-width: 600px) {
+    .form-row { grid-template-columns: 1fr; }
+  }
+
+  .field label {
+    display: block;
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: var(--gris-suave);
+    margin-bottom: 6px;
+  }
+
+  .field input, .field select {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1.5px solid #E0E0E0;
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    color: var(--gris-texto);
+    background: var(--arena);
+    transition: border-color 0.2s;
+  }
+
+  .field input:focus, .field select:focus {
+    outline: none;
+    border-color: var(--oceano-medio);
+  }
+
+  .btn-entrar {
+    background: var(--oceano);
+    color: var(--blanco);
+    border: none;
+    border-radius: 8px;
+    padding: 12px 32px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+    margin-top: 8px;
+  }
+
+  .btn-entrar:hover { background: var(--oceano-medio); transform: translateY(-1px); }
+  .btn-entrar:active { transform: translateY(0); }
+
+  /* ── MAPA DE RUTA ── */
+  .ruta-title {
+    font-family: 'Fraunces', serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--oceano);
+    margin-bottom: 8px;
+  }
+
+  .ruta-desc {
+    font-size: 0.9rem;
+    color: var(--gris-suave);
+    margin-bottom: 32px;
+  }
+
+  .bloques-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 56px;
+  }
+
+  @media(max-width: 768px) {
+    .bloques-grid { grid-template-columns: 1fr; }
+  }
+
+  .bloque-card {
+    background: var(--blanco);
+    border-radius: 14px;
+    padding: 28px 24px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    position: relative;
+    border-top: 4px solid transparent;
+  }
+
+  .bloque-card.comun { border-top-color: var(--comun); }
+  .bloque-card.ruta-a { border-top-color: var(--ruta-a); }
+  .bloque-card.ruta-b { border-top-color: var(--ruta-b); }
+
+  .bloque-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 20px;
+    display: inline-block;
+    margin-bottom: 12px;
+    font-weight: 600;
+  }
+
+  .comun .bloque-tag { background: #E8F5F0; color: var(--comun); }
+  .ruta-a .bloque-tag { background: #E8F0FA; color: var(--ruta-a); }
+  .ruta-b .bloque-tag { background: #F4E8FA; color: var(--ruta-b); }
+
+  .bloque-card h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 12px;
+    line-height: 1.3;
+  }
+
+  .comun h3 { color: var(--comun); }
+  .ruta-a h3 { color: var(--ruta-a); }
+  .ruta-b h3 { color: var(--ruta-b); }
+
+  .bloque-temas {
+    list-style: none;
+    font-size: 0.85rem;
+    color: var(--gris-suave);
+    line-height: 1.8;
+  }
+
+  .bloque-temas li::before {
+    content: '→ ';
+    color: #C0C0C0;
+  }
+
+  /* ── CÓMO FUNCIONA ── */
+  .como-section {
+    background: var(--oceano);
+    padding: 56px 32px;
+    margin-top: 16px;
+  }
+
+  .como-inner {
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .como-section h2 {
+    font-family: 'Fraunces', serif;
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: var(--blanco);
+    margin-bottom: 8px;
+  }
+
+  .como-section p {
+    color: rgba(255,255,255,0.65);
+    font-size: 0.9rem;
+    margin-bottom: 36px;
+  }
+
+  .pasos {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  @media(max-width: 680px) {
+    .pasos { grid-template-columns: 1fr; }
+  }
+
+  .paso {
+    background: rgba(255,255,255,0.07);
+    border-radius: 12px;
+    padding: 24px;
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .paso-num {
+    font-family: 'Fraunces', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--sol);
+    line-height: 1;
+    margin-bottom: 10px;
+  }
+
+  .paso h4 {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--blanco);
+    margin-bottom: 6px;
+  }
+
+  .paso p {
+    font-size: 0.82rem;
+    color: rgba(255,255,255,0.55);
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    text-align: center;
+    padding: 28px;
+    font-size: 0.78rem;
+    color: var(--gris-suave);
+    background: var(--arena);
+  }
+
+  footer span { color: var(--oceano); font-weight: 500; }
+
+  /* ── MODAL / PANTALLA DE BIENVENIDA ── */
+  .overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(26,74,122,0.85);
+    z-index: 100;
+    justify-content: center;
+    align-items: center;
+    padding: 24px;
+  }
+
+  .overlay.visible { display: flex; }
+
+  .modal {
+    background: var(--blanco);
+    border-radius: 20px;
+    padding: 48px 40px;
+    max-width: 520px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  }
+
+  .modal-icon {
+    font-size: 3rem;
+    margin-bottom: 16px;
+  }
+
+  .modal h2 {
+    font-family: 'Fraunces', serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--oceano);
+    margin-bottom: 10px;
+  }
+
+  .modal-nombre {
+    font-size: 1.1rem;
+    color: var(--gris-suave);
+    margin-bottom: 8px;
+  }
+
+  .modal-ruta-badge {
+    display: inline-block;
+    padding: 6px 18px;
+    border-radius: 20px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    margin-bottom: 24px;
+    margin-top: 4px;
+  }
+
+  .modal-ruta-badge.mat1 { background: #E8F0FA; color: var(--ruta-a); }
+  .modal-ruta-badge.matapl { background: #F4E8FA; color: var(--ruta-b); }
+
+  .modal p {
+    font-size: 0.9rem;
+    color: var(--gris-suave);
+    line-height: 1.6;
+    margin-bottom: 28px;
+  }
+
+  .btn-comenzar {
+    display: inline-block;
+    background: var(--comun);
+    color: var(--blanco);
+    border: none;
+    border-radius: 10px;
+    padding: 14px 36px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+    text-decoration: none;
+  }
+
+  .btn-comenzar:hover { background: #166B50; transform: translateY(-1px); }
+
+  /* ── error ── */
+  .campo-error {
+    border-color: #E53935 !important;
+  }
+  .msg-error {
+    color: #E53935;
+    font-size: 0.8rem;
+    margin-top: 8px;
+    display: none;
+  }
+  .msg-error.visible { display: block; }
+
+  /* separator */
+  .sep {
+    height: 1px;
+    background: linear-gradient(to right, transparent, #D0D0D0, transparent);
+    margin: 48px 0;
+  }
+</style>
+</head>
+<body>
+
+<!-- ── HEADER ── -->
+<header>
+  <div class="header-inner">
+    <div class="eyebrow">Las Chapas ECOS · Matemáticas · Verano 2025</div>
+    <h1>Puente a<br><em>Bachillerato</em></h1>
+    <p class="header-sub">Refuerza los fundamentos que necesitas antes de empezar 1º de Bachillerato. A tu ritmo, durante el verano.</p>
+  </div>
+  <div class="wave-divider"></div>
+</header>
+
+<!-- ── CONTENIDO PRINCIPAL ── -->
+<main>
+  <div class="section" style="padding-top: 40px;">
+
+    <!-- LOGIN -->
+    <div class="login-card">
+      <h2>Identifícate para comenzar</h2>
+      <p>Escribe tu nombre y elige tu itinerario de Bachillerato para acceder a tu ruta personalizada.</p>
+      <div class="form-row">
+        <div class="field">
+          <label>Nombre</label>
+          <input type="text" id="inp-nombre" placeholder="Tu nombre" autocomplete="off">
+        </div>
+        <div class="field">
+          <label>Apellidos</label>
+          <input type="text" id="inp-apellidos" placeholder="Tus apellidos" autocomplete="off">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="field">
+          <label>Itinerario en 1º Bachillerato</label>
+          <select id="inp-itinerario">
+            <option value="">— Elige tu ruta —</option>
+            <option value="mat1">Matemáticas I (Tecnológico / Biosanitario)</option>
+            <option value="matapl">Matemáticas Aplicadas (Letras / Social)</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Grupo en 4º ESO</label>
+          <select id="inp-grupo">
+            <option value="">— Elige tu grupo —</option>
+            <option value="4A">4º A</option>
+            <option value="4B">4º B</option>
+            <option value="4C">4º C</option>
+            <option value="4D">4º D</option>
+          </select>
+        </div>
+      </div>
+      <p class="msg-error" id="msg-error">Por favor, rellena todos los campos antes de continuar.</p>
+      <button class="btn-entrar" onclick="acceder()">Entrar a mi ruta →</button>
+    </div>
+
+    <!-- MAPA DE CONTENIDOS -->
+    <div class="ruta-title">¿Qué vas a trabajar este verano?</div>
+    <p class="ruta-desc">El portal se organiza en tres bloques. Empieza siempre por el Bloque 0, que es común para todas.</p>
+
+    <div class="bloques-grid">
+
+      <!-- BLOQUE 0 -->
+      <div class="bloque-card comun">
+        <span class="bloque-tag">Bloque 0 · Todas</span>
+        <h3>Álgebra: la base de todo</h3>
+        <ul class="bloque-temas">
+          <li>Potencias y radicales</li>
+          <li>Polinomios y factorización</li>
+          <li>Ecuaciones 1º y 2º grado</li>
+          <li>Sistemas de ecuaciones</li>
+          <li>Inecuaciones</li>
+          <li>Fracciones algebraicas</li>
+        </ul>
+      </div>
+
+      <!-- RUTA A -->
+      <div class="bloque-card ruta-a">
+        <span class="bloque-tag">Ruta A · Matemáticas I</span>
+        <h3>Funciones, trigonometría y geometría</h3>
+        <ul class="bloque-temas">
+          <li>Funciones y análisis básico</li>
+          <li>Trigonometría</li>
+          <li>Geometría analítica (intro)</li>
+        </ul>
+      </div>
+
+      <!-- RUTA B -->
+      <div class="bloque-card ruta-b">
+        <span class="bloque-tag">Ruta B · Aplicadas</span>
+        <h3>Estadística, probabilidad y funciones</h3>
+        <ul class="bloque-temas">
+          <li>Estadística descriptiva</li>
+          <li>Probabilidad</li>
+          <li>Funciones (nivel aplicado)</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="sep"></div>
+
+  </div><!-- /section -->
+
+  <!-- CÓMO FUNCIONA -->
+  <div class="como-section">
+    <div class="como-inner">
+      <h2>¿Cómo funciona?</h2>
+      <p>Cada bloque sigue siempre la misma estructura en tres fases.</p>
+      <div class="pasos">
+        <div class="paso">
+          <div class="paso-num">01</div>
+          <h4>Diagnóstico inicial</h4>
+          <p>Un test breve detecta exactamente qué dominas y qué necesitas reforzar.</p>
+        </div>
+        <div class="paso">
+          <div class="paso-num">02</div>
+          <h4>Módulos adaptativos</h4>
+          <p>Solo trabajas los temas que realmente necesitas. Explicación + ejercicios con autocorrección.</p>
+        </div>
+        <div class="paso">
+          <div class="paso-num">03</div>
+          <h4>Test de superación</h4>
+          <p>Cuando te sientas lista, completa el test final para certificar el bloque.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <p>Departamento de Matemáticas · <span>Las Chapas ECOS</span> · Marbella · Curso 2024–25</p>
+</footer>
+
+<!-- MODAL DE BIENVENIDA -->
+<div class="overlay" id="overlay">
+  <div class="modal">
+    <div class="modal-icon">☀️</div>
+    <h2 id="modal-titulo">¡Bienvenida!</h2>
+    <div class="modal-nombre" id="modal-nombre"></div>
+    <span class="modal-ruta-badge" id="modal-badge"></span>
+    <p id="modal-texto"></p>
+    <div style="display:flex;flex-direction:column;gap:10px;width:100%;margin-top:8px;">
+      <a href="bloque0-diagnostico.html" class="btn-comenzar" style="text-align:center;">
+        ⭐ Empezar por el Bloque 0 (recomendado) →
+      </a>
+      <a id="btn-ir-ruta" href="#" class="btn-comenzar" style="text-align:center;background:var(--oceano-medio,#2A6BAD);font-size:.88rem;">
+        Ir directamente a mi Ruta →
+      </a>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ── datos de sesión
+  function acceder() {
+    const nombre    = document.getElementById('inp-nombre').value.trim();
+    const apellidos = document.getElementById('inp-apellidos').value.trim();
+    const itinerario= document.getElementById('inp-itinerario').value;
+    const grupo     = document.getElementById('inp-grupo').value;
+    const msgErr    = document.getElementById('msg-error');
+
+    // validación
+    const campos = ['inp-nombre','inp-apellidos','inp-itinerario','inp-grupo'];
+    let ok = true;
+    campos.forEach(id => {
+      const el = document.getElementById(id);
+      if (!el.value.trim()) { el.classList.add('campo-error'); ok = false; }
+      else el.classList.remove('campo-error');
+    });
+    if (!ok) { msgErr.classList.add('visible'); return; }
+    msgErr.classList.remove('visible');
+
+    // guardar en sessionStorage
+    const alumna = { nombre, apellidos, itinerario, grupo };
+    sessionStorage.setItem('alumna', JSON.stringify(alumna));
+
+    // mostrar modal
+    document.getElementById('modal-titulo').textContent = `¡Hola, ${nombre}!`;
+    document.getElementById('modal-nombre').textContent = `${apellidos}, ${grupo}`;
+
+    const badge  = document.getElementById('modal-badge');
+    const texto  = document.getElementById('modal-texto');
+    const btnRuta = document.getElementById('btn-ir-ruta');
+    if (itinerario === 'mat1') {
+      badge.textContent  = 'Ruta A · Matemáticas I';
+      badge.className    = 'modal-ruta-badge mat1';
+      texto.textContent  = 'Te recomendamos empezar por el Bloque 0 de Álgebra — es la base de todo. Pero si ya lo tienes controlado, puedes ir directamente a tu Ruta A.';
+      btnRuta.href = 'ruta-a-trigonometria.html';
+      btnRuta.textContent = 'Ir directamente a Ruta A (Trigonometría) →';
+    } else {
+      badge.textContent  = 'Ruta B · Matemáticas Aplicadas';
+      badge.className    = 'modal-ruta-badge matapl';
+      texto.textContent  = 'Te recomendamos empezar por el Bloque 0 de Álgebra — es la base de todo. Pero si ya lo tienes controlado, puedes ir directamente a tu Ruta B.';
+      btnRuta.href = 'ruta-b.html';
+      btnRuta.textContent = 'Ir directamente a Ruta B →';
+    }
+
+    document.getElementById('overlay').classList.add('visible');
+  }
+
+  // cerrar modal clicando fuera
+  document.getElementById('overlay').addEventListener('click', function(e) {
+    if (e.target === this) this.classList.remove('visible');
+  });
+</script>
+
+</body>
+</html>
