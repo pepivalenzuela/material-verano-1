@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Circunferencia Goniométrica · Ruta A · Puente a Bachillerato</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,600;0,700;1,300&family=DM+Sans:wght@300;400;500&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml.min.js"></script>
+<style>
+:root{--sol:#F5A623;--sol-claro:#FDF3E0;--oceano:#1A4A7A;--oceano-medio:#2A6BAD;--verde:#1E7B5E;--verde-claro:#E8F5F0;--arena:#FAF7F2;--blanco:#FFFFFF;--gris:#2C2C2C;--gris-s:#7A7A7A;--rojo:#C0392B;--rojo-claro:#FEF0EF;--naranja:#B7600A;--naranja-claro:#FEF3E2;--lila:#6B3FA0;--lila-claro:#F0EBF8;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'DM Sans',sans-serif;background:var(--arena);color:var(--gris);min-height:100vh;}
+.topbar{background:var(--oceano);padding:12px 24px;display:flex;justify-content:space-between;align-items:center;}
+.topbar-logo{font-family:'Fraunces',serif;font-size:.95rem;font-weight:600;color:var(--blanco);}
+.topbar-logo em{color:var(--sol);font-style:italic;font-weight:300;}
+.topbar-alumna{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:rgba(255,255,255,.6);}
+.progress-wrap{background:rgba(255,255,255,.15);height:5px;}
+.progress-bar{height:5px;background:var(--sol);transition:width .5s ease;}
+.layout{display:grid;grid-template-columns:240px 1fr;min-height:calc(100vh - 57px);}
+@media(max-width:800px){.layout{grid-template-columns:1fr;}}
+.sidebar{background:var(--blanco);border-right:1px solid #EBEBEB;padding:20px 0;position:sticky;top:0;height:calc(100vh - 57px);overflow-y:auto;}
+.sidebar-bloque{font-family:'JetBrains Mono',monospace;font-size:.65rem;letter-spacing:2px;text-transform:uppercase;color:var(--gris-s);padding:0 18px 10px;}
+.sidebar-item{display:flex;align-items:center;gap:10px;padding:10px 18px;cursor:pointer;border-left:3px solid transparent;font-size:.85rem;transition:all .15s;color:var(--gris-s);}
+.sidebar-item:hover{background:#F5F7FA;color:var(--gris);}
+.sidebar-item.activo{background:#EFF3FA;border-left-color:var(--oceano);color:var(--oceano);font-weight:500;}
+.sidebar-item.hecho{color:var(--verde);}
+.sidebar-item.hecho .s-dot{background:var(--verde);}
+.s-dot{width:8px;height:8px;border-radius:50%;background:#D0D0D0;flex-shrink:0;}
+.sidebar-sep{height:1px;background:#F0F0F0;margin:10px 16px;}
+.sidebar-nav-btns{padding:12px 18px;display:flex;flex-direction:column;gap:8px;}
+.btn-nav{width:100%;padding:9px;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:.82rem;font-weight:500;cursor:pointer;border:1.5px solid transparent;transition:all .2s;text-align:center;}
+.btn-nav.anterior{background:var(--blanco);border-color:#D0D0D0;color:var(--gris-s);}
+.btn-nav.anterior:hover{border-color:var(--oceano);color:var(--oceano);}
+.btn-nav.siguiente{background:var(--oceano);color:var(--blanco);}
+.btn-nav.siguiente:hover{background:var(--oceano-medio);}
+.btn-nav.volver{background:transparent;border-color:transparent;color:var(--gris-s);font-size:.78rem;padding:6px;}
+.btn-nav.volver:hover{color:var(--oceano);text-decoration:underline;}
+.main{padding:36px 40px;max-width:820px;}
+@media(max-width:680px){.main{padding:20px 16px;}}
+.modulo-eyebrow{font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:2px;text-transform:uppercase;color:var(--gris-s);margin-bottom:8px;}
+.modulo-titulo{font-family:'Fraunces',serif;font-size:2rem;font-weight:700;color:var(--oceano);line-height:1.2;margin-bottom:6px;}
+.modulo-desc{font-size:.9rem;color:var(--gris-s);line-height:1.6;margin-bottom:32px;}
+.seccion{display:none;}
+.seccion.visible{display:block;}
+.nav-modulos{display:flex;gap:10px;margin-bottom:28px;flex-wrap:wrap;}
+.nm-btn{padding:7px 16px;border-radius:8px;font-size:.82rem;cursor:pointer;border:1.5px solid #E0E0E0;background:var(--blanco);font-family:'DM Sans',sans-serif;color:var(--gris-s);transition:all .15s;}
+.nm-btn:hover{border-color:var(--oceano-medio);color:var(--oceano);}
+.nm-btn.nm-activo{background:var(--oceano);color:var(--blanco);border-color:var(--oceano);}
+.nm-btn.nm-ok{border-color:var(--verde);color:var(--verde);}
+.teoria-intro{background:var(--oceano);border-radius:14px;padding:24px 28px;margin-bottom:24px;color:var(--blanco);}
+.teoria-intro p{font-size:.9rem;line-height:1.7;opacity:.9;}
+.teoria-intro strong{color:var(--sol);}
+.concepto-card{background:var(--blanco);border-radius:14px;padding:28px 30px;box-shadow:0 2px 12px rgba(26,74,122,.07);margin-bottom:20px;}
+.concepto-card h3{font-family:'Fraunces',serif;font-size:1.05rem;font-weight:600;color:var(--oceano);margin-bottom:16px;}
+.concepto-body{font-size:.9rem;line-height:1.85;color:var(--gris);}
+.concepto-body p{margin-bottom:10px;}
+.formula-box{background:#F0F4FA;border-radius:10px;padding:16px 20px;margin:14px 0;text-align:center;border:1px solid #D0DFF0;font-size:1rem;}
+.formula-box.verde{background:var(--verde-claro);border-color:#9FD4C0;}
+.formula-box.naranja{background:var(--naranja-claro);border-color:#E8C07A;}
+.ejemplo-resuelto{background:var(--sol-claro);border-left:4px solid var(--sol);border-radius:0 10px 10px 0;padding:16px 20px;margin:16px 0;font-size:.88rem;}
+.ejemplo-resuelto .ej-titulo{font-weight:600;color:#7A5500;margin-bottom:8px;font-size:.82rem;text-transform:uppercase;letter-spacing:.5px;}
+.ejemplo-resuelto .paso{display:flex;gap:12px;align-items:flex-start;margin-bottom:6px;}
+.ejemplo-resuelto .paso-num{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--sol);font-weight:600;min-width:20px;margin-top:3px;}
+.alerta-card{background:var(--rojo-claro);border-left:4px solid var(--rojo);border-radius:0 10px 10px 0;padding:14px 18px;margin:14px 0;font-size:.86rem;color:var(--gris);}
+.alerta-card .al-titulo{font-weight:600;color:var(--rojo);margin-bottom:4px;}
+.resumen-tabla{width:100%;border-collapse:collapse;margin:16px 0;font-size:.85rem;}
+.resumen-tabla th{background:#EFF3FA;color:var(--oceano);padding:9px 14px;text-align:left;font-weight:600;border-bottom:2px solid #D0DFF0;}
+.resumen-tabla td{padding:9px 14px;border-bottom:1px solid #F0F0F0;}
+.resumen-tabla tr:nth-child(even) td{background:#FAFCFF;}
+.nivel-header{display:flex;align-items:center;gap:14px;margin-bottom:24px;padding:18px 22px;border-radius:12px;}
+.nivel-header.n1{background:#EFF3FA;border-left:4px solid var(--oceano-medio);}
+.nivel-header.n2{background:var(--naranja-claro);border-left:4px solid var(--naranja);}
+.nivel-header.n3{background:var(--lila-claro);border-left:4px solid var(--lila);}
+.nivel-header.ntest{background:var(--verde-claro);border-left:4px solid var(--verde);}
+.nivel-icon{font-size:1.6rem;}
+.nivel-info h3{font-family:'Fraunces',serif;font-size:1rem;font-weight:600;margin-bottom:2px;}
+.nivel-info p{font-size:.8rem;color:var(--gris-s);}
+.n1 .nivel-info h3{color:var(--oceano-medio);}
+.n2 .nivel-info h3{color:var(--naranja);}
+.n3 .nivel-info h3{color:var(--lila);}
+.ntest .nivel-info h3{color:var(--verde);}
+.ejercicio-card{background:var(--blanco);border-radius:12px;padding:24px 26px;box-shadow:0 1px 8px rgba(0,0,0,.05);margin-bottom:14px;border-top:3px solid transparent;}
+.ejercicio-card.n1-color{border-top-color:var(--oceano-medio);}
+.ejercicio-card.n2-color{border-top-color:var(--naranja);}
+.ejercicio-card.n3-color{border-top-color:var(--lila);}
+.ejercicio-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
+.ej-num{font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--gris-s);letter-spacing:1px;}
+.ej-dificultad{font-family:'JetBrains Mono',monospace;font-size:.65rem;padding:2px 9px;border-radius:10px;font-weight:600;}
+.dif-basico{background:#EFF3FA;color:var(--oceano-medio);}
+.dif-medio{background:var(--naranja-claro);color:var(--naranja);}
+.dif-avanzado{background:var(--lila-claro);color:var(--lila);}
+.ej-enunciado{font-size:.93rem;line-height:1.75;margin-bottom:20px;}
+.opciones-ej{display:grid;grid-template-columns:1fr 1fr;gap:9px;}
+@media(max-width:520px){.opciones-ej{grid-template-columns:1fr;}}
+.op-btn{background:var(--arena);border:2px solid #E8E8E8;border-radius:9px;padding:12px 15px;font-size:.88rem;cursor:pointer;transition:all .15s;text-align:left;font-family:'DM Sans',sans-serif;color:var(--gris);display:flex;align-items:center;gap:9px;}
+.op-btn:hover:not(:disabled){border-color:var(--oceano-medio);background:#EFF3FA;}
+.op-letra{font-family:'JetBrains Mono',monospace;font-size:.68rem;font-weight:600;color:var(--gris-s);min-width:16px;}
+.op-btn.ok{border-color:var(--verde);background:var(--verde-claro);}
+.op-btn.ok .op-letra{color:var(--verde);}
+.op-btn.mal{border-color:var(--rojo);background:var(--rojo-claro);}
+.op-btn.mal .op-letra{color:var(--rojo);}
+.fb-ej{font-size:.83rem;line-height:1.65;padding:11px 15px;border-radius:8px;margin-top:10px;display:none;border-left:3px solid transparent;}
+.fb-ej.ok{display:block;background:var(--verde-claro);border-left-color:var(--verde);color:var(--gris);}
+.fb-ej.ok .fb-titulo{color:var(--verde);font-weight:600;margin-bottom:3px;}
+.fb-ej.mal{display:block;background:var(--rojo-claro);border-left-color:var(--rojo);color:var(--gris);}
+.fb-ej.mal .fb-titulo{color:var(--rojo);font-weight:600;margin-bottom:3px;}
+.minitest-barra{background:#F0F0F0;border-radius:6px;height:8px;margin-bottom:20px;overflow:hidden;}
+.minitest-fill{height:8px;background:var(--verde);border-radius:6px;transition:width .4s;}
+.test-pregunta{background:var(--blanco);border-radius:14px;padding:28px 30px;box-shadow:0 2px 14px rgba(26,74,122,.08);margin-bottom:16px;}
+.test-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;}
+.test-num{font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--gris-s);}
+.test-enunciado{font-size:1rem;line-height:1.75;margin-bottom:22px;}
+.btn-siguiente-nivel{background:var(--oceano);color:var(--blanco);border:none;border-radius:10px;padding:13px 32px;font-family:'DM Sans',sans-serif;font-size:.95rem;font-weight:500;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:8px;margin-top:20px;}
+.btn-siguiente-nivel:hover{background:var(--oceano-medio);transform:translateY(-1px);}
+.btn-siguiente-nivel:disabled{background:#A0B8D0;cursor:not-allowed;transform:none;}
+.bloque-accion{text-align:right;padding:20px 0 8px;border-top:1px dashed #D8D8D8;margin-top:24px;}
+.resultado-minitest{text-align:center;padding:40px 24px;background:var(--blanco);border-radius:16px;box-shadow:0 2px 16px rgba(0,0,0,.08);}
+.resultado-minitest .res-nota{font-family:'Fraunces',serif;font-size:4rem;font-weight:700;line-height:1;}
+.resultado-minitest .res-label{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:2px;text-transform:uppercase;color:var(--gris-s);margin-bottom:16px;}
+.resultado-minitest h3{font-family:'Fraunces',serif;font-size:1.4rem;font-weight:600;margin-bottom:8px;}
+.resultado-minitest p{font-size:.9rem;color:var(--gris-s);line-height:1.6;max-width:420px;margin:0 auto 24px;}
+.btn-res{display:inline-block;border-radius:10px;padding:12px 28px;font-family:'DM Sans',sans-serif;font-size:.92rem;font-weight:500;cursor:pointer;border:none;transition:all .2s;margin:4px;}
+.btn-res.ok{background:var(--verde);color:var(--blanco);}
+.btn-res.ok:hover{background:#166B50;}
+.btn-res.repetir{background:var(--naranja-claro);color:var(--naranja);border:2px solid var(--naranja);}
+.btn-res.volver{background:var(--rojo-claro);color:var(--rojo);border:2px solid var(--rojo);}
+.repaso-errores{background:var(--blanco);border-radius:12px;padding:22px 26px;box-shadow:0 1px 8px rgba(0,0,0,.05);margin-top:20px;}
+.repaso-titulo{font-family:'Fraunces',serif;font-size:.95rem;font-weight:600;color:var(--gris);margin-bottom:14px;}
+.error-item{border-left:3px solid var(--rojo-claro);padding:10px 14px;margin-bottom:10px;border-radius:0 8px 8px 0;background:#FDF7F7;font-size:.84rem;line-height:1.6;}
+.error-correcta{color:var(--verde);font-weight:600;}
+</style>
+</head>
+<body>
+<div class="topbar"><div class="topbar-logo">Puente a <em>Bachillerato</em></div><div class="topbar-alumna" id="topbar-alumna">Trigonometría · Circunferencia goniométrica</div></div>
+<div class="progress-wrap"><div class="progress-bar" id="progress-bar" style="width:0%"></div></div>
+<div class="layout">
+<aside class="sidebar">
+  <div class="sidebar-bloque">Trigonometría · Parte 4 de 5</div>
+  <div class="sidebar-item activo" id="s-teoria" onclick="irSeccion('teoria')"><span class="s-dot"></span> Teoría</div>
+  <div class="sidebar-item" id="s-n1" onclick="irSeccion('n1')"><span class="s-dot"></span> Nivel 1</div>
+  <div class="sidebar-item" id="s-n2" onclick="irSeccion('n2')"><span class="s-dot"></span> Nivel 2</div>
+  <div class="sidebar-item" id="s-n3" onclick="irSeccion('n3')"><span class="s-dot"></span> Nivel 3</div>
+  <div class="sidebar-item" id="s-test" onclick="irSeccion('test')"><span class="s-dot"></span> Mini-test</div>
+  <div class="sidebar-sep"></div>
+  <div class="sidebar-nav-btns">
+    <button class="btn-nav anterior" onclick="window.location.href='trig3-triangulos.html'">← Parte 3</button>
+    <button class="btn-nav siguiente" onclick="window.location.href='trig5-identidades.html'">Parte 5 →</button>
+    <button class="btn-nav volver" onclick="window.location.href='ruta-a-trigonometria.html'">📋 Volver a Trigonometría</button>
+  </div>
+</aside>
+<main class="main" id="main-area"></main>
+</div>
+<script>
+// ══════════════════════════════════════════════════════════
+//  MOTOR DE MÓDULOS — Ruta A · Puente a Bachillerato
+//  Lee el objeto global MODULO_CONFIG y construye toda la
+//  interfaz: cabecera, navegación, teoría, niveles y mini-test.
+// ══════════════════════════════════════════════════════════
+
+let alumna = {};
+try { alumna = JSON.parse(sessionStorage.getItem('alumna') || '{}'); } catch(e){}
+const APPS_SCRIPT_URL_MOD = 'https://script.google.com/macros/s/AKfycbx63xvLtRnJYFQBr7AelcusmRLFzlCN6CyqPQWtjtdZ-IVuDr6RX2v850qTnZPr19LpVA/exec';
+function enviarResultadoModulo(modulo, correctas, superado) {
+  if (!APPS_SCRIPT_URL_MOD || APPS_SCRIPT_URL_MOD.includes('TU_')) return;
+  try {
+    const params = new URLSearchParams({
+      tipo: 'modulo_rutaA',
+      modulo: modulo,
+      nombre: alumna.nombre || '',
+      apellidos: alumna.apellidos || '',
+      grupo: alumna.grupo || '',
+      itinerario: alumna.itinerario || '',
+      correctas: correctas,
+      total: 5,
+      superado: superado ? '1' : '0',
+      fecha: new Date().toISOString()
+    });
+    new Image().src = APPS_SCRIPT_URL_MOD + '?' + params.toString();
+  } catch(e) {}
+}
+
+
+const estadoNiveles = {
+  n1: { respondidas: new Set(), correctas: new Set() },
+  n2: { respondidas: new Set(), correctas: new Set() },
+  n3: { respondidas: new Set(), correctas: new Set() }
+};
+let testPreguntas = [];
+let testActual = 0;
+let testRespuestas = [];
+const SECCIONES = ['teoria','n1','n2','n3','test'];
+
+function iniciarModulo() {
+  const C = MODULO_CONFIG;
+
+  if (alumna.nombre) {
+    document.getElementById('topbar-alumna').textContent = `${alumna.nombre} · ${C.titulo}`;
+  }
+
+  const main = document.getElementById('main-area');
+  main.innerHTML = `
+    <div class="modulo-eyebrow">${C.eyebrow}</div>
+    <div class="modulo-titulo">${C.titulo}</div>
+    <div class="modulo-desc">${C.desc}</div>
+
+    <div class="nav-modulos">
+      <button class="nm-btn nm-activo" onclick="irSeccion('teoria')">📖 Teoría</button>
+      <button class="nm-btn" onclick="irSeccion('n1')">🔵 Nivel 1</button>
+      <button class="nm-btn" onclick="irSeccion('n2')">🟠 Nivel 2</button>
+      <button class="nm-btn" onclick="irSeccion('n3')">🟣 Nivel 3</button>
+      <button class="nm-btn" onclick="irSeccion('test')">✅ Mini-test</button>
+    </div>
+
+    <div class="seccion visible" id="sec-teoria">
+      ${C.teoria}
+      <div class="bloque-accion">
+        <button class="btn-siguiente-nivel" onclick="irSeccion('n1')">Ir a los ejercicios →</button>
+      </div>
+    </div>
+
+    <div class="seccion" id="sec-n1">
+      <div class="nivel-header n1"><div class="nivel-icon">🔵</div><div class="nivel-info"><h3>Nivel 1 — Básico</h3><p>Aplicación directa de definiciones y conversiones.</p></div></div>
+      <div id="ejercicios-n1"></div>
+      <div class="bloque-accion"><button class="btn-siguiente-nivel" id="btn-a-n2" onclick="irSeccion('n2')" disabled>Nivel 2 →</button></div>
+    </div>
+
+    <div class="seccion" id="sec-n2">
+      <div class="nivel-header n2"><div class="nivel-icon">🟠</div><div class="nivel-info"><h3>Nivel 2 — Intermedio</h3><p>Combinación de varias técnicas.</p></div></div>
+      <div id="ejercicios-n2"></div>
+      <div class="bloque-accion"><button class="btn-siguiente-nivel" id="btn-a-n3" onclick="irSeccion('n3')" disabled>Nivel 3 →</button></div>
+    </div>
+
+    <div class="seccion" id="sec-n3">
+      <div class="nivel-header n3"><div class="nivel-icon">🟣</div><div class="nivel-info"><h3>Nivel 3 — Avanzado</h3><p>Resolución de triángulos y ecuaciones trigonométricas.</p></div></div>
+      <div id="ejercicios-n3"></div>
+      <div class="bloque-accion"><button class="btn-siguiente-nivel" id="btn-a-test" onclick="iniciarMinitest()" disabled>Hacer el mini-test →</button></div>
+    </div>
+
+    <div class="seccion" id="sec-test">
+      <div class="nivel-header ntest"><div class="nivel-icon">✅</div><div class="nivel-info"><h3>Mini-test de superación</h3><p>5 preguntas aleatorias. Necesitas 4/5 para superar el módulo.</p></div></div>
+      <div class="minitest-barra"><div class="minitest-fill" id="mt-barra" style="width:0%"></div></div>
+      <div id="minitest-contenido"></div>
+    </div>
+  `;
+
+  renderNivel('n1');
+  renderNivel('n2');
+  renderNivel('n3');
+  MathJax && MathJax.typesetPromise();
+}
+
+// ══════════════════════════════════════════
+// NAVEGACIÓN
+// ══════════════════════════════════════════
+function irSeccion(id) {
+  if (id === 'test' && testPreguntas.length === 0) { iniciarMinitest(); return; }
+  SECCIONES.forEach(s => {
+    const sec = document.getElementById(`sec-${s}`);
+    if (sec) sec.classList.toggle('visible', s === id);
+    const si = document.getElementById(`s-${s}`);
+    if (si) si.classList.toggle('activo', s === id);
+  });
+  document.querySelectorAll('.nm-btn').forEach((btn,i) => btn.classList.toggle('nm-activo', SECCIONES[i] === id));
+  window.scrollTo(0,0);
+  MathJax && MathJax.typesetPromise();
+}
+
+// ══════════════════════════════════════════
+// EJERCICIOS POR NIVEL
+// ══════════════════════════════════════════
+
+// ── Circunferencias goniométricas ──
+const DIBUJOS_T4 = {
+  'n1_0': `<svg width="200" height="200" viewBox="0 0 200 200" style="display:block;flex-shrink:0"><rect x="100" y="18" width="82" height="82" fill="#EFF3FA" opacity="0.7"/><circle cx="100" cy="100" r="82" fill="none" stroke="#1A4A7A" stroke-width="1.5" opacity="0.4"/><line x1="10" y1="100" x2="190" y2="100" stroke="#1A4A7A" stroke-width="1.2" stroke-linecap="round"/><line x1="100" y1="190" x2="100" y2="10" stroke="#1A4A7A" stroke-width="1.2" stroke-linecap="round"/><text x="184" y="97" font-size="9" fill="#1A4A7A" font-family="sans-serif">1</text><text x="8" y="97" font-size="9" fill="#1A4A7A" font-family="sans-serif">-1</text><text x="102" y="16" font-size="9" fill="#1A4A7A" font-family="sans-serif">1</text><text x="102" y="192" font-size="9" fill="#1A4A7A" font-family="sans-serif">-1</text><text x="192" y="104" font-size="10" fill="#1A4A7A" font-family="sans-serif">x</text><text x="103" y="8" font-size="10" fill="#1A4A7A" font-family="sans-serif">y</text><line x1="100" y1="100" x2="158.0" y2="42.0" stroke="#C0392B" stroke-width="2" stroke-linecap="round"/><path d="M 125,100 A 25,25 0 0,0 117,83" fill="none" stroke="#C0392B" stroke-width="1.3"/><text x="129" y="88" font-size="10" fill="#C0392B" font-style="italic" font-family="Georgia,serif" text-anchor="middle">α</text><line x1="158" y1="42" x2="158" y2="100" stroke="#1E7B5E" stroke-width="1" stroke-dasharray="3 2" opacity="0.7"/><line x1="158" y1="42" x2="100" y2="42" stroke="#B7600A" stroke-width="1" stroke-dasharray="3 2" opacity="0.7"/><circle cx="158" cy="42" r="4" fill="#C0392B" stroke="white" stroke-width="1.5"/><text x="166" y="36" font-size="10" fill="#C0392B" font-weight="600" font-family="sans-serif">P</text><text x="158" y="114" font-size="9" fill="#1E7B5E" font-family="sans-serif" text-anchor="middle">cos α</text><text x="72" y="42" font-size="9" fill="#B7600A" font-family="sans-serif" text-anchor="middle">sin α</text></svg>`,
+  'n1_1': `<svg width="200" height="200" viewBox="0 0 200 200" style="display:block;flex-shrink:0"><rect x="18" y="18" width="82" height="82" fill="#FEF3E2" opacity="0.7"/><circle cx="100" cy="100" r="82" fill="none" stroke="#1A4A7A" stroke-width="1.5" opacity="0.4"/><line x1="10" y1="100" x2="190" y2="100" stroke="#1A4A7A" stroke-width="1.2" stroke-linecap="round"/><line x1="100" y1="190" x2="100" y2="10" stroke="#1A4A7A" stroke-width="1.2" stroke-linecap="round"/><text x="184" y="97" font-size="9" fill="#1A4A7A" font-family="sans-serif">1</text><text x="8" y="97" font-size="9" fill="#1A4A7A" font-family="sans-serif">-1</text><text x="102" y="16" font-size="9" fill="#1A4A7A" font-family="sans-serif">1</text><text x="102" y="192" font-size="9" fill="#1A4A7A" font-family="sans-serif">-1</text><text x="192" y="104" font-size="10" fill="#1A4A7A" font-family="sans-serif">x</text><text x="103" y="8" font-size="10" fill="#1A4A7A" font-family="sans-serif">y</text><line x1="100" y1="100" x2="29.0" y2="59.0" stroke="#C0392B" stroke-width="2" stroke-linecap="round"/><path d="M 125,100 A 25,25 0 0,0 79,88" fill="none" stroke="#C0392B" stroke-width="1.3"/><text x="108" y="70" font-size="10" fill="#C0392B" font-style="italic" font-family="Georgia,serif" text-anchor="middle">α</text><line x1="29" y1="59" x2="29" y2="100" stroke="#1E7B5E" stroke-width="1" stroke-dasharray="3 2" opacity="0.7"/><line x1="29" y1="59" x2="100" y2="59" stroke="#B7600A" stroke-width="1" stroke-dasharray="3 2" opacity="0.7"/><circle cx="29" cy="59" r="4" fill="#C0392B" stroke="white" stroke-width="1.5"/><text x="11" y="53" font-size="10" fill="#C0392B" font-weight="600" font-family="sans-serif">P</text><text x="29" y="114" font-size="9" fill="#1E7B5E" font-family="sans-serif" text-anchor="middle">cos α</text><text x="72" y="59" font-size="9" fill="#B7600A" font-family="sans-serif" text-anchor="middle">sin α</text></svg>`,
+  'n1_2': `<svg width="200" height="200" viewBox="0 0 200 200" style="display:block;flex-shrink:0"><rect x="18" y="100" width="82" height="82" fill="#F0EBF8" opacity="0.7"/><circle cx="100" cy="100" r="82" fill="none" stroke="#1A4A7A" stroke-width="1.5" opacity="0.4"/><line x1="10" y1="100" x2="190" y2="100" stroke="#1A4A7A" stroke-width="1.2" stroke-linecap="round"/><line x1="100" y1="190" x2="100" y2="10" stroke="#1A4A7A" stroke-width="1.2" stroke-linecap="round"/><text x="184" y="97" font-size="9" fill="#1A4A7A" font-family="sans-serif">1</text><text x="8" y="97" font-size="9" fill="#1A4A7A" font-family="sans-serif">-1</text><text x="102" y="16" font-size="9" fill="#1A4A7A" font-family="sans-serif">1</text><text x="102" y="192" font-size="9" fill="#1A4A7A" font-family="sans-serif">-1</text><text x="192" y="104" font-size="10" fill="#1A4A7A" font-family="sans-serif">x</text><text x="103" y="8" font-size="10" fill="#1A4A7A" font-family="sans-serif">y</text><line x1="100" y1="100" x2="29.0" y2="141.0" stroke="#C0392B" stroke-width="2" stroke-linecap="round"/><path d="M 125,100 A 25,25 0 1,0 79,112" fill="none" stroke="#C0392B" stroke-width="1.3"/><text x="92" y="70" font-size="10" fill="#C0392B" font-style="italic" font-family="Georgia,serif" text-anchor="middle">α</text><line x1="29" y1="141" x2="29" y2="100" stroke="#1E7B5E" stroke-width="1" stroke-dasharray="3 2" opacity="0.7"/><line x1="29" y1="141" x2="100" y2="141" stroke="#B7600A" stroke-width="1" stroke-dasharray="3 2" opacity="0.7"/><circle cx="29" cy="141" r="4" fill="#C0392B" stroke="white" stroke-width="1.5"/><text x="11" y="155" font-size="10" fill="#C0392B" font-weight="600" font-family="sans-serif">P</text><text x="29" y="114" font-size="9" fill="#1E7B5E" font-family="sans-serif" text-anchor="middle">cos α</text><text x="72" y="141" font-size="9" fill="#B7600A" font-family="sans-serif" text-anchor="middle">sin α</text></svg>`,
+  'n1_3': `<svg width="200" height="200" viewBox="0 0 200 200" style="display:block;flex-shrink:0"><rect x="100" y="100" width="82" height="82" fill="#E8F5F0" opacity="0.7"/><circle cx="100" cy="100" r="82" fill="none" stroke="#1A4A7A" stroke-width="1.5" opacity="0.4"/><line x1="10" y1="100" x2="190" y2="100" stroke="#1A4A7A" stroke-width="1.2" stroke-linecap="round"/><line x1="100" y1="190" x2="100" y2="10" stroke="#1A4A7A" stroke-width="1.2" stroke-linecap="round"/><text x="184" y="97" font-size="9" fill="#1A4A7A" font-family="sans-serif">1</text><text x="8" y="97" font-size="9" fill="#1A4A7A" font-family="sans-serif">-1</text><text x="102" y="16" font-size="9" fill="#1A4A7A" font-family="sans-serif">1</text><text x="102" y="192" font-size="9" fill="#1A4A7A" font-family="sans-serif">-1</text><text x="192" y="104" font-size="10" fill="#1A4A7A" font-family="sans-serif">x</text><text x="103" y="8" font-size="10" fill="#1A4A7A" font-family="sans-serif">y</text><line x1="100" y1="100" x2="141.0" y2="171.0" stroke="#C0392B" stroke-width="2" stroke-linecap="round"/><path d="M 125,100 A 25,25 0 1,0 112,121" fill="none" stroke="#C0392B" stroke-width="1.3"/><text x="73" y="84" font-size="10" fill="#C0392B" font-style="italic" font-family="Georgia,serif" text-anchor="middle">α</text><line x1="141" y1="171" x2="141" y2="100" stroke="#1E7B5E" stroke-width="1" stroke-dasharray="3 2" opacity="0.7"/><line x1="141" y1="171" x2="100" y2="171" stroke="#B7600A" stroke-width="1" stroke-dasharray="3 2" opacity="0.7"/><circle cx="141" cy="171" r="4" fill="#C0392B" stroke="white" stroke-width="1.5"/><text x="149" y="185" font-size="10" fill="#C0392B" font-weight="600" font-family="sans-serif">P</text><text x="141" y="114" font-size="9" fill="#1E7B5E" font-family="sans-serif" text-anchor="middle">cos α</text><text x="72" y="171" font-size="9" fill="#B7600A" font-family="sans-serif" text-anchor="middle">sin α</text></svg>`,
+  'n1_4': `<svg width="200" height="200" viewBox="0 0 200 200" style="display:block;flex-shrink:0"><rect x="100" y="18" width="82" height="82" fill="#EFF3FA" opacity="0.6"/><rect x="18" y="18" width="82" height="82" fill="#FEF3E2" opacity="0.6"/><rect x="18" y="100" width="82" height="82" fill="#F0EBF8" opacity="0.6"/><rect x="100" y="100" width="82" height="82" fill="#E8F5F0" opacity="0.6"/><circle cx="100" cy="100" r="82" fill="none" stroke="#1A4A7A" stroke-width="1.5" opacity="0.5"/><line x1="12" y1="100" x2="188" y2="100" stroke="#1A4A7A" stroke-width="1.2"/><line x1="100" y1="188" x2="100" y2="12" stroke="#1A4A7A" stroke-width="1.2"/><text x="145" y="61" font-size="9" fill="#1A4A7A" font-weight="600" font-family="sans-serif" text-anchor="middle">I</text><text x="145" y="72" font-size="8" fill="#1E7B5E" font-family="sans-serif" text-anchor="middle">+,+,+</text><text x="55" y="61" font-size="9" fill="#1A4A7A" font-weight="600" font-family="sans-serif" text-anchor="middle">II</text><text x="55" y="72" font-size="8" fill="#B7600A" font-family="sans-serif" text-anchor="middle">+,−,−</text><text x="55" y="151" font-size="9" fill="#1A4A7A" font-weight="600" font-family="sans-serif" text-anchor="middle">III</text><text x="55" y="162" font-size="8" fill="#6B3FA0" font-family="sans-serif" text-anchor="middle">−,−,+</text><text x="145" y="151" font-size="9" fill="#1A4A7A" font-weight="600" font-family="sans-serif" text-anchor="middle">IV</text><text x="145" y="162" font-size="8" fill="#1E7B5E" font-family="sans-serif" text-anchor="middle">−,+,−</text></svg>`,
+  'n1_5': `<svg width="200" height="200" viewBox="0 0 200 200" style="display:block;flex-shrink:0"><circle cx="100" cy="100" r="82" fill="none" stroke="#1A4A7A" stroke-width="1.5" opacity="0.4"/><line x1="10" y1="100" x2="190" y2="100" stroke="#1A4A7A" stroke-width="1.2" stroke-linecap="round"/><line x1="100" y1="190" x2="100" y2="10" stroke="#1A4A7A" stroke-width="1.2" stroke-linecap="round"/><text x="184" y="97" font-size="9" fill="#1A4A7A" font-family="sans-serif">1</text><text x="8" y="97" font-size="9" fill="#1A4A7A" font-family="sans-serif">-1</text><text x="102" y="16" font-size="9" fill="#1A4A7A" font-family="sans-serif">1</text><text x="102" y="192" font-size="9" fill="#1A4A7A" font-family="sans-serif">-1</text><text x="192" y="104" font-size="10" fill="#1A4A7A" font-family="sans-serif">x</text><text x="103" y="8" font-size="10" fill="#1A4A7A" font-family="sans-serif">y</text><line x1="100" y1="100" x2="100.0" y2="18.0" stroke="#C0392B" stroke-width="2" stroke-linecap="round"/><path d="M 125,100 A 25,25 0 0,0 100,75" fill="none" stroke="#C0392B" stroke-width="1.3"/><text x="122" y="78" font-size="10" fill="#C0392B" font-style="italic" font-family="Georgia,serif" text-anchor="middle">α</text><line x1="100" y1="18" x2="100" y2="100" stroke="#1E7B5E" stroke-width="1" stroke-dasharray="3 2" opacity="0.7"/><line x1="100" y1="18" x2="100" y2="18" stroke="#B7600A" stroke-width="1" stroke-dasharray="3 2" opacity="0.7"/><circle cx="100" cy="18" r="4" fill="#C0392B" stroke="white" stroke-width="1.5"/><text x="108" y="12" font-size="10" fill="#C0392B" font-weight="600" font-family="sans-serif">P</text></svg>`,
+  'n1_6': `<svg width="200" height="200" viewBox="0 0 200 200" style="display:block;flex-shrink:0"><circle cx="100" cy="100" r="82" fill="none" stroke="#1A4A7A" stroke-width="1.5" opacity="0.4"/><line x1="10" y1="100" x2="190" y2="100" stroke="#1A4A7A" stroke-width="1.2" stroke-linecap="round"/><line x1="100" y1="190" x2="100" y2="10" stroke="#1A4A7A" stroke-width="1.2" stroke-linecap="round"/><text x="184" y="97" font-size="9" fill="#1A4A7A" font-family="sans-serif">1</text><text x="8" y="97" font-size="9" fill="#1A4A7A" font-family="sans-serif">-1</text><text x="102" y="16" font-size="9" fill="#1A4A7A" font-family="sans-serif">1</text><text x="102" y="192" font-size="9" fill="#1A4A7A" font-family="sans-serif">-1</text><text x="192" y="104" font-size="10" fill="#1A4A7A" font-family="sans-serif">x</text><text x="103" y="8" font-size="10" fill="#1A4A7A" font-family="sans-serif">y</text><line x1="100" y1="100" x2="18.0" y2="100.0" stroke="#C0392B" stroke-width="2" stroke-linecap="round"/><path d="M 125,100 A 25,25 0 0,0 75,100" fill="none" stroke="#C0392B" stroke-width="1.3"/><text x="100" y="69" font-size="10" fill="#C0392B" font-style="italic" font-family="Georgia,serif" text-anchor="middle">α</text><line x1="18" y1="100" x2="18" y2="100" stroke="#1E7B5E" stroke-width="1" stroke-dasharray="3 2" opacity="0.7"/><line x1="18" y1="100" x2="100" y2="100" stroke="#B7600A" stroke-width="1" stroke-dasharray="3 2" opacity="0.7"/><circle cx="18" cy="100" r="4" fill="#C0392B" stroke="white" stroke-width="1.5"/><text x="0" y="94" font-size="10" fill="#C0392B" font-weight="600" font-family="sans-serif">P</text></svg>`,
+  'n1_7': `<svg width="200" height="200" viewBox="0 0 200 200" style="display:block;flex-shrink:0"><circle cx="100" cy="100" r="82" fill="none" stroke="#1A4A7A" stroke-width="1.5" opacity="0.4"/><line x1="10" y1="100" x2="190" y2="100" stroke="#1A4A7A" stroke-width="1.2" stroke-linecap="round"/><line x1="100" y1="190" x2="100" y2="10" stroke="#1A4A7A" stroke-width="1.2" stroke-linecap="round"/><text x="184" y="97" font-size="9" fill="#1A4A7A" font-family="sans-serif">1</text><text x="8" y="97" font-size="9" fill="#1A4A7A" font-family="sans-serif">-1</text><text x="102" y="16" font-size="9" fill="#1A4A7A" font-family="sans-serif">1</text><text x="102" y="192" font-size="9" fill="#1A4A7A" font-family="sans-serif">-1</text><text x="192" y="104" font-size="10" fill="#1A4A7A" font-family="sans-serif">x</text><text x="103" y="8" font-size="10" fill="#1A4A7A" font-family="sans-serif">y</text><line x1="100" y1="100" x2="100.0" y2="182.0" stroke="#C0392B" stroke-width="2" stroke-linecap="round"/><path d="M 125,100 A 25,25 0 1,0 100,125" fill="none" stroke="#C0392B" stroke-width="1.3"/><text x="78" y="78" font-size="10" fill="#C0392B" font-style="italic" font-family="Georgia,serif" text-anchor="middle">α</text><line x1="100" y1="182" x2="100" y2="100" stroke="#1E7B5E" stroke-width="1" stroke-dasharray="3 2" opacity="0.7"/><line x1="100" y1="182" x2="100" y2="182" stroke="#B7600A" stroke-width="1" stroke-dasharray="3 2" opacity="0.7"/><circle cx="100" cy="182" r="4" fill="#C0392B" stroke="white" stroke-width="1.5"/><text x="82" y="196" font-size="10" fill="#C0392B" font-weight="600" font-family="sans-serif">P</text></svg>`,
+  'n1_8': `<svg width="200" height="200" viewBox="0 0 200 200" style="display:block;flex-shrink:0"><rect x="100" y="18" width="82" height="82" fill="#EFF3FA" opacity="0.7"/><circle cx="100" cy="100" r="82" fill="none" stroke="#1A4A7A" stroke-width="1.5" opacity="0.4"/><line x1="10" y1="100" x2="190" y2="100" stroke="#1A4A7A" stroke-width="1.2" stroke-linecap="round"/><line x1="100" y1="190" x2="100" y2="10" stroke="#1A4A7A" stroke-width="1.2" stroke-linecap="round"/><text x="184" y="97" font-size="9" fill="#1A4A7A" font-family="sans-serif">1</text><text x="8" y="97" font-size="9" fill="#1A4A7A" font-family="sans-serif">-1</text><text x="102" y="16" font-size="9" fill="#1A4A7A" font-family="sans-serif">1</text><text x="102" y="192" font-size="9" fill="#1A4A7A" font-family="sans-serif">-1</text><text x="192" y="104" font-size="10" fill="#1A4A7A" font-family="sans-serif">x</text><text x="103" y="8" font-size="10" fill="#1A4A7A" font-family="sans-serif">y</text><line x1="100" y1="100" x2="171.0" y2="59.0" stroke="#C0392B" stroke-width="2" stroke-linecap="round"/><path d="M 125,100 A 25,25 0 0,0 121,88" fill="none" stroke="#C0392B" stroke-width="1.3"/><text x="130" y="92" font-size="10" fill="#C0392B" font-style="italic" font-family="Georgia,serif" text-anchor="middle">α</text><line x1="171" y1="59" x2="171" y2="100" stroke="#1E7B5E" stroke-width="1" stroke-dasharray="3 2" opacity="0.7"/><line x1="171" y1="59" x2="100" y2="59" stroke="#B7600A" stroke-width="1" stroke-dasharray="3 2" opacity="0.7"/><circle cx="171" cy="59" r="4" fill="#C0392B" stroke="white" stroke-width="1.5"/><text x="179" y="53" font-size="10" fill="#C0392B" font-weight="600" font-family="sans-serif">P</text><text x="171" y="114" font-size="9" fill="#1E7B5E" font-family="sans-serif" text-anchor="middle">cos α</text><text x="72" y="59" font-size="9" fill="#B7600A" font-family="sans-serif" text-anchor="middle">sin α</text></svg>`,
+  'n1_9': `<svg width="200" height="200" viewBox="0 0 200 200" style="display:block;flex-shrink:0"><rect x="18" y="18" width="82" height="82" fill="#FEF3E2" opacity="0.7"/><circle cx="100" cy="100" r="82" fill="none" stroke="#1A4A7A" stroke-width="1.5" opacity="0.4"/><line x1="10" y1="100" x2="190" y2="100" stroke="#1A4A7A" stroke-width="1.2" stroke-linecap="round"/><line x1="100" y1="190" x2="100" y2="10" stroke="#1A4A7A" stroke-width="1.2" stroke-linecap="round"/><text x="184" y="97" font-size="9" fill="#1A4A7A" font-family="sans-serif">1</text><text x="8" y="97" font-size="9" fill="#1A4A7A" font-family="sans-serif">-1</text><text x="102" y="16" font-size="9" fill="#1A4A7A" font-family="sans-serif">1</text><text x="102" y="192" font-size="9" fill="#1A4A7A" font-family="sans-serif">-1</text><text x="192" y="104" font-size="10" fill="#1A4A7A" font-family="sans-serif">x</text><text x="103" y="8" font-size="10" fill="#1A4A7A" font-family="sans-serif">y</text><line x1="100" y1="100" x2="59.0" y2="29.0" stroke="#C0392B" stroke-width="2" stroke-linecap="round"/><path d="M 125,100 A 25,25 0 0,0 88,79" fill="none" stroke="#C0392B" stroke-width="1.3"/><text x="116" y="73" font-size="10" fill="#C0392B" font-style="italic" font-family="Georgia,serif" text-anchor="middle">α</text><line x1="59" y1="29" x2="59" y2="100" stroke="#1E7B5E" stroke-width="1" stroke-dasharray="3 2" opacity="0.7"/><line x1="59" y1="29" x2="100" y2="29" stroke="#B7600A" stroke-width="1" stroke-dasharray="3 2" opacity="0.7"/><circle cx="59" cy="29" r="4" fill="#C0392B" stroke="white" stroke-width="1.5"/><text x="41" y="23" font-size="10" fill="#C0392B" font-weight="600" font-family="sans-serif">P</text><text x="59" y="114" font-size="9" fill="#1E7B5E" font-family="sans-serif" text-anchor="middle">cos α</text><text x="72" y="29" font-size="9" fill="#B7600A" font-family="sans-serif" text-anchor="middle">sin α</text></svg>`,
+  'n2_0': `<svg width="200" height="200" viewBox="0 0 200 200" style="display:block;flex-shrink:0"><rect x="18" y="18" width="82" height="82" fill="#FEF3E2" opacity="0.7"/><circle cx="100" cy="100" r="82" fill="none" stroke="#1A4A7A" stroke-width="1.5" opacity="0.4"/><line x1="10" y1="100" x2="190" y2="100" stroke="#1A4A7A" stroke-width="1.2" stroke-linecap="round"/><line x1="100" y1="190" x2="100" y2="10" stroke="#1A4A7A" stroke-width="1.2" stroke-linecap="round"/><text x="184" y="97" font-size="9" fill="#1A4A7A" font-family="sans-serif">1</text><text x="8" y="97" font-size="9" fill="#1A4A7A" font-family="sans-serif">-1</text><text x="102" y="16" font-size="9" fill="#1A4A7A" font-family="sans-serif">1</text><text x="102" y="192" font-size="9" fill="#1A4A7A" font-family="sans-serif">-1</text><text x="192" y="104" font-size="10" fill="#1A4A7A" font-family="sans-serif">x</text><text x="103" y="8" font-size="10" fill="#1A4A7A" font-family="sans-serif">y</text><line x1="100" y1="100" x2="29.0" y2="59.0" stroke="#C0392B" stroke-width="2" stroke-linecap="round"/><path d="M 125,100 A 25,25 0 0,0 79,88" fill="none" stroke="#C0392B" stroke-width="1.3"/><text x="108" y="70" font-size="10" fill="#C0392B" font-style="italic" font-family="Georgia,serif" text-anchor="middle">α</text><line x1="29" y1="59" x2="29" y2="100" stroke="#1E7B5E" stroke-width="1" stroke-dasharray="3 2" opacity="0.7"/><line x1="29" y1="59" x2="100" y2="59" stroke="#B7600A" stroke-width="1" stroke-dasharray="3 2" opacity="0.7"/><circle cx="29" cy="59" r="4" fill="#C0392B" stroke="white" stroke-width="1.5"/><text x="11" y="53" font-size="10" fill="#C0392B" font-weight="600" font-family="sans-serif">P</text><text x="29" y="114" font-size="9" fill="#1E7B5E" font-family="sans-serif" text-anchor="middle">cos α</text><text x="72" y="59" font-size="9" fill="#B7600A" font-family="sans-serif" text-anchor="middle">sin α</text></svg>`,
+  'n2_1': `<svg width="200" height="200" viewBox="0 0 200 200" style="display:block;flex-shrink:0"><rect x="18" y="100" width="82" height="82" fill="#F0EBF8" opacity="0.7"/><circle cx="100" cy="100" r="82" fill="none" stroke="#1A4A7A" stroke-width="1.5" opacity="0.4"/><line x1="10" y1="100" x2="190" y2="100" stroke="#1A4A7A" stroke-width="1.2" stroke-linecap="round"/><line x1="100" y1="190" x2="100" y2="10" stroke="#1A4A7A" stroke-width="1.2" stroke-linecap="round"/><text x="184" y="97" font-size="9" fill="#1A4A7A" font-family="sans-serif">1</text><text x="8" y="97" font-size="9" fill="#1A4A7A" font-family="sans-serif">-1</text><text x="102" y="16" font-size="9" fill="#1A4A7A" font-family="sans-serif">1</text><text x="102" y="192" font-size="9" fill="#1A4A7A" font-family="sans-serif">-1</text><text x="192" y="104" font-size="10" fill="#1A4A7A" font-family="sans-serif">x</text><text x="103" y="8" font-size="10" fill="#1A4A7A" font-family="sans-serif">y</text><line x1="100" y1="100" x2="29.0" y2="141.0" stroke="#C0392B" stroke-width="2" stroke-linecap="round"/><path d="M 125,100 A 25,25 0 1,0 79,112" fill="none" stroke="#C0392B" stroke-width="1.3"/><text x="92" y="70" font-size="10" fill="#C0392B" font-style="italic" font-family="Georgia,serif" text-anchor="middle">α</text><line x1="29" y1="141" x2="29" y2="100" stroke="#1E7B5E" stroke-width="1" stroke-dasharray="3 2" opacity="0.7"/><line x1="29" y1="141" x2="100" y2="141" stroke="#B7600A" stroke-width="1" stroke-dasharray="3 2" opacity="0.7"/><circle cx="29" cy="141" r="4" fill="#C0392B" stroke="white" stroke-width="1.5"/><text x="11" y="155" font-size="10" fill="#C0392B" font-weight="600" font-family="sans-serif">P</text><text x="29" y="114" font-size="9" fill="#1E7B5E" font-family="sans-serif" text-anchor="middle">cos α</text><text x="72" y="141" font-size="9" fill="#B7600A" font-family="sans-serif" text-anchor="middle">sin α</text></svg>`,
+  'n2_2': `<svg width="200" height="200" viewBox="0 0 200 200" style="display:block;flex-shrink:0"><rect x="100" y="100" width="82" height="82" fill="#E8F5F0" opacity="0.7"/><circle cx="100" cy="100" r="82" fill="none" stroke="#1A4A7A" stroke-width="1.5" opacity="0.4"/><line x1="10" y1="100" x2="190" y2="100" stroke="#1A4A7A" stroke-width="1.2" stroke-linecap="round"/><line x1="100" y1="190" x2="100" y2="10" stroke="#1A4A7A" stroke-width="1.2" stroke-linecap="round"/><text x="184" y="97" font-size="9" fill="#1A4A7A" font-family="sans-serif">1</text><text x="8" y="97" font-size="9" fill="#1A4A7A" font-family="sans-serif">-1</text><text x="102" y="16" font-size="9" fill="#1A4A7A" font-family="sans-serif">1</text><text x="102" y="192" font-size="9" fill="#1A4A7A" font-family="sans-serif">-1</text><text x="192" y="104" font-size="10" fill="#1A4A7A" font-family="sans-serif">x</text><text x="103" y="8" font-size="10" fill="#1A4A7A" font-family="sans-serif">y</text><line x1="100" y1="100" x2="171.0" y2="141.0" stroke="#C0392B" stroke-width="2" stroke-linecap="round"/><path d="M 125,100 A 25,25 0 1,0 121,112" fill="none" stroke="#C0392B" stroke-width="1.3"/><text x="70" y="92" font-size="10" fill="#C0392B" font-style="italic" font-family="Georgia,serif" text-anchor="middle">α</text><line x1="171" y1="141" x2="171" y2="100" stroke="#1E7B5E" stroke-width="1" stroke-dasharray="3 2" opacity="0.7"/><line x1="171" y1="141" x2="100" y2="141" stroke="#B7600A" stroke-width="1" stroke-dasharray="3 2" opacity="0.7"/><circle cx="171" cy="141" r="4" fill="#C0392B" stroke="white" stroke-width="1.5"/><text x="179" y="155" font-size="10" fill="#C0392B" font-weight="600" font-family="sans-serif">P</text><text x="171" y="114" font-size="9" fill="#1E7B5E" font-family="sans-serif" text-anchor="middle">cos α</text><text x="72" y="141" font-size="9" fill="#B7600A" font-family="sans-serif" text-anchor="middle">sin α</text></svg>`,
+  'n2_3': `<svg width="200" height="200" viewBox="0 0 200 200" style="display:block;flex-shrink:0"><rect x="18" y="18" width="82" height="82" fill="#FEF3E2" opacity="0.7"/><circle cx="100" cy="100" r="82" fill="none" stroke="#1A4A7A" stroke-width="1.5" opacity="0.4"/><line x1="10" y1="100" x2="190" y2="100" stroke="#1A4A7A" stroke-width="1.2" stroke-linecap="round"/><line x1="100" y1="190" x2="100" y2="10" stroke="#1A4A7A" stroke-width="1.2" stroke-linecap="round"/><text x="184" y="97" font-size="9" fill="#1A4A7A" font-family="sans-serif">1</text><text x="8" y="97" font-size="9" fill="#1A4A7A" font-family="sans-serif">-1</text><text x="102" y="16" font-size="9" fill="#1A4A7A" font-family="sans-serif">1</text><text x="102" y="192" font-size="9" fill="#1A4A7A" font-family="sans-serif">-1</text><text x="192" y="104" font-size="10" fill="#1A4A7A" font-family="sans-serif">x</text><text x="103" y="8" font-size="10" fill="#1A4A7A" font-family="sans-serif">y</text><line x1="100" y1="100" x2="59.0" y2="29.0" stroke="#C0392B" stroke-width="2" stroke-linecap="round"/><path d="M 125,100 A 25,25 0 0,0 88,79" fill="none" stroke="#C0392B" stroke-width="1.3"/><text x="116" y="73" font-size="10" fill="#C0392B" font-style="italic" font-family="Georgia,serif" text-anchor="middle">α</text><line x1="59" y1="29" x2="59" y2="100" stroke="#1E7B5E" stroke-width="1" stroke-dasharray="3 2" opacity="0.7"/><line x1="59" y1="29" x2="100" y2="29" stroke="#B7600A" stroke-width="1" stroke-dasharray="3 2" opacity="0.7"/><circle cx="59" cy="29" r="4" fill="#C0392B" stroke="white" stroke-width="1.5"/><text x="41" y="23" font-size="10" fill="#C0392B" font-weight="600" font-family="sans-serif">P</text><text x="59" y="114" font-size="9" fill="#1E7B5E" font-family="sans-serif" text-anchor="middle">cos α</text><text x="72" y="29" font-size="9" fill="#B7600A" font-family="sans-serif" text-anchor="middle">sin α</text></svg>`,
+  'n2_4': `<svg width="200" height="200" viewBox="0 0 200 200" style="display:block;flex-shrink:0"><rect x="18" y="100" width="82" height="82" fill="#F0EBF8" opacity="0.7"/><circle cx="100" cy="100" r="82" fill="none" stroke="#1A4A7A" stroke-width="1.5" opacity="0.4"/><line x1="10" y1="100" x2="190" y2="100" stroke="#1A4A7A" stroke-width="1.2" stroke-linecap="round"/><line x1="100" y1="190" x2="100" y2="10" stroke="#1A4A7A" stroke-width="1.2" stroke-linecap="round"/><text x="184" y="97" font-size="9" fill="#1A4A7A" font-family="sans-serif">1</text><text x="8" y="97" font-size="9" fill="#1A4A7A" font-family="sans-serif">-1</text><text x="102" y="16" font-size="9" fill="#1A4A7A" font-family="sans-serif">1</text><text x="102" y="192" font-size="9" fill="#1A4A7A" font-family="sans-serif">-1</text><text x="192" y="104" font-size="10" fill="#1A4A7A" font-family="sans-serif">x</text><text x="103" y="8" font-size="10" fill="#1A4A7A" font-family="sans-serif">y</text><line x1="100" y1="100" x2="59.0" y2="171.0" stroke="#C0392B" stroke-width="2" stroke-linecap="round"/><path d="M 125,100 A 25,25 0 1,0 88,121" fill="none" stroke="#C0392B" stroke-width="1.3"/><text x="84" y="73" font-size="10" fill="#C0392B" font-style="italic" font-family="Georgia,serif" text-anchor="middle">α</text><line x1="59" y1="171" x2="59" y2="100" stroke="#1E7B5E" stroke-width="1" stroke-dasharray="3 2" opacity="0.7"/><line x1="59" y1="171" x2="100" y2="171" stroke="#B7600A" stroke-width="1" stroke-dasharray="3 2" opacity="0.7"/><circle cx="59" cy="171" r="4" fill="#C0392B" stroke="white" stroke-width="1.5"/><text x="41" y="185" font-size="10" fill="#C0392B" font-weight="600" font-family="sans-serif">P</text><text x="59" y="114" font-size="9" fill="#1E7B5E" font-family="sans-serif" text-anchor="middle">cos α</text><text x="72" y="171" font-size="9" fill="#B7600A" font-family="sans-serif" text-anchor="middle">sin α</text></svg>`,
+  'n2_5': `<svg width="200" height="200" viewBox="0 0 200 200" style="display:block;flex-shrink:0"><rect x="100" y="100" width="82" height="82" fill="#E8F5F0" opacity="0.7"/><circle cx="100" cy="100" r="82" fill="none" stroke="#1A4A7A" stroke-width="1.5" opacity="0.4"/><line x1="10" y1="100" x2="190" y2="100" stroke="#1A4A7A" stroke-width="1.2" stroke-linecap="round"/><line x1="100" y1="190" x2="100" y2="10" stroke="#1A4A7A" stroke-width="1.2" stroke-linecap="round"/><text x="184" y="97" font-size="9" fill="#1A4A7A" font-family="sans-serif">1</text><text x="8" y="97" font-size="9" fill="#1A4A7A" font-family="sans-serif">-1</text><text x="102" y="16" font-size="9" fill="#1A4A7A" font-family="sans-serif">1</text><text x="102" y="192" font-size="9" fill="#1A4A7A" font-family="sans-serif">-1</text><text x="192" y="104" font-size="10" fill="#1A4A7A" font-family="sans-serif">x</text><text x="103" y="8" font-size="10" fill="#1A4A7A" font-family="sans-serif">y</text><line x1="100" y1="100" x2="141.0" y2="171.0" stroke="#C0392B" stroke-width="2" stroke-linecap="round"/><path d="M 125,100 A 25,25 0 1,0 112,121" fill="none" stroke="#C0392B" stroke-width="1.3"/><text x="73" y="84" font-size="10" fill="#C0392B" font-style="italic" font-family="Georgia,serif" text-anchor="middle">α</text><line x1="141" y1="171" x2="141" y2="100" stroke="#1E7B5E" stroke-width="1" stroke-dasharray="3 2" opacity="0.7"/><line x1="141" y1="171" x2="100" y2="171" stroke="#B7600A" stroke-width="1" stroke-dasharray="3 2" opacity="0.7"/><circle cx="141" cy="171" r="4" fill="#C0392B" stroke="white" stroke-width="1.5"/><text x="149" y="185" font-size="10" fill="#C0392B" font-weight="600" font-family="sans-serif">P</text><text x="141" y="114" font-size="9" fill="#1E7B5E" font-family="sans-serif" text-anchor="middle">cos α</text><text x="72" y="171" font-size="9" fill="#B7600A" font-family="sans-serif" text-anchor="middle">sin α</text></svg>`,
+  'n2_6': `<svg width="200" height="200" viewBox="0 0 200 200" style="display:block;flex-shrink:0"><rect x="18" y="18" width="82" height="82" fill="#FEF3E2" opacity="0.7"/><circle cx="100" cy="100" r="82" fill="none" stroke="#1A4A7A" stroke-width="1.5" opacity="0.4"/><line x1="10" y1="100" x2="190" y2="100" stroke="#1A4A7A" stroke-width="1.2" stroke-linecap="round"/><line x1="100" y1="190" x2="100" y2="10" stroke="#1A4A7A" stroke-width="1.2" stroke-linecap="round"/><text x="184" y="97" font-size="9" fill="#1A4A7A" font-family="sans-serif">1</text><text x="8" y="97" font-size="9" fill="#1A4A7A" font-family="sans-serif">-1</text><text x="102" y="16" font-size="9" fill="#1A4A7A" font-family="sans-serif">1</text><text x="102" y="192" font-size="9" fill="#1A4A7A" font-family="sans-serif">-1</text><text x="192" y="104" font-size="10" fill="#1A4A7A" font-family="sans-serif">x</text><text x="103" y="8" font-size="10" fill="#1A4A7A" font-family="sans-serif">y</text><line x1="100" y1="100" x2="42.0" y2="42.0" stroke="#C0392B" stroke-width="2" stroke-linecap="round"/><path d="M 125,100 A 25,25 0 0,0 83,83" fill="none" stroke="#C0392B" stroke-width="1.3"/><text x="112" y="71" font-size="10" fill="#C0392B" font-style="italic" font-family="Georgia,serif" text-anchor="middle">α</text><line x1="42" y1="42" x2="42" y2="100" stroke="#1E7B5E" stroke-width="1" stroke-dasharray="3 2" opacity="0.7"/><line x1="42" y1="42" x2="100" y2="42" stroke="#B7600A" stroke-width="1" stroke-dasharray="3 2" opacity="0.7"/><circle cx="42" cy="42" r="4" fill="#C0392B" stroke="white" stroke-width="1.5"/><text x="24" y="36" font-size="10" fill="#C0392B" font-weight="600" font-family="sans-serif">P</text><text x="42" y="114" font-size="9" fill="#1E7B5E" font-family="sans-serif" text-anchor="middle">cos α</text><text x="72" y="42" font-size="9" fill="#B7600A" font-family="sans-serif" text-anchor="middle">sin α</text></svg>`,
+  'n2_7': `<svg width="200" height="200" viewBox="0 0 200 200" style="display:block;flex-shrink:0"><rect x="18" y="100" width="82" height="82" fill="#F0EBF8" opacity="0.7"/><circle cx="100" cy="100" r="82" fill="none" stroke="#1A4A7A" stroke-width="1.5" opacity="0.4"/><line x1="10" y1="100" x2="190" y2="100" stroke="#1A4A7A" stroke-width="1.2" stroke-linecap="round"/><line x1="100" y1="190" x2="100" y2="10" stroke="#1A4A7A" stroke-width="1.2" stroke-linecap="round"/><text x="184" y="97" font-size="9" fill="#1A4A7A" font-family="sans-serif">1</text><text x="8" y="97" font-size="9" fill="#1A4A7A" font-family="sans-serif">-1</text><text x="102" y="16" font-size="9" fill="#1A4A7A" font-family="sans-serif">1</text><text x="102" y="192" font-size="9" fill="#1A4A7A" font-family="sans-serif">-1</text><text x="192" y="104" font-size="10" fill="#1A4A7A" font-family="sans-serif">x</text><text x="103" y="8" font-size="10" fill="#1A4A7A" font-family="sans-serif">y</text><line x1="100" y1="100" x2="42.0" y2="158.0" stroke="#C0392B" stroke-width="2" stroke-linecap="round"/><path d="M 125,100 A 25,25 0 1,0 83,117" fill="none" stroke="#C0392B" stroke-width="1.3"/><text x="88" y="71" font-size="10" fill="#C0392B" font-style="italic" font-family="Georgia,serif" text-anchor="middle">α</text><line x1="42" y1="158" x2="42" y2="100" stroke="#1E7B5E" stroke-width="1" stroke-dasharray="3 2" opacity="0.7"/><line x1="42" y1="158" x2="100" y2="158" stroke="#B7600A" stroke-width="1" stroke-dasharray="3 2" opacity="0.7"/><circle cx="42" cy="158" r="4" fill="#C0392B" stroke="white" stroke-width="1.5"/><text x="24" y="172" font-size="10" fill="#C0392B" font-weight="600" font-family="sans-serif">P</text><text x="42" y="114" font-size="9" fill="#1E7B5E" font-family="sans-serif" text-anchor="middle">cos α</text><text x="72" y="158" font-size="9" fill="#B7600A" font-family="sans-serif" text-anchor="middle">sin α</text></svg>`,
+  'n3_0': `<svg width="200" height="200" viewBox="0 0 200 200" style="display:block;flex-shrink:0"><rect x="18" y="18" width="82" height="82" fill="#FEF3E2" opacity="0.7"/><circle cx="100" cy="100" r="82" fill="none" stroke="#1A4A7A" stroke-width="1.5" opacity="0.4"/><line x1="10" y1="100" x2="190" y2="100" stroke="#1A4A7A" stroke-width="1.2" stroke-linecap="round"/><line x1="100" y1="190" x2="100" y2="10" stroke="#1A4A7A" stroke-width="1.2" stroke-linecap="round"/><text x="184" y="97" font-size="9" fill="#1A4A7A" font-family="sans-serif">1</text><text x="8" y="97" font-size="9" fill="#1A4A7A" font-family="sans-serif">-1</text><text x="102" y="16" font-size="9" fill="#1A4A7A" font-family="sans-serif">1</text><text x="102" y="192" font-size="9" fill="#1A4A7A" font-family="sans-serif">-1</text><text x="192" y="104" font-size="10" fill="#1A4A7A" font-family="sans-serif">x</text><text x="103" y="8" font-size="10" fill="#1A4A7A" font-family="sans-serif">y</text><line x1="100" y1="100" x2="29.0" y2="59.0" stroke="#C0392B" stroke-width="2" stroke-linecap="round"/><path d="M 125,100 A 25,25 0 0,0 79,88" fill="none" stroke="#C0392B" stroke-width="1.3"/><text x="108" y="70" font-size="10" fill="#C0392B" font-style="italic" font-family="Georgia,serif" text-anchor="middle">α</text><line x1="29" y1="59" x2="29" y2="100" stroke="#1E7B5E" stroke-width="1" stroke-dasharray="3 2" opacity="0.7"/><line x1="29" y1="59" x2="100" y2="59" stroke="#B7600A" stroke-width="1" stroke-dasharray="3 2" opacity="0.7"/><circle cx="29" cy="59" r="4" fill="#C0392B" stroke="white" stroke-width="1.5"/><text x="11" y="53" font-size="10" fill="#C0392B" font-weight="600" font-family="sans-serif">P</text><text x="29" y="114" font-size="9" fill="#1E7B5E" font-family="sans-serif" text-anchor="middle">cos α</text><text x="72" y="59" font-size="9" fill="#B7600A" font-family="sans-serif" text-anchor="middle">sin α</text></svg>`,
+  'n3_1': `<svg width="200" height="200" viewBox="0 0 200 200" style="display:block;flex-shrink:0"><rect x="18" y="100" width="82" height="82" fill="#F0EBF8" opacity="0.7"/><circle cx="100" cy="100" r="82" fill="none" stroke="#1A4A7A" stroke-width="1.5" opacity="0.4"/><line x1="10" y1="100" x2="190" y2="100" stroke="#1A4A7A" stroke-width="1.2" stroke-linecap="round"/><line x1="100" y1="190" x2="100" y2="10" stroke="#1A4A7A" stroke-width="1.2" stroke-linecap="round"/><text x="184" y="97" font-size="9" fill="#1A4A7A" font-family="sans-serif">1</text><text x="8" y="97" font-size="9" fill="#1A4A7A" font-family="sans-serif">-1</text><text x="102" y="16" font-size="9" fill="#1A4A7A" font-family="sans-serif">1</text><text x="102" y="192" font-size="9" fill="#1A4A7A" font-family="sans-serif">-1</text><text x="192" y="104" font-size="10" fill="#1A4A7A" font-family="sans-serif">x</text><text x="103" y="8" font-size="10" fill="#1A4A7A" font-family="sans-serif">y</text><line x1="100" y1="100" x2="29.0" y2="141.0" stroke="#C0392B" stroke-width="2" stroke-linecap="round"/><path d="M 125,100 A 25,25 0 1,0 79,112" fill="none" stroke="#C0392B" stroke-width="1.3"/><text x="92" y="70" font-size="10" fill="#C0392B" font-style="italic" font-family="Georgia,serif" text-anchor="middle">α</text><line x1="29" y1="141" x2="29" y2="100" stroke="#1E7B5E" stroke-width="1" stroke-dasharray="3 2" opacity="0.7"/><line x1="29" y1="141" x2="100" y2="141" stroke="#B7600A" stroke-width="1" stroke-dasharray="3 2" opacity="0.7"/><circle cx="29" cy="141" r="4" fill="#C0392B" stroke="white" stroke-width="1.5"/><text x="11" y="155" font-size="10" fill="#C0392B" font-weight="600" font-family="sans-serif">P</text><text x="29" y="114" font-size="9" fill="#1E7B5E" font-family="sans-serif" text-anchor="middle">cos α</text><text x="72" y="141" font-size="9" fill="#B7600A" font-family="sans-serif" text-anchor="middle">sin α</text></svg>`,
+  'n3_2': `<svg width="200" height="200" viewBox="0 0 200 200" style="display:block;flex-shrink:0"><rect x="100" y="100" width="82" height="82" fill="#E8F5F0" opacity="0.7"/><circle cx="100" cy="100" r="82" fill="none" stroke="#1A4A7A" stroke-width="1.5" opacity="0.4"/><line x1="10" y1="100" x2="190" y2="100" stroke="#1A4A7A" stroke-width="1.2" stroke-linecap="round"/><line x1="100" y1="190" x2="100" y2="10" stroke="#1A4A7A" stroke-width="1.2" stroke-linecap="round"/><text x="184" y="97" font-size="9" fill="#1A4A7A" font-family="sans-serif">1</text><text x="8" y="97" font-size="9" fill="#1A4A7A" font-family="sans-serif">-1</text><text x="102" y="16" font-size="9" fill="#1A4A7A" font-family="sans-serif">1</text><text x="102" y="192" font-size="9" fill="#1A4A7A" font-family="sans-serif">-1</text><text x="192" y="104" font-size="10" fill="#1A4A7A" font-family="sans-serif">x</text><text x="103" y="8" font-size="10" fill="#1A4A7A" font-family="sans-serif">y</text><line x1="100" y1="100" x2="171.0" y2="141.0" stroke="#C0392B" stroke-width="2" stroke-linecap="round"/><path d="M 125,100 A 25,25 0 1,0 121,112" fill="none" stroke="#C0392B" stroke-width="1.3"/><text x="70" y="92" font-size="10" fill="#C0392B" font-style="italic" font-family="Georgia,serif" text-anchor="middle">α</text><line x1="171" y1="141" x2="171" y2="100" stroke="#1E7B5E" stroke-width="1" stroke-dasharray="3 2" opacity="0.7"/><line x1="171" y1="141" x2="100" y2="141" stroke="#B7600A" stroke-width="1" stroke-dasharray="3 2" opacity="0.7"/><circle cx="171" cy="141" r="4" fill="#C0392B" stroke="white" stroke-width="1.5"/><text x="179" y="155" font-size="10" fill="#C0392B" font-weight="600" font-family="sans-serif">P</text><text x="171" y="114" font-size="9" fill="#1E7B5E" font-family="sans-serif" text-anchor="middle">cos α</text><text x="72" y="141" font-size="9" fill="#B7600A" font-family="sans-serif" text-anchor="middle">sin α</text></svg>`,
+  'n3_3': `<svg width="200" height="200" viewBox="0 0 200 200" style="display:block;flex-shrink:0"><rect x="18" y="18" width="82" height="82" fill="#FEF3E2" opacity="0.7"/><circle cx="100" cy="100" r="82" fill="none" stroke="#1A4A7A" stroke-width="1.5" opacity="0.4"/><line x1="10" y1="100" x2="190" y2="100" stroke="#1A4A7A" stroke-width="1.2" stroke-linecap="round"/><line x1="100" y1="190" x2="100" y2="10" stroke="#1A4A7A" stroke-width="1.2" stroke-linecap="round"/><text x="184" y="97" font-size="9" fill="#1A4A7A" font-family="sans-serif">1</text><text x="8" y="97" font-size="9" fill="#1A4A7A" font-family="sans-serif">-1</text><text x="102" y="16" font-size="9" fill="#1A4A7A" font-family="sans-serif">1</text><text x="102" y="192" font-size="9" fill="#1A4A7A" font-family="sans-serif">-1</text><text x="192" y="104" font-size="10" fill="#1A4A7A" font-family="sans-serif">x</text><text x="103" y="8" font-size="10" fill="#1A4A7A" font-family="sans-serif">y</text><line x1="100" y1="100" x2="59.0" y2="29.0" stroke="#C0392B" stroke-width="2" stroke-linecap="round"/><path d="M 125,100 A 25,25 0 0,0 88,79" fill="none" stroke="#C0392B" stroke-width="1.3"/><text x="116" y="73" font-size="10" fill="#C0392B" font-style="italic" font-family="Georgia,serif" text-anchor="middle">α</text><line x1="59" y1="29" x2="59" y2="100" stroke="#1E7B5E" stroke-width="1" stroke-dasharray="3 2" opacity="0.7"/><line x1="59" y1="29" x2="100" y2="29" stroke="#B7600A" stroke-width="1" stroke-dasharray="3 2" opacity="0.7"/><circle cx="59" cy="29" r="4" fill="#C0392B" stroke="white" stroke-width="1.5"/><text x="41" y="23" font-size="10" fill="#C0392B" font-weight="600" font-family="sans-serif">P</text><text x="59" y="114" font-size="9" fill="#1E7B5E" font-family="sans-serif" text-anchor="middle">cos α</text><text x="72" y="29" font-size="9" fill="#B7600A" font-family="sans-serif" text-anchor="middle">sin α</text></svg>`,
+  'n3_4': `<svg width="200" height="200" viewBox="0 0 200 200" style="display:block;flex-shrink:0"><rect x="100" y="18" width="82" height="82" fill="#EFF3FA" opacity="0.6"/><rect x="18" y="18" width="82" height="82" fill="#FEF3E2" opacity="0.6"/><rect x="18" y="100" width="82" height="82" fill="#F0EBF8" opacity="0.6"/><rect x="100" y="100" width="82" height="82" fill="#E8F5F0" opacity="0.6"/><circle cx="100" cy="100" r="82" fill="none" stroke="#1A4A7A" stroke-width="1.5" opacity="0.5"/><line x1="12" y1="100" x2="188" y2="100" stroke="#1A4A7A" stroke-width="1.2"/><line x1="100" y1="188" x2="100" y2="12" stroke="#1A4A7A" stroke-width="1.2"/><text x="145" y="61" font-size="9" fill="#1A4A7A" font-weight="600" font-family="sans-serif" text-anchor="middle">I</text><text x="145" y="72" font-size="8" fill="#1E7B5E" font-family="sans-serif" text-anchor="middle">+,+,+</text><text x="55" y="61" font-size="9" fill="#1A4A7A" font-weight="600" font-family="sans-serif" text-anchor="middle">II</text><text x="55" y="72" font-size="8" fill="#B7600A" font-family="sans-serif" text-anchor="middle">+,−,−</text><text x="55" y="151" font-size="9" fill="#1A4A7A" font-weight="600" font-family="sans-serif" text-anchor="middle">III</text><text x="55" y="162" font-size="8" fill="#6B3FA0" font-family="sans-serif" text-anchor="middle">−,−,+</text><text x="145" y="151" font-size="9" fill="#1A4A7A" font-weight="600" font-family="sans-serif" text-anchor="middle">IV</text><text x="145" y="162" font-size="8" fill="#1E7B5E" font-family="sans-serif" text-anchor="middle">−,+,−</text></svg>`,
+  'n3_5': `<svg width="200" height="200" viewBox="0 0 200 200" style="display:block;flex-shrink:0"><rect x="100" y="100" width="82" height="82" fill="#E8F5F0" opacity="0.7"/><circle cx="100" cy="100" r="82" fill="none" stroke="#1A4A7A" stroke-width="1.5" opacity="0.4"/><line x1="10" y1="100" x2="190" y2="100" stroke="#1A4A7A" stroke-width="1.2" stroke-linecap="round"/><line x1="100" y1="190" x2="100" y2="10" stroke="#1A4A7A" stroke-width="1.2" stroke-linecap="round"/><text x="184" y="97" font-size="9" fill="#1A4A7A" font-family="sans-serif">1</text><text x="8" y="97" font-size="9" fill="#1A4A7A" font-family="sans-serif">-1</text><text x="102" y="16" font-size="9" fill="#1A4A7A" font-family="sans-serif">1</text><text x="102" y="192" font-size="9" fill="#1A4A7A" font-family="sans-serif">-1</text><text x="192" y="104" font-size="10" fill="#1A4A7A" font-family="sans-serif">x</text><text x="103" y="8" font-size="10" fill="#1A4A7A" font-family="sans-serif">y</text><line x1="100" y1="100" x2="141.0" y2="171.0" stroke="#C0392B" stroke-width="2" stroke-linecap="round"/><path d="M 125,100 A 25,25 0 1,0 112,121" fill="none" stroke="#C0392B" stroke-width="1.3"/><text x="73" y="84" font-size="10" fill="#C0392B" font-style="italic" font-family="Georgia,serif" text-anchor="middle">α</text><line x1="141" y1="171" x2="141" y2="100" stroke="#1E7B5E" stroke-width="1" stroke-dasharray="3 2" opacity="0.7"/><line x1="141" y1="171" x2="100" y2="171" stroke="#B7600A" stroke-width="1" stroke-dasharray="3 2" opacity="0.7"/><circle cx="141" cy="171" r="4" fill="#C0392B" stroke="white" stroke-width="1.5"/><text x="149" y="185" font-size="10" fill="#C0392B" font-weight="600" font-family="sans-serif">P</text><text x="141" y="114" font-size="9" fill="#1E7B5E" font-family="sans-serif" text-anchor="middle">cos α</text><text x="72" y="171" font-size="9" fill="#B7600A" font-family="sans-serif" text-anchor="middle">sin α</text></svg>`,
+};
+
+function enunciadoConDibujoT4(enunciado, nivel, idx) {
+  const key = nivel + '_' + idx;
+  if (!DIBUJOS_T4[key]) return enunciado;
+  return '<div style="display:flex;gap:14px;align-items:center;flex-wrap:wrap">' +
+    DIBUJOS_T4[key] +
+    '<div style="flex:1;min-width:160px">' + enunciado + '</div>' +
+    '</div>';
+}
+
+
+function renderNivel(nivel) {
+  const cont = document.getElementById(`ejercicios-${nivel}`);
+  const letras = ['A','B','C','D'];
+  const banco = MODULO_CONFIG.banco[nivel];
+
+  cont.innerHTML = banco.map((ej, i) => {
+    const dif = nivel === 'n1' ? 'Básico' : (nivel === 'n2' ? 'Intermedio' : 'Avanzado');
+    const difCls = nivel === 'n1' ? 'dif-basico' : (nivel === 'n2' ? 'dif-medio' : 'dif-avanzado');
+    return `<div class="ejercicio-card ${nivel}-color" id="ej-${nivel}-${i}">
+      <div class="ejercicio-meta">
+        <span class="ej-num">Ejercicio ${i+1}</span>
+        <span class="ej-dificultad ${difCls}">${dif}</span>
+      </div>
+      <div class="ej-enunciado">${enunciadoConDibujoT4(ej.enunciado, nivel, i)}</div>
+      <div class="opciones-ej">
+        ${ej.opciones.map((op,oi) => `<button class="op-btn" onclick="responderEj('${nivel}',${i},${oi})"><span class="op-letra">${letras[oi]}</span><span>${op}</span></button>`).join('')}
+      </div>
+      <div class="fb-ej" id="fb-${nivel}-${i}"></div>
+    </div>`;
+  }).join('');
+}
+
+function responderEj(nivel, idx, opIdx) {
+  if (estadoNiveles[nivel].respondidas.has(idx)) return;
+  estadoNiveles[nivel].respondidas.add(idx);
+
+  const ej = MODULO_CONFIG.banco[nivel][idx];
+  const ok = opIdx === ej.correcta;
+  if (ok) estadoNiveles[nivel].correctas.add(idx);
+
+  document.getElementById(`ej-${nivel}-${idx}`).querySelectorAll('.op-btn').forEach((btn, oi) => {
+    btn.disabled = true;
+    if (oi === ej.correcta) btn.classList.add('ok');
+    else if (oi === opIdx && !ok) btn.classList.add('mal');
+  });
+
+  const fb = document.getElementById(`fb-${nivel}-${idx}`);
+  fb.className = `fb-ej ${ok ? 'ok' : 'mal'}`;
+  fb.innerHTML = `<div class="fb-titulo">${ok ? '✓ Correcto' : '✗ No es correcto'}</div>${ej.feedback}`;
+
+  if (estadoNiveles[nivel].respondidas.size === MODULO_CONFIG.banco[nivel].length) {
+    const si = document.getElementById(`s-${nivel}`);
+    if (si) si.classList.add('hecho');
+    const btns = { n1:'btn-a-n2', n2:'btn-a-n3', n3:'btn-a-test' };
+    const b = document.getElementById(btns[nivel]);
+    if (b) b.disabled = false;
+  }
+
+  actualizarProgreso();
+  MathJax && MathJax.typesetPromise();
+}
+
+// ══════════════════════════════════════════
+// MINI-TEST
+// ══════════════════════════════════════════
+function iniciarMinitest() {
+  testPreguntas = [...MODULO_CONFIG.bancoTest].sort(() => Math.random() - 0.5).slice(0,5);
+  testActual = 0;
+  testRespuestas = new Array(5).fill(null);
+  irSeccion('test');
+  mostrarPreguntaTest(0);
+}
+
+function mostrarPreguntaTest(idx) {
+  const p = testPreguntas[idx];
+  const letras = ['A','B','C','D'];
+  document.getElementById('mt-barra').style.width = ((idx/5)*100) + '%';
+  document.getElementById('minitest-contenido').innerHTML = `
+    <div class="test-pregunta">
+      <div class="test-meta"><span class="test-num">Pregunta ${idx+1} de 5</span></div>
+      <div class="test-enunciado">${p.enunciado}</div>
+      <div class="opciones-ej" id="ops-test">
+        ${p.opciones.map((op,oi) => `<button class="op-btn" onclick="responderTest(${oi})"><span class="op-letra">${letras[oi]}</span><span>${op}</span></button>`).join('')}
+      </div>
+    </div>
+    <div style="text-align:right;margin-top:8px;">
+      <button class="btn-siguiente-nivel" id="btn-test-sig" style="display:none" onclick="siguienteTest()">${idx<4 ? 'Siguiente →' : 'Ver resultado →'}</button>
+    </div>`;
+  MathJax && MathJax.typesetPromise();
+}
+
+function responderTest(opIdx) {
+  testRespuestas[testActual] = opIdx;
+  document.querySelectorAll('#ops-test .op-btn').forEach((btn,i) => {
+    btn.disabled = true;
+    if (i === opIdx) { btn.style.borderColor = 'var(--oceano-medio)'; btn.style.background = '#EFF3FA'; }
+  });
+  document.getElementById('btn-test-sig').style.display = 'inline-flex';
+}
+
+function siguienteTest() {
+  testActual++;
+  if (testActual < 5) mostrarPreguntaTest(testActual);
+  else mostrarResultadoTest();
+}
+
+function mostrarResultadoTest() {
+  document.getElementById('mt-barra').style.width = '100%';
+  const correctas = testRespuestas.filter((r,i) => r === testPreguntas[i].correcta).length;
+  const superado = correctas >= 4;
+  enviarResultadoModulo(MODULO_CONFIG.clave, correctas, superado);
+  const color = superado ? 'var(--verde)' : (correctas >= 3 ? 'var(--naranja)' : 'var(--rojo)');
+  const titulo = superado ? '¡Módulo superado!' : (correctas >= 3 ? 'Por poco…' : 'Hay que repasar');
+  const C = MODULO_CONFIG;
+  const texto = superado
+    ? `Dominas ${C.titulo.toLowerCase()}. Avanza al siguiente módulo de Ruta A.`
+    : (correctas >= 3 ? 'Estás cerca. Repasa los errores y vuelve a intentarlo.' : 'Repasa la teoría y los ejercicios antes de repetir el test.');
+
+  if (superado) {
+    const m = JSON.parse(sessionStorage.getItem('modulos_rutaA') || '[]');
+    if (!m.includes(C.clave)) m.push(C.clave);
+    sessionStorage.setItem('modulos_rutaA', JSON.stringify(m));
+    const si = document.getElementById('s-test');
+    if (si) si.classList.add('hecho');
+  }
+
+  const errores = testPreguntas.map((p,i) => ({...p, elegida: testRespuestas[i]})).filter(p => p.elegida !== p.correcta);
+  const letras = ['A','B','C','D'];
+
+  document.getElementById('minitest-contenido').innerHTML = `
+    <div class="resultado-minitest">
+      <div class="res-nota" style="color:${color}">${correctas}/5</div>
+      <div class="res-label">respuestas correctas</div>
+      <h3>${titulo}</h3>
+      <p>${texto}</p>
+      ${superado
+        ? `<button class="btn-res ok" onclick="window.location.href='${C.siguiente}'">${C.siguiente.includes('test-final') ? 'Ir al test final →' : 'Siguiente módulo →'}</button>
+           <button class="btn-res repetir" onclick="iniciarMinitest()">↻ Repetir test</button>`
+        : `<button class="btn-res volver" onclick="irSeccion('teoria')">← Repasar teoría</button>
+           <button class="btn-res repetir" onclick="iniciarMinitest()">↻ Intentar de nuevo</button>`
+      }
+    </div>
+    ${errores.length > 0 ? `<div class="repaso-errores"><div class="repaso-titulo">Repaso de errores</div>${errores.map(p => `
+      <div class="error-item">
+        <div>${p.enunciado}</div>
+        <div>Tu respuesta: ${p.elegida !== null ? letras[p.elegida]+') '+p.opciones[p.elegida] : '—'}</div>
+        <div class="error-correcta">✓ Correcta: ${letras[p.correcta]}) ${p.opciones[p.correcta]}</div>
+        <div style="color:var(--gris-s);font-size:.82rem;margin-top:4px;">${p.feedback}</div>
+      </div>`).join('')}</div>` : ''}`;
+
+  actualizarProgreso();
+  MathJax && MathJax.typesetPromise();
+}
+
+// ══════════════════════════════════════════
+// PROGRESO
+// ══════════════════════════════════════════
+function actualizarProgreso() {
+  const C = MODULO_CONFIG;
+  const total = C.banco.n1.length + C.banco.n2.length + C.banco.n3.length;
+  const resp = estadoNiveles.n1.respondidas.size + estadoNiveles.n2.respondidas.size + estadoNiveles.n3.respondidas.size;
+  document.getElementById('progress-bar').style.width = Math.round((resp/(total+5))*100) + '%';
+}
+</script>
+<script>
+MODULO_CONFIG = {
+  num: 4, total: 5, clave: 'trig-goniometrica', titulo: 'Circunferencia Goniométrica',
+  eyebrow: 'Ruta A · Trigonometría · Parte 4 de 5',
+  desc: 'La circunferencia goniométrica permite dar sentido a las razones trigonométricas de cualquier ángulo, no solo los agudos. Es la clave para entender el signo de cada razón y las relaciones entre ángulos.',
+  anterior: 'trig3-triangulos.html', siguiente: 'trig5-identidades.html',
+  teoria: `
+  <div class="teoria-intro"><p>La <strong>circunferencia goniométrica</strong> es una circunferencia de radio 1 centrada en el origen. A cada ángulo \\(\\alpha\\) le corresponde un punto \\(P=(\\cos\\alpha,\\sin\\alpha)\\) en esa circunferencia. Esto extiende las razones trigonométricas a <strong>cualquier ángulo real</strong>, no solo los agudos.</p></div>
+
+  <div class="concepto-card"><h3>📐 1. El punto P y las coordenadas</h3><div class="concepto-body">
+  <div class="formula-box verde">\\(P = (\\cos\\alpha, \\sin\\alpha)\\quad\\Rightarrow\\quad\\text{abscisa}=\\cos\\alpha,\\quad\\text{ordenada}=\\sin\\alpha\\)</div>
+  <p>Como el radio es 1, los valores de seno y coseno están siempre entre \\(-1\\) y \\(1\\):</p>
+  <div class="formula-box">\\(-1 \\leq \\sin\\alpha \\leq 1 \\qquad -1 \\leq \\cos\\alpha \\leq 1\\)</div>
+  <div class="ejemplo-resuelto"><div class="ej-titulo">Ejemplo resuelto 1 — Leer coordenadas</div>
+  <div class="paso"><span class="paso-num">①</span><span>Si \\(\\alpha=60°\\), el punto es \\(P=(\\cos60°,\\sin60°)=\\left(\\dfrac{1}{2},\\dfrac{\\sqrt{3}}{2}\\right)\\)</span></div>
+  <div class="paso"><span class="paso-num">②</span><span>La abscisa (eje X) es el coseno; la ordenada (eje Y) es el seno.</span></div>
+  </div>
+  </div></div>
+
+  <div class="concepto-card"><h3>📐 2. Signos según el cuadrante</h3><div class="concepto-body">
+  <p>El signo de cada razón depende del cuadrante donde esté el ángulo:</p>
+  <table class="resumen-tabla">
+  <tr><th>Cuadrante</th><th>Ángulos</th><th>\\(\\sin\\alpha\\)</th><th>\\(\\cos\\alpha\\)</th><th>\\(\\tan\\alpha\\)</th></tr>
+  <tr><td>I</td><td>\\(0°\\) a \\(90°\\)</td><td>\\(+\\)</td><td>\\(+\\)</td><td>\\(+\\)</td></tr>
+  <tr><td>II</td><td>\\(90°\\) a \\(180°\\)</td><td>\\(+\\)</td><td>\\(−\\)</td><td>\\(−\\)</td></tr>
+  <tr><td>III</td><td>\\(180°\\) a \\(270°\\)</td><td>\\(−\\)</td><td>\\(−\\)</td><td>\\(+\\)</td></tr>
+  <tr><td>IV</td><td>\\(270°\\) a \\(360°\\)</td><td>\\(−\\)</td><td>\\(+\\)</td><td>\\(−\\)</td></tr>
+  </table>
+  <div class="alerta-card"><div class="al-titulo">💡 Truco para recordarlo: ASTC</div>
+  Leyendo en orden (I→II→III→IV): <strong>A</strong>ll <strong>S</strong>ines <strong>T</strong>angents <strong>C</strong>osines — en el I todas son positivas, en el II solo el seno, en el III solo la tangente, en el IV solo el coseno.</div>
+  </div></div>
+
+  <div class="concepto-card"><h3>📐 3. Ángulos en los ejes</h3><div class="concepto-body">
+  <table class="resumen-tabla">
+  <tr><th>Ángulo</th><th>\\(\\sin\\)</th><th>\\(\\cos\\)</th><th>\\(\\tan\\)</th></tr>
+  <tr><td>\\(0°\\)</td><td>\\(0\\)</td><td>\\(1\\)</td><td>\\(0\\)</td></tr>
+  <tr><td>\\(90°\\)</td><td>\\(1\\)</td><td>\\(0\\)</td><td>No def.</td></tr>
+  <tr><td>\\(180°\\)</td><td>\\(0\\)</td><td>\\(-1\\)</td><td>\\(0\\)</td></tr>
+  <tr><td>\\(270°\\)</td><td>\\(-1\\)</td><td>\\(0\\)</td><td>No def.</td></tr>
+  </table>
+  <div class="ejemplo-resuelto"><div class="ej-titulo">Ejemplo resuelto 2</div>
+  <div class="paso"><span class="paso-num">①</span><span>\\(\\sin90°=1\\) porque el punto en \\(90°\\) es \\(P=(0,1)\\), y la ordenada es 1.</span></div>
+  <div class="paso"><span class="paso-num">②</span><span>\\(\\cos180°=-1\\) porque el punto en \\(180°\\) es \\(P=(-1,0)\\), y la abscisa es \\(-1\\).</span></div>
+  </div>
+  </div></div>
+
+  <div class="concepto-card"><h3>📐 4. Fórmulas de reducción</h3><div class="concepto-body">
+  <p>Permiten calcular razones de cualquier ángulo a partir de las del primer cuadrante:</p>
+  <table class="resumen-tabla">
+  <tr><th>Ángulo</th><th>Seno</th><th>Coseno</th><th>Tangente</th></tr>
+  <tr><td>\\(180°-\\alpha\\) (II)</td><td>\\(+\\sin\\alpha\\)</td><td>\\(-\\cos\\alpha\\)</td><td>\\(-\\tan\\alpha\\)</td></tr>
+  <tr><td>\\(180°+\\alpha\\) (III)</td><td>\\(-\\sin\\alpha\\)</td><td>\\(-\\cos\\alpha\\)</td><td>\\(+\\tan\\alpha\\)</td></tr>
+  <tr><td>\\(360°-\\alpha\\) (IV)</td><td>\\(-\\sin\\alpha\\)</td><td>\\(+\\cos\\alpha\\)</td><td>\\(-\\tan\\alpha\\)</td></tr>
+  <tr><td>\\(360°+\\alpha\\)</td><td>\\(+\\sin\\alpha\\)</td><td>\\(+\\cos\\alpha\\)</td><td>\\(+\\tan\\alpha\\)</td></tr>
+  </table>
+  <div class="alerta-card"><div class="al-titulo">💡 Regla práctica</div>
+  El signo de cada reducción es el que tiene esa razón en el cuadrante donde cae el ángulo. El valor numérico es siempre el del <strong>ángulo de referencia</strong> (ángulo agudo equivalente en el primer cuadrante).</div>
+  <div class="ejemplo-resuelto"><div class="ej-titulo">Ejemplo resuelto 3 — Aplicar reducciones</div>
+  <div class="paso"><span class="paso-num">①</span><span>\\(\\sin150°=\\sin(180°-30°)=+\\sin30°=\\dfrac{1}{2}\\)</span></div>
+  <div class="paso"><span class="paso-num">②</span><span>\\(\\cos210°=\\cos(180°+30°)=-\\cos30°=-\\dfrac{\\sqrt{3}}{2}\\)</span></div>
+  <div class="paso"><span class="paso-num">③</span><span>\\(\\tan330°=\\tan(360°-30°)=-\\tan30°=-\\dfrac{\\sqrt{3}}{3}\\)</span></div>
+  </div>
+  </div></div>`,
+
+  banco: {
+    n1:[
+      {enunciado:'El punto \\(P\\) está en el primer cuadrante con \\(\\alpha=45°\\). ¿Cuáles son las coordenadas de \\(P\\)?',opciones:['\\(\\left(\\dfrac{\\sqrt{2}}{2},\\dfrac{\\sqrt{2}}{2}\\right)\\)','\\(\\left(\\dfrac{1}{2},\\dfrac{\\sqrt{3}}{2}\\right)\\)','\\((1,1)\\)','\\(\\left(\\dfrac{\\sqrt{3}}{2},\\dfrac{1}{2}\\right)\\)'],correcta:0,feedback:'\\(P=(\\cos45°,\\sin45°)=\\left(\\dfrac{\\sqrt{2}}{2},\\dfrac{\\sqrt{2}}{2}\\right)\\).'},
+      {enunciado:'\\(\\alpha=150°\\). ¿En qué cuadrante está el punto \\(P\\)?',opciones:['Cuadrante II','Cuadrante I','Cuadrante III','Cuadrante IV'],correcta:0,feedback:'\\(150°\\) está entre \\(90°\\) y \\(180°\\) → cuadrante II.'},
+      {enunciado:'\\(\\alpha=210°\\). ¿En qué cuadrante está el punto \\(P\\)?',opciones:['Cuadrante III','Cuadrante II','Cuadrante IV','Cuadrante I'],correcta:0,feedback:'\\(210°\\) está entre \\(180°\\) y \\(270°\\) → cuadrante III.'},
+      {enunciado:'\\(\\alpha=300°\\). ¿Cuál es el signo de \\(\\sin300°\\)?',opciones:['Negativo','Positivo','Cero','No definido'],correcta:0,feedback:'\\(300°\\) está en el cuadrante IV. En el IV, \\(\\sin\\alpha<0\\).'},
+      {enunciado:'¿En qué cuadrante son positivos el seno y negativos el coseno?',opciones:['Cuadrante II','Cuadrante I','Cuadrante III','Cuadrante IV'],correcta:0,feedback:'En el II: \\(\\sin\\alpha>0\\) y \\(\\cos\\alpha<0\\). Mnemotecnia: solo el Seno es positivo en el II.'},
+      {enunciado:'¿Cuánto vale \\(\\sin90°\\)?',opciones:['\\(1\\)','\\(0\\)','\\(-1\\)','No definido'],correcta:0,feedback:'El punto en \\(90°\\) es \\(P=(0,1)\\). La ordenada (seno) es \\(1\\).'},
+      {enunciado:'¿Cuánto vale \\(\\cos180°\\)?',opciones:['\\(-1\\)','\\(0\\)','\\(1\\)','No definido'],correcta:0,feedback:'El punto en \\(180°\\) es \\(P=(-1,0)\\). La abscisa (coseno) es \\(-1\\).'},
+      {enunciado:'¿Cuánto vale \\(\\sin270°\\)?',opciones:['\\(-1\\)','\\(1\\)','\\(0\\)','No definido'],correcta:0,feedback:'El punto en \\(270°\\) es \\(P=(0,-1)\\). La ordenada (seno) es \\(-1\\).'},
+      {enunciado:'El punto \\(P\\) corresponde al ángulo \\(\\alpha=30°\\). ¿Cuáles son sus coordenadas?',opciones:['\\(\\left(\\dfrac{\\sqrt{3}}{2},\\dfrac{1}{2}\\right)\\)','\\(\\left(\\dfrac{1}{2},\\dfrac{\\sqrt{3}}{2}\\right)\\)','\\(\\left(\\dfrac{\\sqrt{2}}{2},\\dfrac{\\sqrt{2}}{2}\\right)\\)','\\((1,0)\\)'],correcta:0,feedback:'\\(P=(\\cos30°,\\sin30°)=\\left(\\dfrac{\\sqrt{3}}{2},\\dfrac{1}{2}\\right)\\).'},
+      {enunciado:'¿En qué cuadrante son negativas tanto \\(\\sin\\alpha\\) como \\(\\cos\\alpha\\)?',opciones:['Cuadrante III','Cuadrante II','Cuadrante IV','Cuadrante I'],correcta:0,feedback:'En el III (\\(180°\\) a \\(270°\\)): \\(x<0\\) e \\(y<0\\), así que \\(\\cos\\alpha<0\\) y \\(\\sin\\alpha<0\\).'}
+    ],
+    n2:[
+      {enunciado:'Calcula \\(\\sin150°\\)',opciones:['\\(\\dfrac{1}{2}\\)','\\(-\\dfrac{1}{2}\\)','\\(\\dfrac{\\sqrt{3}}{2}\\)','\\(-\\dfrac{\\sqrt{3}}{2}\\)'],correcta:0,feedback:'\\(150°=180°-30°\\). Como \\(\\sin(180°-\\alpha)=+\\sin\\alpha\\): \\(\\sin150°=\\sin30°=\\dfrac{1}{2}\\).'},
+      {enunciado:'Calcula \\(\\cos210°\\)',opciones:['\\(-\\dfrac{\\sqrt{3}}{2}\\)','\\(\\dfrac{\\sqrt{3}}{2}\\)','\\(-\\dfrac{1}{2}\\)','\\(\\dfrac{1}{2}\\)'],correcta:0,feedback:'\\(210°=180°+30°\\). Como \\(\\cos(180°+\\alpha)=-\\cos\\alpha\\): \\(\\cos210°=-\\cos30°=-\\dfrac{\\sqrt{3}}{2}\\).'},
+      {enunciado:'Calcula \\(\\sin330°\\)',opciones:['\\(-\\dfrac{1}{2}\\)','\\(\\dfrac{1}{2}\\)','\\(-\\dfrac{\\sqrt{3}}{2}\\)','\\(\\dfrac{\\sqrt{3}}{2}\\)'],correcta:0,feedback:'\\(330°=360°-30°\\). Como \\(\\sin(360°-\\alpha)=-\\sin\\alpha\\): \\(\\sin330°=-\\sin30°=-\\dfrac{1}{2}\\).'},
+      {enunciado:'Calcula \\(\\cos120°\\)',opciones:['\\(-\\dfrac{1}{2}\\)','\\(\\dfrac{1}{2}\\)','\\(-\\dfrac{\\sqrt{3}}{2}\\)','\\(\\dfrac{\\sqrt{3}}{2}\\)'],correcta:0,feedback:'\\(120°=180°-60°\\). \\(\\cos(180°-\\alpha)=-\\cos\\alpha\\): \\(\\cos120°=-\\cos60°=-\\dfrac{1}{2}\\).'},
+      {enunciado:'Calcula \\(\\tan240°\\)',opciones:['\\(\\sqrt{3}\\)','\\(-\\sqrt{3}\\)','\\(\\dfrac{\\sqrt{3}}{3}\\)','\\(-\\dfrac{\\sqrt{3}}{3}\\)'],correcta:0,feedback:'\\(240°=180°+60°\\). \\(\\tan(180°+\\alpha)=+\\tan\\alpha\\): \\(\\tan240°=\\tan60°=\\sqrt{3}\\).'},
+      {enunciado:'Calcula \\(\\cos300°\\)',opciones:['\\(\\dfrac{1}{2}\\)','\\(-\\dfrac{1}{2}\\)','\\(\\dfrac{\\sqrt{3}}{2}\\)','\\(-\\dfrac{\\sqrt{3}}{2}\\)'],correcta:0,feedback:'\\(300°=360°-60°\\). \\(\\cos(360°-\\alpha)=+\\cos\\alpha\\): \\(\\cos300°=\\cos60°=\\dfrac{1}{2}\\).'},
+      {enunciado:'Calcula \\(\\sin135°\\)',opciones:['\\(\\dfrac{\\sqrt{2}}{2}\\)','\\(-\\dfrac{\\sqrt{2}}{2}\\)','\\(\\dfrac{1}{2}\\)','\\(-\\dfrac{1}{2}\\)'],correcta:0,feedback:'\\(135°=180°-45°\\). \\(\\sin(180°-\\alpha)=+\\sin\\alpha\\): \\(\\sin135°=\\sin45°=\\dfrac{\\sqrt{2}}{2}\\).'},
+      {enunciado:'Calcula \\(\\cos225°\\)',opciones:['\\(-\\dfrac{\\sqrt{2}}{2}\\)','\\(\\dfrac{\\sqrt{2}}{2}\\)','\\(-\\dfrac{1}{2}\\)','\\(\\dfrac{1}{2}\\)'],correcta:0,feedback:'\\(225°=180°+45°\\). \\(\\cos(180°+\\alpha)=-\\cos\\alpha\\): \\(\\cos225°=-\\cos45°=-\\dfrac{\\sqrt{2}}{2}\\).'}
+    ],
+    n3:[
+      {enunciado:'Si \\(\\sin\\alpha=\\dfrac{3}{5}\\) y \\(\\alpha\\) está en el segundo cuadrante, ¿cuánto vale \\(\\cos\\alpha\\)?',opciones:['\\(-\\dfrac{4}{5}\\)','\\(\\dfrac{4}{5}\\)','\\(-\\dfrac{3}{4}\\)','\\(\\dfrac{3}{4}\\)'],correcta:0,feedback:'\\(\\cos^2\\alpha=1-\\dfrac{9}{25}=\\dfrac{16}{25}\\). En el II, \\(\\cos\\alpha<0\\): \\(\\cos\\alpha=-\\dfrac{4}{5}\\).'},
+      {enunciado:'Si \\(\\cos\\alpha=-\\dfrac{\\sqrt{3}}{2}\\) y \\(\\alpha\\in(180°,270°)\\), ¿cuánto vale \\(\\sin\\alpha\\)?',opciones:['\\(-\\dfrac{1}{2}\\)','\\(\\dfrac{1}{2}\\)','\\(-\\dfrac{\\sqrt{3}}{2}\\)','\\(\\dfrac{\\sqrt{3}}{2}\\)'],correcta:0,feedback:'\\(\\cos\\alpha=-\\dfrac{\\sqrt{3}}{2}\\) corresponde a \\(\\alpha=210°\\) (cuadrante III). \\(\\sin210°=-\\sin30°=-\\dfrac{1}{2}\\).'},
+      {enunciado:'Simplifica: \\(\\sin(360°-\\alpha)+\\sin\\alpha\\)',opciones:['\\(0\\)','\\(2\\sin\\alpha\\)','\\(-2\\sin\\alpha\\)','\\(1\\)'],correcta:0,feedback:'\\(\\sin(360°-\\alpha)=-\\sin\\alpha\\). Sumando: \\(-\\sin\\alpha+\\sin\\alpha=0\\).'},
+      {enunciado:'Si \\(\\tan\\alpha<0\\) y \\(\\sin\\alpha>0\\), ¿en qué cuadrante está \\(\\alpha\\)?',opciones:['Cuadrante II','Cuadrante I','Cuadrante III','Cuadrante IV'],correcta:0,feedback:'\\(\\sin\\alpha>0\\) → cuadrante I o II. \\(\\tan\\alpha<0\\) → cuadrante II o IV. La intersección es el cuadrante II.'},
+      {enunciado:'¿Cuánto vale \\(\\sin^2(180°+\\alpha)+\\cos^2(180°+\\alpha)\\)?',opciones:['\\(1\\)','\\(0\\)','\\(-1\\)','Depende de \\(\\alpha\\)'],correcta:0,feedback:'\\(\\sin(180°+\\alpha)=-\\sin\\alpha\\) y \\(\\cos(180°+\\alpha)=-\\cos\\alpha\\). Elevando al cuadrado: \\(\\sin^2\\alpha+\\cos^2\\alpha=1\\).'},
+      {enunciado:'Si \\(\\alpha=390°\\), ¿cuánto vale \\(\\sin390°\\)?',opciones:['\\(\\dfrac{1}{2}\\)','\\(-\\dfrac{1}{2}\\)','\\(\\dfrac{\\sqrt{3}}{2}\\)','\\(1\\)'],correcta:0,feedback:'\\(390°=360°+30°\\). Una vuelta completa no cambia el ángulo: \\(\\sin390°=\\sin30°=\\dfrac{1}{2}\\).'}
+    ]
+  },
+
+  bancoTest:[
+    {enunciado:'¿Cuánto vale \\(\\sin90°\\)?',opciones:['\\(1\\)','\\(0\\)','\\(-1\\)','No definido'],correcta:0,feedback:'Punto \\(P=(0,1)\\) en \\(90°\\). La ordenada es \\(1\\).'},
+    {enunciado:'¿En qué cuadrante son positivos \\(\\sin\\alpha\\) y \\(\\cos\\alpha\\)?',opciones:['Cuadrante I','Cuadrante II','Cuadrante III','Cuadrante IV'],correcta:0,feedback:'En el I todos los signos son positivos.'},
+    {enunciado:'Calcula \\(\\cos150°\\)',opciones:['\\(-\\dfrac{\\sqrt{3}}{2}\\)','\\(\\dfrac{\\sqrt{3}}{2}\\)','\\(-\\dfrac{1}{2}\\)','\\(\\dfrac{1}{2}\\)'],correcta:0,feedback:'\\(150°=180°-30°\\). \\(\\cos(180°-\\alpha)=-\\cos\\alpha=-\\cos30°=-\\dfrac{\\sqrt{3}}{2}\\).'},
+    {enunciado:'Calcula \\(\\sin210°\\)',opciones:['\\(-\\dfrac{1}{2}\\)','\\(\\dfrac{1}{2}\\)','\\(-\\dfrac{\\sqrt{3}}{2}\\)','\\(\\dfrac{\\sqrt{3}}{2}\\)'],correcta:0,feedback:'\\(210°=180°+30°\\). \\(\\sin(180°+\\alpha)=-\\sin\\alpha=-\\dfrac{1}{2}\\).'},
+    {enunciado:'Calcula \\(\\cos300°\\)',opciones:['\\(\\dfrac{1}{2}\\)','\\(-\\dfrac{1}{2}\\)','\\(\\dfrac{\\sqrt{3}}{2}\\)','\\(-\\dfrac{\\sqrt{3}}{2}\\)'],correcta:0,feedback:'\\(300°=360°-60°\\). \\(\\cos(360°-\\alpha)=+\\cos60°=\\dfrac{1}{2}\\).'},
+    {enunciado:'¿Cuánto vale \\(\\cos0°\\)?',opciones:['\\(1\\)','\\(0\\)','\\(-1\\)','No definido'],correcta:0,feedback:'Punto \\(P=(1,0)\\) en \\(0°\\). La abscisa es \\(1\\).'},
+    {enunciado:'Si \\(\\alpha\\in(270°,360°)\\), ¿cuál es el signo de \\(\\tan\\alpha\\)?',opciones:['Negativo','Positivo','Cero','No definido'],correcta:0,feedback:'En el IV: \\(\\sin\\alpha<0\\) y \\(\\cos\\alpha>0\\), así que \\(\\tan\\alpha=\\dfrac{\\sin\\alpha}{\\cos\\alpha}<0\\).'},
+    {enunciado:'Calcula \\(\\sin330°\\)',opciones:['\\(-\\dfrac{1}{2}\\)','\\(\\dfrac{1}{2}\\)','\\(-\\dfrac{\\sqrt{3}}{2}\\)','\\(\\dfrac{\\sqrt{3}}{2}\\)'],correcta:0,feedback:'\\(330°=360°-30°\\). \\(\\sin(360°-\\alpha)=-\\sin30°=-\\dfrac{1}{2}\\).'},
+    {enunciado:'Si \\(\\cos\\alpha=-\\dfrac{1}{2}\\) y \\(\\alpha\\in(90°,180°)\\), ¿cuánto vale \\(\\sin\\alpha\\)?',opciones:['\\(\\dfrac{\\sqrt{3}}{2}\\)','\\(-\\dfrac{\\sqrt{3}}{2}\\)','\\(\\dfrac{1}{2}\\)','\\(-\\dfrac{1}{2}\\)'],correcta:0,feedback:'\\(\\cos\\alpha=-\\dfrac{1}{2}\\Rightarrow\\alpha=120°\\). En el II, \\(\\sin\\alpha>0\\): \\(\\sin120°=\\sin60°=\\dfrac{\\sqrt{3}}{2}\\).'},
+    {enunciado:'¿Cuánto vale \\(\\tan180°\\)?',opciones:['\\(0\\)','\\(1\\)','No definido','\\(-1\\)'],correcta:0,feedback:'\\(\\tan180°=\\dfrac{\\sin180°}{\\cos180°}=\\dfrac{0}{-1}=0\\).'},
+    {enunciado:'Calcula \\(\\cos(360°+\\alpha)\\)',opciones:['\\(\\cos\\alpha\\)','\\(-\\cos\\alpha\\)','\\(\\sin\\alpha\\)','\\(-\\sin\\alpha\\)'],correcta:0,feedback:'Una vuelta completa no cambia el ángulo: \\(\\cos(360°+\\alpha)=\\cos\\alpha\\).'},
+    {enunciado:'Si \\(\\tan\\alpha>0\\) y \\(\\cos\\alpha<0\\), ¿en qué cuadrante está \\(\\alpha\\)?',opciones:['Cuadrante III','Cuadrante I','Cuadrante II','Cuadrante IV'],correcta:0,feedback:'\\(\\tan\\alpha>0\\) → cuadrante I o III. \\(\\cos\\alpha<0\\) → cuadrante II o III. Intersección: cuadrante III.'}
+  ]
+};
+iniciarModulo();
+</script>
+</body>
+</html>

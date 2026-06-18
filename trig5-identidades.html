@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Identidades y Ecuaciones Trigonométricas · Ruta A · Puente a Bachillerato</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,600;0,700;1,300&family=DM+Sans:wght@300;400;500&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml.min.js"></script>
+<style>
+:root{--sol:#F5A623;--sol-claro:#FDF3E0;--oceano:#1A4A7A;--oceano-medio:#2A6BAD;--verde:#1E7B5E;--verde-claro:#E8F5F0;--arena:#FAF7F2;--blanco:#FFFFFF;--gris:#2C2C2C;--gris-s:#7A7A7A;--rojo:#C0392B;--rojo-claro:#FEF0EF;--naranja:#B7600A;--naranja-claro:#FEF3E2;--lila:#6B3FA0;--lila-claro:#F0EBF8;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'DM Sans',sans-serif;background:var(--arena);color:var(--gris);min-height:100vh;}
+.topbar{background:var(--oceano);padding:12px 24px;display:flex;justify-content:space-between;align-items:center;}
+.topbar-logo{font-family:'Fraunces',serif;font-size:.95rem;font-weight:600;color:var(--blanco);}
+.topbar-logo em{color:var(--sol);font-style:italic;font-weight:300;}
+.topbar-alumna{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:rgba(255,255,255,.6);}
+.progress-wrap{background:rgba(255,255,255,.15);height:5px;}
+.progress-bar{height:5px;background:var(--sol);transition:width .5s ease;}
+.layout{display:grid;grid-template-columns:240px 1fr;min-height:calc(100vh - 57px);}
+@media(max-width:800px){.layout{grid-template-columns:1fr;}}
+.sidebar{background:var(--blanco);border-right:1px solid #EBEBEB;padding:20px 0;position:sticky;top:0;height:calc(100vh - 57px);overflow-y:auto;}
+.sidebar-bloque{font-family:'JetBrains Mono',monospace;font-size:.65rem;letter-spacing:2px;text-transform:uppercase;color:var(--gris-s);padding:0 18px 10px;}
+.sidebar-item{display:flex;align-items:center;gap:10px;padding:10px 18px;cursor:pointer;border-left:3px solid transparent;font-size:.85rem;transition:all .15s;color:var(--gris-s);}
+.sidebar-item:hover{background:#F5F7FA;color:var(--gris);}
+.sidebar-item.activo{background:#EFF3FA;border-left-color:var(--oceano);color:var(--oceano);font-weight:500;}
+.sidebar-item.hecho{color:var(--verde);}
+.sidebar-item.hecho .s-dot{background:var(--verde);}
+.s-dot{width:8px;height:8px;border-radius:50%;background:#D0D0D0;flex-shrink:0;}
+.sidebar-sep{height:1px;background:#F0F0F0;margin:10px 16px;}
+.sidebar-nav-btns{padding:12px 18px;display:flex;flex-direction:column;gap:8px;}
+.btn-nav{width:100%;padding:9px;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:.82rem;font-weight:500;cursor:pointer;border:1.5px solid transparent;transition:all .2s;text-align:center;}
+.btn-nav.anterior{background:var(--blanco);border-color:#D0D0D0;color:var(--gris-s);}
+.btn-nav.anterior:hover{border-color:var(--oceano);color:var(--oceano);}
+.btn-nav.siguiente{background:var(--oceano);color:var(--blanco);}
+.btn-nav.siguiente:hover{background:var(--oceano-medio);}
+.btn-nav.volver{background:transparent;border-color:transparent;color:var(--gris-s);font-size:.78rem;padding:6px;}
+.btn-nav.volver:hover{color:var(--oceano);text-decoration:underline;}
+.main{padding:36px 40px;max-width:820px;}
+@media(max-width:680px){.main{padding:20px 16px;}}
+.modulo-eyebrow{font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:2px;text-transform:uppercase;color:var(--gris-s);margin-bottom:8px;}
+.modulo-titulo{font-family:'Fraunces',serif;font-size:2rem;font-weight:700;color:var(--oceano);line-height:1.2;margin-bottom:6px;}
+.modulo-desc{font-size:.9rem;color:var(--gris-s);line-height:1.6;margin-bottom:32px;}
+.seccion{display:none;}
+.seccion.visible{display:block;}
+.nav-modulos{display:flex;gap:10px;margin-bottom:28px;flex-wrap:wrap;}
+.nm-btn{padding:7px 16px;border-radius:8px;font-size:.82rem;cursor:pointer;border:1.5px solid #E0E0E0;background:var(--blanco);font-family:'DM Sans',sans-serif;color:var(--gris-s);transition:all .15s;}
+.nm-btn:hover{border-color:var(--oceano-medio);color:var(--oceano);}
+.nm-btn.nm-activo{background:var(--oceano);color:var(--blanco);border-color:var(--oceano);}
+.nm-btn.nm-ok{border-color:var(--verde);color:var(--verde);}
+.teoria-intro{background:var(--oceano);border-radius:14px;padding:24px 28px;margin-bottom:24px;color:var(--blanco);}
+.teoria-intro p{font-size:.9rem;line-height:1.7;opacity:.9;}
+.teoria-intro strong{color:var(--sol);}
+.concepto-card{background:var(--blanco);border-radius:14px;padding:28px 30px;box-shadow:0 2px 12px rgba(26,74,122,.07);margin-bottom:20px;}
+.concepto-card h3{font-family:'Fraunces',serif;font-size:1.05rem;font-weight:600;color:var(--oceano);margin-bottom:16px;}
+.concepto-body{font-size:.9rem;line-height:1.85;color:var(--gris);}
+.concepto-body p{margin-bottom:10px;}
+.formula-box{background:#F0F4FA;border-radius:10px;padding:16px 20px;margin:14px 0;text-align:center;border:1px solid #D0DFF0;font-size:1rem;}
+.formula-box.verde{background:var(--verde-claro);border-color:#9FD4C0;}
+.formula-box.naranja{background:var(--naranja-claro);border-color:#E8C07A;}
+.ejemplo-resuelto{background:var(--sol-claro);border-left:4px solid var(--sol);border-radius:0 10px 10px 0;padding:16px 20px;margin:16px 0;font-size:.88rem;}
+.ejemplo-resuelto .ej-titulo{font-weight:600;color:#7A5500;margin-bottom:8px;font-size:.82rem;text-transform:uppercase;letter-spacing:.5px;}
+.ejemplo-resuelto .paso{display:flex;gap:12px;align-items:flex-start;margin-bottom:6px;}
+.ejemplo-resuelto .paso-num{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--sol);font-weight:600;min-width:20px;margin-top:3px;}
+.alerta-card{background:var(--rojo-claro);border-left:4px solid var(--rojo);border-radius:0 10px 10px 0;padding:14px 18px;margin:14px 0;font-size:.86rem;color:var(--gris);}
+.alerta-card .al-titulo{font-weight:600;color:var(--rojo);margin-bottom:4px;}
+.resumen-tabla{width:100%;border-collapse:collapse;margin:16px 0;font-size:.85rem;}
+.resumen-tabla th{background:#EFF3FA;color:var(--oceano);padding:9px 14px;text-align:left;font-weight:600;border-bottom:2px solid #D0DFF0;}
+.resumen-tabla td{padding:9px 14px;border-bottom:1px solid #F0F0F0;}
+.resumen-tabla tr:nth-child(even) td{background:#FAFCFF;}
+.nivel-header{display:flex;align-items:center;gap:14px;margin-bottom:24px;padding:18px 22px;border-radius:12px;}
+.nivel-header.n1{background:#EFF3FA;border-left:4px solid var(--oceano-medio);}
+.nivel-header.n2{background:var(--naranja-claro);border-left:4px solid var(--naranja);}
+.nivel-header.n3{background:var(--lila-claro);border-left:4px solid var(--lila);}
+.nivel-header.ntest{background:var(--verde-claro);border-left:4px solid var(--verde);}
+.nivel-icon{font-size:1.6rem;}
+.nivel-info h3{font-family:'Fraunces',serif;font-size:1rem;font-weight:600;margin-bottom:2px;}
+.nivel-info p{font-size:.8rem;color:var(--gris-s);}
+.n1 .nivel-info h3{color:var(--oceano-medio);}
+.n2 .nivel-info h3{color:var(--naranja);}
+.n3 .nivel-info h3{color:var(--lila);}
+.ntest .nivel-info h3{color:var(--verde);}
+.ejercicio-card{background:var(--blanco);border-radius:12px;padding:24px 26px;box-shadow:0 1px 8px rgba(0,0,0,.05);margin-bottom:14px;border-top:3px solid transparent;}
+.ejercicio-card.n1-color{border-top-color:var(--oceano-medio);}
+.ejercicio-card.n2-color{border-top-color:var(--naranja);}
+.ejercicio-card.n3-color{border-top-color:var(--lila);}
+.ejercicio-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
+.ej-num{font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--gris-s);letter-spacing:1px;}
+.ej-dificultad{font-family:'JetBrains Mono',monospace;font-size:.65rem;padding:2px 9px;border-radius:10px;font-weight:600;}
+.dif-basico{background:#EFF3FA;color:var(--oceano-medio);}
+.dif-medio{background:var(--naranja-claro);color:var(--naranja);}
+.dif-avanzado{background:var(--lila-claro);color:var(--lila);}
+.ej-enunciado{font-size:.93rem;line-height:1.75;margin-bottom:20px;}
+.opciones-ej{display:grid;grid-template-columns:1fr 1fr;gap:9px;}
+@media(max-width:520px){.opciones-ej{grid-template-columns:1fr;}}
+.op-btn{background:var(--arena);border:2px solid #E8E8E8;border-radius:9px;padding:12px 15px;font-size:.88rem;cursor:pointer;transition:all .15s;text-align:left;font-family:'DM Sans',sans-serif;color:var(--gris);display:flex;align-items:center;gap:9px;}
+.op-btn:hover:not(:disabled){border-color:var(--oceano-medio);background:#EFF3FA;}
+.op-letra{font-family:'JetBrains Mono',monospace;font-size:.68rem;font-weight:600;color:var(--gris-s);min-width:16px;}
+.op-btn.ok{border-color:var(--verde);background:var(--verde-claro);}
+.op-btn.ok .op-letra{color:var(--verde);}
+.op-btn.mal{border-color:var(--rojo);background:var(--rojo-claro);}
+.op-btn.mal .op-letra{color:var(--rojo);}
+.fb-ej{font-size:.83rem;line-height:1.65;padding:11px 15px;border-radius:8px;margin-top:10px;display:none;border-left:3px solid transparent;}
+.fb-ej.ok{display:block;background:var(--verde-claro);border-left-color:var(--verde);color:var(--gris);}
+.fb-ej.ok .fb-titulo{color:var(--verde);font-weight:600;margin-bottom:3px;}
+.fb-ej.mal{display:block;background:var(--rojo-claro);border-left-color:var(--rojo);color:var(--gris);}
+.fb-ej.mal .fb-titulo{color:var(--rojo);font-weight:600;margin-bottom:3px;}
+.minitest-barra{background:#F0F0F0;border-radius:6px;height:8px;margin-bottom:20px;overflow:hidden;}
+.minitest-fill{height:8px;background:var(--verde);border-radius:6px;transition:width .4s;}
+.test-pregunta{background:var(--blanco);border-radius:14px;padding:28px 30px;box-shadow:0 2px 14px rgba(26,74,122,.08);margin-bottom:16px;}
+.test-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;}
+.test-num{font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--gris-s);}
+.test-enunciado{font-size:1rem;line-height:1.75;margin-bottom:22px;}
+.btn-siguiente-nivel{background:var(--oceano);color:var(--blanco);border:none;border-radius:10px;padding:13px 32px;font-family:'DM Sans',sans-serif;font-size:.95rem;font-weight:500;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:8px;margin-top:20px;}
+.btn-siguiente-nivel:hover{background:var(--oceano-medio);transform:translateY(-1px);}
+.btn-siguiente-nivel:disabled{background:#A0B8D0;cursor:not-allowed;transform:none;}
+.bloque-accion{text-align:right;padding:20px 0 8px;border-top:1px dashed #D8D8D8;margin-top:24px;}
+.resultado-minitest{text-align:center;padding:40px 24px;background:var(--blanco);border-radius:16px;box-shadow:0 2px 16px rgba(0,0,0,.08);}
+.resultado-minitest .res-nota{font-family:'Fraunces',serif;font-size:4rem;font-weight:700;line-height:1;}
+.resultado-minitest .res-label{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:2px;text-transform:uppercase;color:var(--gris-s);margin-bottom:16px;}
+.resultado-minitest h3{font-family:'Fraunces',serif;font-size:1.4rem;font-weight:600;margin-bottom:8px;}
+.resultado-minitest p{font-size:.9rem;color:var(--gris-s);line-height:1.6;max-width:420px;margin:0 auto 24px;}
+.btn-res{display:inline-block;border-radius:10px;padding:12px 28px;font-family:'DM Sans',sans-serif;font-size:.92rem;font-weight:500;cursor:pointer;border:none;transition:all .2s;margin:4px;}
+.btn-res.ok{background:var(--verde);color:var(--blanco);}
+.btn-res.ok:hover{background:#166B50;}
+.btn-res.repetir{background:var(--naranja-claro);color:var(--naranja);border:2px solid var(--naranja);}
+.btn-res.volver{background:var(--rojo-claro);color:var(--rojo);border:2px solid var(--rojo);}
+.repaso-errores{background:var(--blanco);border-radius:12px;padding:22px 26px;box-shadow:0 1px 8px rgba(0,0,0,.05);margin-top:20px;}
+.repaso-titulo{font-family:'Fraunces',serif;font-size:.95rem;font-weight:600;color:var(--gris);margin-bottom:14px;}
+.error-item{border-left:3px solid var(--rojo-claro);padding:10px 14px;margin-bottom:10px;border-radius:0 8px 8px 0;background:#FDF7F7;font-size:.84rem;line-height:1.6;}
+.error-correcta{color:var(--verde);font-weight:600;}
+</style>
+</head>
+<body>
+<div class="topbar"><div class="topbar-logo">Puente a <em>Bachillerato</em></div><div class="topbar-alumna" id="topbar-alumna">Trigonometría · Identidades y ecuaciones</div></div>
+<div class="progress-wrap"><div class="progress-bar" id="progress-bar" style="width:0%"></div></div>
+<div class="layout">
+<aside class="sidebar">
+  <div class="sidebar-bloque">Trigonometría · Parte 5 de 5</div>
+  <div class="sidebar-item activo" id="s-teoria" onclick="irSeccion('teoria')"><span class="s-dot"></span> Teoría</div>
+  <div class="sidebar-item" id="s-n1" onclick="irSeccion('n1')"><span class="s-dot"></span> Nivel 1</div>
+  <div class="sidebar-item" id="s-n2" onclick="irSeccion('n2')"><span class="s-dot"></span> Nivel 2</div>
+  <div class="sidebar-item" id="s-n3" onclick="irSeccion('n3')"><span class="s-dot"></span> Nivel 3</div>
+  <div class="sidebar-item" id="s-test" onclick="irSeccion('test')"><span class="s-dot"></span> Mini-test</div>
+  <div class="sidebar-sep"></div>
+  <div class="sidebar-nav-btns">
+    <button class="btn-nav anterior" onclick="window.location.href='trig4-goniometrica.html'">← Parte 4</button>
+    <button class="btn-nav siguiente" onclick="window.location.href='ruta-a-trigonometria.html'">Volver al índice →</button>
+    <button class="btn-nav volver" onclick="window.location.href='ruta-a-trigonometria.html'">📋 Volver a Trigonometría</button>
+  </div>
+</aside>
+<main class="main" id="main-area"></main>
+</div>
+<script>
+// ══════════════════════════════════════════════════════════
+//  MOTOR DE MÓDULOS — Ruta A · Puente a Bachillerato
+//  Lee el objeto global MODULO_CONFIG y construye toda la
+//  interfaz: cabecera, navegación, teoría, niveles y mini-test.
+// ══════════════════════════════════════════════════════════
+
+let alumna = {};
+try { alumna = JSON.parse(sessionStorage.getItem('alumna') || '{}'); } catch(e){}
+const APPS_SCRIPT_URL_MOD = 'https://script.google.com/macros/s/AKfycbx63xvLtRnJYFQBr7AelcusmRLFzlCN6CyqPQWtjtdZ-IVuDr6RX2v850qTnZPr19LpVA/exec';
+function enviarResultadoModulo(modulo, correctas, superado) {
+  if (!APPS_SCRIPT_URL_MOD || APPS_SCRIPT_URL_MOD.includes('TU_')) return;
+  try {
+    const params = new URLSearchParams({
+      tipo: 'modulo_rutaA',
+      modulo: modulo,
+      nombre: alumna.nombre || '',
+      apellidos: alumna.apellidos || '',
+      grupo: alumna.grupo || '',
+      itinerario: alumna.itinerario || '',
+      correctas: correctas,
+      total: 5,
+      superado: superado ? '1' : '0',
+      fecha: new Date().toISOString()
+    });
+    new Image().src = APPS_SCRIPT_URL_MOD + '?' + params.toString();
+  } catch(e) {}
+}
+
+
+const estadoNiveles = {
+  n1: { respondidas: new Set(), correctas: new Set() },
+  n2: { respondidas: new Set(), correctas: new Set() },
+  n3: { respondidas: new Set(), correctas: new Set() }
+};
+let testPreguntas = [];
+let testActual = 0;
+let testRespuestas = [];
+const SECCIONES = ['teoria','n1','n2','n3','test'];
+
+function iniciarModulo() {
+  const C = MODULO_CONFIG;
+
+  if (alumna.nombre) {
+    document.getElementById('topbar-alumna').textContent = `${alumna.nombre} · ${C.titulo}`;
+  }
+
+  const main = document.getElementById('main-area');
+  main.innerHTML = `
+    <div class="modulo-eyebrow">${C.eyebrow}</div>
+    <div class="modulo-titulo">${C.titulo}</div>
+    <div class="modulo-desc">${C.desc}</div>
+
+    <div class="nav-modulos">
+      <button class="nm-btn nm-activo" onclick="irSeccion('teoria')">📖 Teoría</button>
+      <button class="nm-btn" onclick="irSeccion('n1')">🔵 Nivel 1</button>
+      <button class="nm-btn" onclick="irSeccion('n2')">🟠 Nivel 2</button>
+      <button class="nm-btn" onclick="irSeccion('n3')">🟣 Nivel 3</button>
+      <button class="nm-btn" onclick="irSeccion('test')">✅ Mini-test</button>
+    </div>
+
+    <div class="seccion visible" id="sec-teoria">
+      ${C.teoria}
+      <div class="bloque-accion">
+        <button class="btn-siguiente-nivel" onclick="irSeccion('n1')">Ir a los ejercicios →</button>
+      </div>
+    </div>
+
+    <div class="seccion" id="sec-n1">
+      <div class="nivel-header n1"><div class="nivel-icon">🔵</div><div class="nivel-info"><h3>Nivel 1 — Básico</h3><p>Aplicación directa de definiciones y conversiones.</p></div></div>
+      <div id="ejercicios-n1"></div>
+      <div class="bloque-accion"><button class="btn-siguiente-nivel" id="btn-a-n2" onclick="irSeccion('n2')" disabled>Nivel 2 →</button></div>
+    </div>
+
+    <div class="seccion" id="sec-n2">
+      <div class="nivel-header n2"><div class="nivel-icon">🟠</div><div class="nivel-info"><h3>Nivel 2 — Intermedio</h3><p>Combinación de varias técnicas.</p></div></div>
+      <div id="ejercicios-n2"></div>
+      <div class="bloque-accion"><button class="btn-siguiente-nivel" id="btn-a-n3" onclick="irSeccion('n3')" disabled>Nivel 3 →</button></div>
+    </div>
+
+    <div class="seccion" id="sec-n3">
+      <div class="nivel-header n3"><div class="nivel-icon">🟣</div><div class="nivel-info"><h3>Nivel 3 — Avanzado</h3><p>Resolución de triángulos y ecuaciones trigonométricas.</p></div></div>
+      <div id="ejercicios-n3"></div>
+      <div class="bloque-accion"><button class="btn-siguiente-nivel" id="btn-a-test" onclick="iniciarMinitest()" disabled>Hacer el mini-test →</button></div>
+    </div>
+
+    <div class="seccion" id="sec-test">
+      <div class="nivel-header ntest"><div class="nivel-icon">✅</div><div class="nivel-info"><h3>Mini-test de superación</h3><p>5 preguntas aleatorias. Necesitas 4/5 para superar el módulo.</p></div></div>
+      <div class="minitest-barra"><div class="minitest-fill" id="mt-barra" style="width:0%"></div></div>
+      <div id="minitest-contenido"></div>
+    </div>
+  `;
+
+  renderNivel('n1');
+  renderNivel('n2');
+  renderNivel('n3');
+  MathJax && MathJax.typesetPromise();
+}
+
+// ══════════════════════════════════════════
+// NAVEGACIÓN
+// ══════════════════════════════════════════
+function irSeccion(id) {
+  if (id === 'test' && testPreguntas.length === 0) { iniciarMinitest(); return; }
+  SECCIONES.forEach(s => {
+    const sec = document.getElementById(`sec-${s}`);
+    if (sec) sec.classList.toggle('visible', s === id);
+    const si = document.getElementById(`s-${s}`);
+    if (si) si.classList.toggle('activo', s === id);
+  });
+  document.querySelectorAll('.nm-btn').forEach((btn,i) => btn.classList.toggle('nm-activo', SECCIONES[i] === id));
+  window.scrollTo(0,0);
+  MathJax && MathJax.typesetPromise();
+}
+
+// ══════════════════════════════════════════
+// EJERCICIOS POR NIVEL
+// ══════════════════════════════════════════
+function renderNivel(nivel) {
+  const cont = document.getElementById(`ejercicios-${nivel}`);
+  const letras = ['A','B','C','D'];
+  const banco = MODULO_CONFIG.banco[nivel];
+
+  cont.innerHTML = banco.map((ej, i) => {
+    const dif = nivel === 'n1' ? 'Básico' : (nivel === 'n2' ? 'Intermedio' : 'Avanzado');
+    const difCls = nivel === 'n1' ? 'dif-basico' : (nivel === 'n2' ? 'dif-medio' : 'dif-avanzado');
+    return `<div class="ejercicio-card ${nivel}-color" id="ej-${nivel}-${i}">
+      <div class="ejercicio-meta">
+        <span class="ej-num">Ejercicio ${i+1}</span>
+        <span class="ej-dificultad ${difCls}">${dif}</span>
+      </div>
+      <div class="ej-enunciado">${ej.enunciado}</div>
+      <div class="opciones-ej">
+        ${ej.opciones.map((op,oi) => `<button class="op-btn" onclick="responderEj('${nivel}',${i},${oi})"><span class="op-letra">${letras[oi]}</span><span>${op}</span></button>`).join('')}
+      </div>
+      <div class="fb-ej" id="fb-${nivel}-${i}"></div>
+    </div>`;
+  }).join('');
+}
+
+function responderEj(nivel, idx, opIdx) {
+  if (estadoNiveles[nivel].respondidas.has(idx)) return;
+  estadoNiveles[nivel].respondidas.add(idx);
+
+  const ej = MODULO_CONFIG.banco[nivel][idx];
+  const ok = opIdx === ej.correcta;
+  if (ok) estadoNiveles[nivel].correctas.add(idx);
+
+  document.getElementById(`ej-${nivel}-${idx}`).querySelectorAll('.op-btn').forEach((btn, oi) => {
+    btn.disabled = true;
+    if (oi === ej.correcta) btn.classList.add('ok');
+    else if (oi === opIdx && !ok) btn.classList.add('mal');
+  });
+
+  const fb = document.getElementById(`fb-${nivel}-${idx}`);
+  fb.className = `fb-ej ${ok ? 'ok' : 'mal'}`;
+  fb.innerHTML = `<div class="fb-titulo">${ok ? '✓ Correcto' : '✗ No es correcto'}</div>${ej.feedback}`;
+
+  if (estadoNiveles[nivel].respondidas.size === MODULO_CONFIG.banco[nivel].length) {
+    const si = document.getElementById(`s-${nivel}`);
+    if (si) si.classList.add('hecho');
+    const btns = { n1:'btn-a-n2', n2:'btn-a-n3', n3:'btn-a-test' };
+    const b = document.getElementById(btns[nivel]);
+    if (b) b.disabled = false;
+  }
+
+  actualizarProgreso();
+  MathJax && MathJax.typesetPromise();
+}
+
+// ══════════════════════════════════════════
+// MINI-TEST
+// ══════════════════════════════════════════
+function iniciarMinitest() {
+  testPreguntas = [...MODULO_CONFIG.bancoTest].sort(() => Math.random() - 0.5).slice(0,5);
+  testActual = 0;
+  testRespuestas = new Array(5).fill(null);
+  irSeccion('test');
+  mostrarPreguntaTest(0);
+}
+
+function mostrarPreguntaTest(idx) {
+  const p = testPreguntas[idx];
+  const letras = ['A','B','C','D'];
+  document.getElementById('mt-barra').style.width = ((idx/5)*100) + '%';
+  document.getElementById('minitest-contenido').innerHTML = `
+    <div class="test-pregunta">
+      <div class="test-meta"><span class="test-num">Pregunta ${idx+1} de 5</span></div>
+      <div class="test-enunciado">${p.enunciado}</div>
+      <div class="opciones-ej" id="ops-test">
+        ${p.opciones.map((op,oi) => `<button class="op-btn" onclick="responderTest(${oi})"><span class="op-letra">${letras[oi]}</span><span>${op}</span></button>`).join('')}
+      </div>
+    </div>
+    <div style="text-align:right;margin-top:8px;">
+      <button class="btn-siguiente-nivel" id="btn-test-sig" style="display:none" onclick="siguienteTest()">${idx<4 ? 'Siguiente →' : 'Ver resultado →'}</button>
+    </div>`;
+  MathJax && MathJax.typesetPromise();
+}
+
+function responderTest(opIdx) {
+  testRespuestas[testActual] = opIdx;
+  document.querySelectorAll('#ops-test .op-btn').forEach((btn,i) => {
+    btn.disabled = true;
+    if (i === opIdx) { btn.style.borderColor = 'var(--oceano-medio)'; btn.style.background = '#EFF3FA'; }
+  });
+  document.getElementById('btn-test-sig').style.display = 'inline-flex';
+}
+
+function siguienteTest() {
+  testActual++;
+  if (testActual < 5) mostrarPreguntaTest(testActual);
+  else mostrarResultadoTest();
+}
+
+function mostrarResultadoTest() {
+  document.getElementById('mt-barra').style.width = '100%';
+  const correctas = testRespuestas.filter((r,i) => r === testPreguntas[i].correcta).length;
+  const superado = correctas >= 4;
+  enviarResultadoModulo(MODULO_CONFIG.clave, correctas, superado);
+  const color = superado ? 'var(--verde)' : (correctas >= 3 ? 'var(--naranja)' : 'var(--rojo)');
+  const titulo = superado ? '¡Módulo superado!' : (correctas >= 3 ? 'Por poco…' : 'Hay que repasar');
+  const C = MODULO_CONFIG;
+  const texto = superado
+    ? `¡Has completado toda la Trigonometría! Vuelve al índice para ver tu progreso.`
+    : (correctas >= 3 ? 'Estás cerca. Repasa los errores y vuelve a intentarlo.' : 'Repasa la teoría y los ejercicios antes de repetir el test.');
+
+  if (superado) {
+    const m = JSON.parse(sessionStorage.getItem('modulos_rutaA') || '[]');
+    if (!m.includes(C.clave)) m.push(C.clave);
+    sessionStorage.setItem('modulos_rutaA', JSON.stringify(m));
+    const si = document.getElementById('s-test');
+    if (si) si.classList.add('hecho');
+  }
+
+  const errores = testPreguntas.map((p,i) => ({...p, elegida: testRespuestas[i]})).filter(p => p.elegida !== p.correcta);
+  const letras = ['A','B','C','D'];
+
+  document.getElementById('minitest-contenido').innerHTML = `
+    <div class="resultado-minitest">
+      <div class="res-nota" style="color:${color}">${correctas}/5</div>
+      <div class="res-label">respuestas correctas</div>
+      <h3>${titulo}</h3>
+      <p>${texto}</p>
+      ${superado
+        ? `<button class="btn-res ok" onclick="window.location.href='${C.siguiente}'">${C.siguiente.includes('test-final') ? 'Ir al test final →' : 'Siguiente módulo →'}</button>
+           <button class="btn-res repetir" onclick="iniciarMinitest()">↻ Repetir test</button>`
+        : `<button class="btn-res volver" onclick="irSeccion('teoria')">← Repasar teoría</button>
+           <button class="btn-res repetir" onclick="iniciarMinitest()">↻ Intentar de nuevo</button>`
+      }
+    </div>
+    ${errores.length > 0 ? `<div class="repaso-errores"><div class="repaso-titulo">Repaso de errores</div>${errores.map(p => `
+      <div class="error-item">
+        <div>${p.enunciado}</div>
+        <div>Tu respuesta: ${p.elegida !== null ? letras[p.elegida]+') '+p.opciones[p.elegida] : '—'}</div>
+        <div class="error-correcta">✓ Correcta: ${letras[p.correcta]}) ${p.opciones[p.correcta]}</div>
+        <div style="color:var(--gris-s);font-size:.82rem;margin-top:4px;">${p.feedback}</div>
+      </div>`).join('')}</div>` : ''}`;
+
+  actualizarProgreso();
+  MathJax && MathJax.typesetPromise();
+}
+
+// ══════════════════════════════════════════
+// PROGRESO
+// ══════════════════════════════════════════
+function actualizarProgreso() {
+  const C = MODULO_CONFIG;
+  const total = C.banco.n1.length + C.banco.n2.length + C.banco.n3.length;
+  const resp = estadoNiveles.n1.respondidas.size + estadoNiveles.n2.respondidas.size + estadoNiveles.n3.respondidas.size;
+  document.getElementById('progress-bar').style.width = Math.round((resp/(total+5))*100) + '%';
+}
+</script>
+<script>
+MODULO_CONFIG = {
+  num: 5, total: 5, clave: 'trig-identidades', titulo: 'Identidades y Ecuaciones Trigonométricas',
+  eyebrow: 'Ruta A · Trigonometría · Parte 5 de 5',
+  desc: 'La identidad fundamental conecta seno y coseno. Las ecuaciones trigonométricas aparecen constantemente en física y en el estudio de funciones periódicas en Bachillerato.',
+  anterior: 'trig4-goniometrica.html', siguiente: 'ruta-a-trigonometria.html',
+  teoria: `
+  <div class="teoria-intro"><p>Una <strong>identidad trigonométrica</strong> es una igualdad que se cumple para todos los valores del ángulo. La más importante es la <strong>identidad fundamental</strong>, de la que se derivan todas las demás. Las <strong>ecuaciones trigonométricas</strong> son igualdades que solo se cumplen para ciertos valores — la clave es encontrar todos los ángulos que las satisfacen.</p></div>
+
+  <div class="concepto-card"><h3>📐 1. Identidad fundamental y consecuencias</h3><div class="concepto-body">
+  <div class="formula-box verde" style="font-size:1.1rem">\\(\\sin^2\\alpha + \\cos^2\\alpha = 1\\)</div>
+  <p>De aquí se deducen directamente:</p>
+  <div class="formula-box">
+  \\(\\sin^2\\alpha = 1 - \\cos^2\\alpha \\qquad \\cos^2\\alpha = 1 - \\sin^2\\alpha\\)
+  </div>
+  <div class="ejemplo-resuelto"><div class="ej-titulo">Ejemplo resuelto 1 — Calcular una razón desde otra</div>
+  <div class="paso"><span class="paso-num">①</span><span>Si \\(\\cos\\alpha=\\dfrac{3}{5}\\) y \\(\\alpha\\) está en el IV cuadrante, halla \\(\\sin\\alpha\\)</span></div>
+  <div class="paso"><span class="paso-num">②</span><span>\\(\\sin^2\\alpha=1-\\dfrac{9}{25}=\\dfrac{16}{25}\\)</span></div>
+  <div class="paso"><span class="paso-num">③</span><span>En el IV cuadrante \\(\\sin\\alpha<0\\): \\(\\sin\\alpha=-\\dfrac{4}{5}\\)</span></div>
+  </div>
+  <div class="ejemplo-resuelto"><div class="ej-titulo">Ejemplo resuelto 2 — Simplificar una expresión</div>
+  <div class="paso"><span class="paso-num">①</span><span>Simplifica: \\(\\dfrac{\\sin^2\\alpha}{1-\\cos\\alpha}\\)</span></div>
+  <div class="paso"><span class="paso-num">②</span><span>\\(\\sin^2\\alpha=(1-\\cos\\alpha)(1+\\cos\\alpha)\\)</span></div>
+  <div class="paso"><span class="paso-num">③</span><span>\\(\\dfrac{(1-\\cos\\alpha)(1+\\cos\\alpha)}{1-\\cos\\alpha}=1+\\cos\\alpha\\)</span></div>
+  </div>
+  </div></div>
+
+  <div class="concepto-card"><h3>📐 2. Otras identidades útiles</h3><div class="concepto-body">
+  <div class="formula-box">
+  \\(\\tan\\alpha = \\dfrac{\\sin\\alpha}{\\cos\\alpha}\\qquad(\\cos\\alpha\\neq0)\\)<br><br>
+  \\(1+\\tan^2\\alpha = \\dfrac{1}{\\cos^2\\alpha}\\qquad(\\cos\\alpha\\neq0)\\)
+  </div>
+  <div class="ejemplo-resuelto"><div class="ej-titulo">Ejemplo resuelto 3 — Demostrar una identidad</div>
+  <div class="paso"><span class="paso-num">①</span><span>Demuestra: \\(1+\\tan^2\\alpha=\\dfrac{1}{\\cos^2\\alpha}\\)</span></div>
+  <div class="paso"><span class="paso-num">②</span><span>\\(1+\\tan^2\\alpha=1+\\dfrac{\\sin^2\\alpha}{\\cos^2\\alpha}=\\dfrac{\\cos^2\\alpha+\\sin^2\\alpha}{\\cos^2\\alpha}=\\dfrac{1}{\\cos^2\\alpha}\\) ✓</span></div>
+  </div>
+  </div></div>
+
+  <div class="concepto-card"><h3>📐 3. Ecuaciones trigonométricas básicas</h3><div class="concepto-body">
+  <p>Para resolver \\(\\sin x = k\\), \\(\\cos x = k\\) o \\(\\tan x = k\\) en \\([0°,360°)\\):</p>
+  <div class="formula-box verde">
+  1. Halla el <strong>ángulo de referencia</strong> \\(\\alpha_0\\) en el primer cuadrante (con calculadora si hace falta).<br>
+  2. Identifica en qué cuadrantes el signo de la razón coincide con el de \\(k\\).<br>
+  3. Usa las fórmulas de reducción para hallar <strong>todas las soluciones</strong>.
+  </div>
+  <div class="ejemplo-resuelto"><div class="ej-titulo">Ejemplo resuelto 4 — Ecuación de seno</div>
+  <div class="paso"><span class="paso-num">①</span><span>Resuelve \\(\\sin x=\\dfrac{1}{2}\\) en \\([0°,360°)\\)</span></div>
+  <div class="paso"><span class="paso-num">②</span><span>Ángulo de referencia: \\(x_0=30°\\) (porque \\(\\sin30°=\\dfrac{1}{2}\\))</span></div>
+  <div class="paso"><span class="paso-num">③</span><span>\\(\\sin x>0\\) → cuadrantes I y II</span></div>
+  <div class="paso"><span class="paso-num">④</span><span>Soluciones: \\(x=30°\\) (I) y \\(x=180°-30°=150°\\) (II)</span></div>
+  </div>
+  <div class="ejemplo-resuelto"><div class="ej-titulo">Ejemplo resuelto 5 — Ecuación de coseno negativo</div>
+  <div class="paso"><span class="paso-num">①</span><span>Resuelve \\(\\cos x=-\\dfrac{\\sqrt{3}}{2}\\) en \\([0°,360°)\\)</span></div>
+  <div class="paso"><span class="paso-num">②</span><span>Ángulo de referencia: \\(x_0=30°\\) (porque \\(\\cos30°=\\dfrac{\\sqrt{3}}{2}\\))</span></div>
+  <div class="paso"><span class="paso-num">③</span><span>\\(\\cos x<0\\) → cuadrantes II y III</span></div>
+  <div class="paso"><span class="paso-num">④</span><span>Soluciones: \\(x=180°-30°=150°\\) (II) y \\(x=180°+30°=210°\\) (III)</span></div>
+  </div>
+  <div class="ejemplo-resuelto"><div class="ej-titulo">Ejemplo resuelto 6 — Ecuación reducible</div>
+  <div class="paso"><span class="paso-num">①</span><span>Resuelve \\(2\\sin^2 x - \\sin x = 0\\) en \\([0°,360°)\\)</span></div>
+  <div class="paso"><span class="paso-num">②</span><span>Factorizo: \\(\\sin x(2\\sin x-1)=0\\)</span></div>
+  <div class="paso"><span class="paso-num">③</span><span>\\(\\sin x=0 \\Rightarrow x=0°,180°\\)</span></div>
+  <div class="paso"><span class="paso-num">④</span><span>\\(\\sin x=\\dfrac{1}{2} \\Rightarrow x=30°,150°\\)</span></div>
+  <div class="paso"><span class="paso-num">⑤</span><span>Cuatro soluciones: \\(\\{0°,30°,150°,180°\\}\\)</span></div>
+  </div>
+  </div></div>`,
+
+  banco: {
+    n1:[
+      {enunciado:'Si \\(\\sin\\alpha=\\dfrac{4}{5}\\) y \\(\\alpha\\) es agudo, ¿cuánto vale \\(\\cos\\alpha\\)?',opciones:['\\(\\dfrac{3}{5}\\)','\\(-\\dfrac{3}{5}\\)','\\(\\dfrac{4}{3}\\)','\\(\\dfrac{5}{4}\\)'],correcta:0,feedback:'\\(\\cos^2\\alpha=1-\\dfrac{16}{25}=\\dfrac{9}{25}\\). Como \\(\\alpha\\) es agudo, \\(\\cos\\alpha>0\\): \\(\\cos\\alpha=\\dfrac{3}{5}\\).'},
+      {enunciado:'Si \\(\\cos\\alpha=\\dfrac{5}{13}\\), ¿cuánto vale \\(\\sin^2\\alpha\\)?',opciones:['\\(\\dfrac{144}{169}\\)','\\(\\dfrac{25}{169}\\)','\\(\\dfrac{12}{13}\\)','\\(\\dfrac{119}{169}\\)'],correcta:0,feedback:'\\(\\sin^2\\alpha=1-\\cos^2\\alpha=1-\\dfrac{25}{169}=\\dfrac{144}{169}\\).'},
+      {enunciado:'¿Es cierta la identidad \\(\\sin^2\\alpha+\\cos^2\\alpha=2\\)?',opciones:['No, vale siempre \\(1\\)','Sí, es correcta','Solo para \\(\\alpha=45°\\)','Depende del cuadrante'],correcta:0,feedback:'La identidad fundamental dice \\(\\sin^2\\alpha+\\cos^2\\alpha=1\\), siempre.'},
+      {enunciado:'Resuelve \\(\\sin x=\\dfrac{\\sqrt{3}}{2}\\) en \\([0°,360°)\\)',opciones:['\\(x=60°\\) y \\(x=120°\\)','\\(x=60°\\) solo','\\(x=30°\\) y \\(x=150°\\)','\\(x=60°\\) y \\(x=300°\\)'],correcta:0,feedback:'Referencia: \\(60°\\). Seno positivo → cuadrantes I y II: \\(x=60°\\) y \\(x=180°-60°=120°\\).'},
+      {enunciado:'Resuelve \\(\\cos x=\\dfrac{1}{2}\\) en \\([0°,360°)\\)',opciones:['\\(x=60°\\) y \\(x=300°\\)','\\(x=60°\\) solo','\\(x=60°\\) y \\(x=120°\\)','\\(x=30°\\) y \\(x=330°\\)'],correcta:0,feedback:'Referencia: \\(60°\\). Coseno positivo → cuadrantes I y IV: \\(x=60°\\) y \\(x=360°-60°=300°\\).'},
+      {enunciado:'Resuelve \\(\\sin x=-\\dfrac{1}{2}\\) en \\([0°,360°)\\)',opciones:['\\(x=210°\\) y \\(x=330°\\)','\\(x=30°\\) y \\(x=150°\\)','\\(x=210°\\) solo','\\(x=150°\\) y \\(x=330°\\)'],correcta:0,feedback:'Referencia: \\(30°\\). Seno negativo → cuadrantes III y IV: \\(x=180°+30°=210°\\) y \\(x=360°-30°=330°\\).'},
+      {enunciado:'Simplifica: \\(\\sin^2\\alpha+\\cos^2\\alpha+1\\)',opciones:['\\(2\\)','\\(1\\)','\\(0\\)','Depende de \\(\\alpha\\)'],correcta:0,feedback:'\\(\\sin^2\\alpha+\\cos^2\\alpha=1\\). Sumando \\(1\\): resultado \\(2\\).'},
+      {enunciado:'Si \\(\\tan x=1\\), ¿cuáles son las soluciones en \\([0°,360°)\\)?',opciones:['\\(x=45°\\) y \\(x=225°\\)','\\(x=45°\\) solo','\\(x=45°\\) y \\(x=135°\\)','\\(x=135°\\) y \\(x=315°\\)'],correcta:0,feedback:'Referencia: \\(45°\\). Tangente positiva → cuadrantes I y III: \\(x=45°\\) y \\(x=180°+45°=225°\\).'},
+      {enunciado:'Si \\(\\sin\\alpha=\\dfrac{3}{5}\\) y \\(\\alpha\\) es agudo, ¿cuánto vale \\(\\tan\\alpha\\)?',opciones:['\\(\\dfrac{3}{4}\\)','\\(\\dfrac{4}{3}\\)','\\(\\dfrac{3}{5}\\)','\\(\\dfrac{5}{3}\\)'],correcta:0,feedback:'\\(\\cos\\alpha=\\dfrac{4}{5}\\). \\(\\tan\\alpha=\\dfrac{\\sin\\alpha}{\\cos\\alpha}=\\dfrac{3/5}{4/5}=\\dfrac{3}{4}\\).'},
+      {enunciado:'Resuelve \\(2\\sin x-1=0\\) en \\([0°,360°)\\)',opciones:['\\(x=30°\\) y \\(x=150°\\)','\\(x=30°\\) solo','\\(x=60°\\) y \\(x=120°\\)','\\(x=30°\\) y \\(x=210°\\)'],correcta:0,feedback:'\\(\\sin x=\\dfrac{1}{2}\\). Referencia \\(30°\\). Positivo → I y II: \\(x=30°\\) y \\(x=150°\\).'}
+    ],
+    n2:[
+      {enunciado:'Si \\(\\sin\\alpha=-\\dfrac{\\sqrt{3}}{2}\\) y \\(\\alpha\\in(180°,270°)\\), halla \\(\\cos\\alpha\\) y \\(\\tan\\alpha\\)',opciones:['\\(\\cos\\alpha=-\\dfrac{1}{2},\\;\\tan\\alpha=\\sqrt{3}\\)','\\(\\cos\\alpha=\\dfrac{1}{2},\\;\\tan\\alpha=-\\sqrt{3}\\)','\\(\\cos\\alpha=-\\dfrac{\\sqrt{3}}{2},\\;\\tan\\alpha=1\\)','\\(\\cos\\alpha=\\dfrac{\\sqrt{3}}{2},\\;\\tan\\alpha=\\sqrt{3}\\)'],correcta:0,feedback:'\\(\\cos^2\\alpha=\\dfrac{1}{4}\\). En III: \\(\\cos\\alpha=-\\dfrac{1}{2}\\). \\(\\tan\\alpha=\\dfrac{-\\sqrt{3}/2}{-1/2}=\\sqrt{3}\\).'},
+      {enunciado:'Simplifica: \\(\\dfrac{\\sin^2\\alpha}{1-\\cos\\alpha}\\)',opciones:['\\(1+\\cos\\alpha\\)','\\(1-\\cos\\alpha\\)','\\(\\sin\\alpha\\)','\\(\\cos\\alpha\\)'],correcta:0,feedback:'\\(\\sin^2\\alpha=(1-\\cos\\alpha)(1+\\cos\\alpha)\\). Simplificando: \\(1+\\cos\\alpha\\).'},
+      {enunciado:'Resuelve \\(\\cos x=-\\dfrac{1}{2}\\) en \\([0°,360°)\\)',opciones:['\\(x=120°\\) y \\(x=240°\\)','\\(x=60°\\) y \\(x=300°\\)','\\(x=120°\\) solo','\\(x=150°\\) y \\(x=210°\\)'],correcta:0,feedback:'Referencia: \\(60°\\). Coseno negativo → II y III: \\(x=180°-60°=120°\\) y \\(x=180°+60°=240°\\).'},
+      {enunciado:'Demuestra que \\(\\tan^2\\alpha+1=\\dfrac{1}{\\cos^2\\alpha}\\). ¿Cuál es el paso clave?',opciones:['Dividir toda la identidad fundamental entre \\(\\cos^2\\alpha\\)','Dividir entre \\(\\sin^2\\alpha\\)','Sustituir \\(\\tan\\alpha=\\dfrac{\\cos\\alpha}{\\sin\\alpha}\\)','Aplicar la fórmula de la tangente doble'],correcta:0,feedback:'\\(\\sin^2\\alpha+\\cos^2\\alpha=1\\). Dividiendo entre \\(\\cos^2\\alpha\\): \\(\\tan^2\\alpha+1=\\dfrac{1}{\\cos^2\\alpha}\\) ✓.'},
+      {enunciado:'Resuelve \\(\\tan x=-1\\) en \\([0°,360°)\\)',opciones:['\\(x=135°\\) y \\(x=315°\\)','\\(x=45°\\) y \\(x=225°\\)','\\(x=135°\\) solo','\\(x=45°\\) y \\(x=135°\\)'],correcta:0,feedback:'Referencia: \\(45°\\). Tangente negativa → II y IV: \\(x=180°-45°=135°\\) y \\(x=360°-45°=315°\\).'},
+      {enunciado:'Resuelve \\(2\\cos^2 x-1=0\\) en \\([0°,360°)\\)',opciones:['\\(x=45°,135°,225°,315°\\)','\\(x=45°,135°\\)','\\(x=60°,120°,240°,300°\\)','\\(x=45°,315°\\)'],correcta:0,feedback:'\\(\\cos^2 x=\\dfrac{1}{2}\\Rightarrow\\cos x=\\pm\\dfrac{\\sqrt{2}}{2}\\). Cuatro soluciones: \\(45°,135°,225°,315°\\).'},
+      {enunciado:'Si \\(\\cos\\alpha=\\dfrac{1}{3}\\), ¿cuánto vale \\(\\sin^2\\alpha\\)?',opciones:['\\(\\dfrac{8}{9}\\)','\\(\\dfrac{1}{9}\\)','\\(\\dfrac{2\\sqrt{2}}{3}\\)','\\(\\dfrac{4}{9}\\)'],correcta:0,feedback:'\\(\\sin^2\\alpha=1-\\dfrac{1}{9}=\\dfrac{8}{9}\\).'},
+      {enunciado:'Resuelve \\(\\sin^2 x-\\sin x=0\\) en \\([0°,360°)\\)',opciones:['\\(x=0°,90°,180°\\)','\\(x=0°,180°\\)','\\(x=90°\\) solo','\\(x=0°,90°,180°,270°\\)'],correcta:0,feedback:'\\(\\sin x(\\sin x-1)=0\\). \\(\\sin x=0\\Rightarrow x=0°,180°\\). \\(\\sin x=1\\Rightarrow x=90°\\). Total: \\(\\{0°,90°,180°\\}\\).'}
+    ],
+    n3:[
+      {enunciado:'Resuelve \\(2\\sin^2 x-3\\sin x+1=0\\) en \\([0°,360°)\\)',opciones:['\\(x=30°,90°,150°\\)','\\(x=30°,150°\\)','\\(x=90°,270°\\)','\\(x=30°,90°\\)'],correcta:0,feedback:'\\((2\\sin x-1)(\\sin x-1)=0\\). \\(\\sin x=\\dfrac{1}{2}\\Rightarrow30°,150°\\). \\(\\sin x=1\\Rightarrow90°\\). Total: \\(\\{30°,90°,150°\\}\\).'},
+      {enunciado:'Resuelve \\(\\cos^2 x+\\cos x=0\\) en \\([0°,360°)\\)',opciones:['\\(x=90°,180°,270°\\)','\\(x=90°,270°\\)','\\(x=180°\\) solo','\\(x=0°,180°\\)'],correcta:0,feedback:'\\(\\cos x(\\cos x+1)=0\\). \\(\\cos x=0\\Rightarrow90°,270°\\). \\(\\cos x=-1\\Rightarrow180°\\). Total: \\(\\{90°,180°,270°\\}\\).'},
+      {enunciado:'Simplifica: \\((\\sin\\alpha+\\cos\\alpha)^2-(\\sin\\alpha-\\cos\\alpha)^2\\)',opciones:['\\(4\\sin\\alpha\\cos\\alpha\\)','\\(2\\)','\\(0\\)','\\(4\\)'],correcta:0,feedback:'\\((a+b)^2-(a-b)^2=4ab\\). Aquí: \\(4\\sin\\alpha\\cos\\alpha\\).'},
+      {enunciado:'Resuelve \\(2\\cos^2 x+\\cos x-1=0\\) en \\([0°,360°)\\)',opciones:['\\(x=60°,180°,300°\\)','\\(x=60°,300°\\)','\\(x=60°,180°\\)','\\(x=120°,240°\\)'],correcta:0,feedback:'\\((2\\cos x-1)(\\cos x+1)=0\\). \\(\\cos x=\\dfrac{1}{2}\\Rightarrow60°,300°\\). \\(\\cos x=-1\\Rightarrow180°\\). Total: \\(\\{60°,180°,300°\\}\\).'},
+      {enunciado:'Simplifica: \\(\\dfrac{1-\\cos^2\\alpha}{\\sin\\alpha}\\) (con \\(\\sin\\alpha\\neq0\\))',opciones:['\\(\\sin\\alpha\\)','\\(\\cos\\alpha\\)','\\(\\tan\\alpha\\)','\\(1\\)'],correcta:0,feedback:'\\(1-\\cos^2\\alpha=\\sin^2\\alpha\\). \\(\\dfrac{\\sin^2\\alpha}{\\sin\\alpha}=\\sin\\alpha\\).'},
+      {enunciado:'Resuelve \\(\\sin x=\\cos x\\) en \\([0°,360°)\\)',opciones:['\\(x=45°\\) y \\(x=225°\\)','\\(x=45°\\) solo','\\(x=45°\\) y \\(x=135°\\)','\\(x=135°\\) y \\(x=315°\\)'],correcta:0,feedback:'\\(\\sin x=\\cos x\\Rightarrow\\tan x=1\\). Referencia: \\(45°\\). Tangente positiva → I y III: \\(45°\\) y \\(225°\\).'}
+    ]
+  },
+
+  bancoTest:[
+    {enunciado:'Si \\(\\sin\\alpha=\\dfrac{3}{5}\\) y \\(\\alpha\\) es agudo, ¿cuánto vale \\(\\cos\\alpha\\)?',opciones:['\\(\\dfrac{4}{5}\\)','\\(-\\dfrac{4}{5}\\)','\\(\\dfrac{3}{4}\\)','\\(\\dfrac{5}{3}\\)'],correcta:0,feedback:'\\(\\cos^2\\alpha=1-\\dfrac{9}{25}=\\dfrac{16}{25}\\). Agudo → positivo: \\(\\dfrac{4}{5}\\).'},
+    {enunciado:'Resuelve \\(\\sin x=\\dfrac{\\sqrt{2}}{2}\\) en \\([0°,360°)\\)',opciones:['\\(x=45°\\) y \\(x=135°\\)','\\(x=45°\\) solo','\\(x=45°\\) y \\(x=315°\\)','\\(x=135°\\) y \\(x=225°\\)'],correcta:0,feedback:'Referencia: \\(45°\\). Positivo → I y II: \\(45°\\) y \\(135°\\).'},
+    {enunciado:'Resuelve \\(\\cos x=-1\\) en \\([0°,360°)\\)',opciones:['\\(x=180°\\)','\\(x=0°\\)','\\(x=90°\\) y \\(x=270°\\)','\\(x=270°\\)'],correcta:0,feedback:'\\(\\cos180°=-1\\). Solo una solución: \\(x=180°\\).'},
+    {enunciado:'Simplifica: \\(\\dfrac{\\cos^2\\alpha}{1-\\sin\\alpha}\\)',opciones:['\\(1+\\sin\\alpha\\)','\\(1-\\sin\\alpha\\)','\\(\\cos\\alpha\\)','\\(\\sin\\alpha\\)'],correcta:0,feedback:'\\(\\cos^2\\alpha=(1-\\sin\\alpha)(1+\\sin\\alpha)\\). Simplificando: \\(1+\\sin\\alpha\\).'},
+    {enunciado:'Resuelve \\(2\\sin x-\\sqrt{3}=0\\) en \\([0°,360°)\\)',opciones:['\\(x=60°\\) y \\(x=120°\\)','\\(x=60°\\) solo','\\(x=30°\\) y \\(x=150°\\)','\\(x=60°\\) y \\(x=300°\\)'],correcta:0,feedback:'\\(\\sin x=\\dfrac{\\sqrt{3}}{2}\\). Referencia: \\(60°\\). Positivo → I y II: \\(60°\\) y \\(120°\\).'},
+    {enunciado:'Si \\(\\cos\\alpha=-\\dfrac{4}{5}\\) y \\(\\alpha\\in(90°,180°)\\), ¿cuánto vale \\(\\sin\\alpha\\)?',opciones:['\\(\\dfrac{3}{5}\\)','\\(-\\dfrac{3}{5}\\)','\\(\\dfrac{4}{3}\\)','\\(-\\dfrac{4}{5}\\)'],correcta:0,feedback:'\\(\\sin^2\\alpha=1-\\dfrac{16}{25}=\\dfrac{9}{25}\\). En II: \\(\\sin\\alpha>0\\): \\(\\dfrac{3}{5}\\).'},
+    {enunciado:'Resuelve \\(\\tan x=\\sqrt{3}\\) en \\([0°,360°)\\)',opciones:['\\(x=60°\\) y \\(x=240°\\)','\\(x=60°\\) solo','\\(x=60°\\) y \\(x=120°\\)','\\(x=30°\\) y \\(x=210°\\)'],correcta:0,feedback:'Referencia: \\(60°\\). Tangente positiva → I y III: \\(60°\\) y \\(240°\\).'},
+    {enunciado:'¿Cuántas soluciones tiene \\(\\sin x=2\\) en \\([0°,360°)\\)?',opciones:['Ninguna','Una','Dos','Cuatro'],correcta:0,feedback:'\\(|\\sin x|\\leq1\\) siempre. Como \\(2>1\\), no hay solución.'},
+    {enunciado:'Resuelve \\(\\cos^2 x=1\\) en \\([0°,360°)\\)',opciones:['\\(x=0°\\) y \\(x=180°\\)','\\(x=0°\\) solo','\\(x=90°\\) y \\(x=270°\\)','\\(x=0°,90°,180°,270°\\)'],correcta:0,feedback:'\\(\\cos x=\\pm1\\Rightarrow x=0°\\) (cos=1) y \\(x=180°\\) (cos=-1).'},
+    {enunciado:'Simplifica: \\(\\sin^2\\alpha\\cdot(1+\\tan^2\\alpha)\\)',opciones:['\\(\\tan^2\\alpha\\)','\\(\\sin^2\\alpha\\)','\\(1\\)','\\(\\cos^2\\alpha\\)'],correcta:0,feedback:'\\(1+\\tan^2\\alpha=\\dfrac{1}{\\cos^2\\alpha}\\). Multiplicando: \\(\\dfrac{\\sin^2\\alpha}{\\cos^2\\alpha}=\\tan^2\\alpha\\).'},
+    {enunciado:'Resuelve \\(\\sin x=-1\\) en \\([0°,360°)\\)',opciones:['\\(x=270°\\)','\\(x=90°\\)','\\(x=180°\\)','No tiene solución'],correcta:0,feedback:'\\(\\sin270°=-1\\). Única solución: \\(x=270°\\).'},
+    {enunciado:'Resuelve \\(2\\sin^2 x=1\\) en \\([0°,360°)\\)',opciones:['\\(x=45°,135°,225°,315°\\)','\\(x=45°,135°\\)','\\(x=45°,315°\\)','\\(x=30°,150°,210°,330°\\)'],correcta:0,feedback:'\\(\\sin^2 x=\\dfrac{1}{2}\\Rightarrow\\sin x=\\pm\\dfrac{\\sqrt{2}}{2}\\). Cuatro soluciones: \\(45°,135°,225°,315°\\).'}
+  ]
+};
+iniciarModulo();
+</script>
+</body>
+</html>
