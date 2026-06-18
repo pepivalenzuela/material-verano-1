@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Trigonometría · Ruta A · Puente a Bachillerato</title>
+<title>Geometría Analítica · Ruta A · Puente a Bachillerato</title>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,600;0,700;1,300&family=DM+Sans:wght@300;400;500&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <style>
-:root{--sol:#F5A623;--sol-claro:#FDF3E0;--oceano:#1A4A7A;--oceano-medio:#2A6BAD;--verde:#1E7B5E;--verde-claro:#E8F5F0;--arena:#FAF7F2;--blanco:#FFFFFF;--gris:#2C2C2C;--gris-s:#7A7A7A;--rojo:#C0392B;--rojo-claro:#FEF0EF;--naranja:#B7600A;--naranja-claro:#FEF3E2;--lila:#6B3FA0;--lila-claro:#F0EBF8;}
+:root{--sol:#F5A623;--sol-claro:#FDF3E0;--oceano:#1A4A7A;--oceano-medio:#2A6BAD;--verde:#1E7B5E;--verde-claro:#E8F5F0;--arena:#FAF7F2;--blanco:#FFFFFF;--gris:#2C2C2C;--gris-s:#7A7A7A;}
 *{margin:0;padding:0;box-sizing:border-box;}
 body{font-family:'DM Sans',sans-serif;background:var(--arena);color:var(--gris);min-height:100vh;}
 .topbar{background:var(--oceano);padding:12px 24px;display:flex;justify-content:space-between;align-items:center;}
@@ -30,16 +30,15 @@ body{font-family:'DM Sans',sans-serif;background:var(--arena);color:var(--gris);
 .resumen-barra{background:#F0F0F0;border-radius:8px;height:10px;overflow:hidden;margin-bottom:6px;}
 .resumen-barra-fill{height:10px;background:var(--verde);border-radius:8px;transition:width .6s ease;}
 .resumen-barra-label{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--gris-s);text-align:right;}
-.modulos-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.modulos-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;}
 @media(max-width:680px){.modulos-grid{grid-template-columns:1fr;}}
 .modulo-card{background:var(--blanco);border-radius:14px;padding:24px 26px;box-shadow:0 2px 12px rgba(0,0,0,.06);text-decoration:none;color:inherit;display:block;transition:transform .15s,box-shadow .15s;border-top:4px solid var(--oceano);position:relative;}
 .modulo-card:hover{transform:translateY(-2px);box-shadow:0 4px 20px rgba(26,74,122,.12);}
 .modulo-card.superado{border-top-color:var(--verde);background:linear-gradient(135deg,var(--blanco) 0%,#F4FBF8 100%);}
-.modulo-card.pendiente{border-top-color:var(--oceano-medio);}
 .modulo-num{font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:2px;text-transform:uppercase;color:var(--gris-s);margin-bottom:8px;}
-.modulo-nombre{font-family:'Fraunces',serif;font-size:1.1rem;font-weight:600;color:var(--oceano);margin-bottom:10px;line-height:1.3;}
-.modulo-desc{font-size:.82rem;color:var(--gris-s);line-height:1.5;margin-bottom:12px;}
-.modulo-estado{display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:.7rem;font-weight:600;padding:4px 12px;border-radius:20px;letter-spacing:.5px;}
+.modulo-nombre{font-family:'Fraunces',serif;font-size:1.05rem;font-weight:600;color:var(--oceano);margin-bottom:8px;line-height:1.3;}
+.modulo-desc{font-size:.8rem;color:var(--gris-s);line-height:1.5;margin-bottom:12px;}
+.modulo-estado{display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:.7rem;font-weight:600;padding:4px 12px;border-radius:20px;}
 .estado-superado{background:var(--verde-claro);color:var(--verde);}
 .estado-pendiente{background:#EFF3FA;color:var(--oceano-medio);}
 .modulo-flecha{position:absolute;top:24px;right:24px;font-size:1.2rem;color:#D0D0D0;transition:color .15s;}
@@ -55,22 +54,22 @@ body{font-family:'DM Sans',sans-serif;background:var(--arena);color:var(--gris);
 <body>
 <div class="topbar">
   <div class="topbar-logo">Puente a <em>Bachillerato</em></div>
-  <div class="topbar-info" id="topbar-info">Ruta A · Trigonometría</div>
+  <div class="topbar-info" id="topbar-info">Ruta A · Geometría Analítica</div>
 </div>
 <div class="progress-wrap"><div class="progress-bar" id="progress-bar" style="width:0%"></div></div>
 
 <div class="contenedor">
   <div class="cabecera">
     <div class="badge">Ruta A · Matemáticas I</div>
-    <h1>Trigonometría</h1>
-    <p>5 módulos que te llevan desde la definición de radián hasta las ecuaciones trigonométricas. Trabájalos en orden — cada uno construye sobre el anterior.</p>
+    <h1>Geometría <em>Analítica</em></h1>
+    <p>3 módulos para dominar vectores, ecuaciones de rectas, posición relativa y problemas de triángulos. El bloque final de la Ruta A.</p>
   </div>
 
   <div class="resumen-progreso">
-    <div class="resumen-num" id="resumen-num">0/5</div>
+    <div class="resumen-num" id="resumen-num">0/3</div>
     <div class="resumen-texto">
-      <h3>Partes superadas</h3>
-      <p id="resumen-detalle">Completa el mini-test de cada parte para avanzar.</p>
+      <h3>Módulos superados</h3>
+      <p id="resumen-detalle">Completa el mini-test de cada módulo para avanzar.</p>
     </div>
     <div class="resumen-barra-wrap">
       <div class="resumen-barra"><div class="resumen-barra-fill" id="resumen-barra-fill" style="width:0%"></div></div>
@@ -81,49 +80,46 @@ body{font-family:'DM Sans',sans-serif;background:var(--arena);color:var(--gris);
   <div class="modulos-grid" id="modulos-grid"></div>
 
   <div class="nav-inferior">
-    <a href="bloque0-modulos.html" class="btn-nav-inf volver">← Bloque 0</a>
-    <a href="ruta-a-geometria.html" class="btn-nav-inf inicio">Geometría →</a>
-    <a href="index.html" class="btn-nav-inf volver">🏠 Inicio</a>
+    <a href="ruta-a-trigonometria.html" class="btn-nav-inf volver">← Trigonometría</a>
+    <a href="index.html" class="btn-nav-inf inicio">🏠 Inicio</a>
   </div>
 </div>
 
 <script>
 let alumna = {};
 try { alumna = JSON.parse(sessionStorage.getItem('alumna') || '{}'); } catch(e){}
-if (alumna.nombre) document.getElementById('topbar-info').textContent = `${alumna.nombre} · Trigonometría`;
+if (alumna.nombre) document.getElementById('topbar-info').textContent = `${alumna.nombre} · Geometría Analítica`;
 
-const PARTES = [
-  { key:'trig-radianes',    nombre:'Radianes',                    desc:'Definición de radián y conversión entre grados y radianes.',         archivo:'trig1-radianes.html' },
-  { key:'trig-razones',     nombre:'Razones Trigonométricas',     desc:'Seno, coseno y tangente en el triángulo rectángulo.',                 archivo:'trig2-razones.html' },
-  { key:'trig-triangulos',  nombre:'Resolución de Triángulos',    desc:'Triángulos rectángulos, ángulos de elevación y teoremas del seno y coseno.', archivo:'trig3-triangulos.html' },
-  { key:'trig-goniometrica',nombre:'Circunferencia Goniométrica', desc:'Coordenadas, cuadrantes y fórmulas de reducción.',                   archivo:'trig4-goniometrica.html' },
-  { key:'trig-identidades', nombre:'Identidades y Ecuaciones',    desc:'Identidad fundamental y resolución de ecuaciones trigonométricas.',   archivo:'trig5-identidades.html' },
+const MODULOS = [
+  { key:'geo-vectores',  nombre:'Vectores y Ecuaciones de la Recta', desc:'Vectores, punto medio y las cinco formas de la ecuación de la recta.', archivo:'geo1-vectores.html' },
+  { key:'geo-posicion',  nombre:'Posición Relativa de Rectas',        desc:'Paralelas, secantes, coincidentes, rectas paralelas e intersección.', archivo:'geo2-posicion.html' },
+  { key:'geo-problemas', nombre:'Problemas de Aplicación',            desc:'Medianas, baricentro y problemas tipo 1º Bachillerato.',             archivo:'geo3-problemas.html' },
 ];
 
 function renderHub() {
-  const superadas = JSON.parse(sessionStorage.getItem('modulos_rutaA') || '[]');
+  const superados = JSON.parse(sessionStorage.getItem('modulos_geometria') || '[]');
   const grid = document.getElementById('modulos-grid');
 
-  grid.innerHTML = PARTES.map((p, i) => {
-    const ok = superadas.includes(p.key);
-    return `<a href="${p.archivo}" class="modulo-card ${ok ? 'superado' : 'pendiente'}">
+  grid.innerHTML = MODULOS.map((m, i) => {
+    const ok = superados.includes(m.key);
+    return `<a href="${m.archivo}" class="modulo-card ${ok ? 'superado' : ''}">
       <span class="modulo-flecha">→</span>
-      <div class="modulo-num">Parte ${i+1} de 5</div>
-      <div class="modulo-nombre">${p.nombre}</div>
-      <div class="modulo-desc">${p.desc}</div>
+      <div class="modulo-num">Módulo ${i+1} de 3</div>
+      <div class="modulo-nombre">${m.nombre}</div>
+      <div class="modulo-desc">${m.desc}</div>
       <span class="modulo-estado ${ok ? 'estado-superado' : 'estado-pendiente'}">${ok ? 'Superado ✓' : 'Pendiente'}</span>
     </a>`;
   }).join('');
 
-  const total = superadas.filter(k => PARTES.some(p => p.key === k)).length;
-  const pct = Math.round((total/5)*100);
-  document.getElementById('resumen-num').textContent = `${total}/5`;
+  const total = superados.filter(k => MODULOS.some(m => m.key === k)).length;
+  const pct = Math.round((total/3)*100);
+  document.getElementById('resumen-num').textContent = `${total}/3`;
   document.getElementById('resumen-barra-fill').style.width = pct + '%';
   document.getElementById('resumen-barra-label').textContent = `${pct}% completado`;
   document.getElementById('progress-bar').style.width = pct + '%';
-  document.getElementById('resumen-detalle').textContent = total === 5
-    ? '¡Has completado toda la trigonometría!'
-    : `Te ${5-total === 1 ? 'falta 1 parte' : `faltan ${5-total} partes`} para completar el bloque.`;
+  document.getElementById('resumen-detalle').textContent = total === 3
+    ? '¡Has completado toda la Geometría Analítica! Ruta A terminada.'
+    : `Te ${3-total === 1 ? 'falta 1 módulo' : `faltan ${3-total} módulos`} para completar el bloque.`;
 }
 
 renderHub();
