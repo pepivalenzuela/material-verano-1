@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Continuidad · Análisis · Ruta A · Puente a Bachillerato</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,600;0,700;1,300&family=DM+Sans:wght@300;400;500&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml.min.js"></script>
+<style>
+:root{--sol:#F5A623;--sol-claro:#FDF3E0;--oceano:#1A4A7A;--oceano-medio:#2A6BAD;--verde:#1E7B5E;--verde-claro:#E8F5F0;--arena:#FAF7F2;--blanco:#FFFFFF;--gris:#2C2C2C;--gris-s:#7A7A7A;--rojo:#C0392B;--rojo-claro:#FEF0EF;--naranja:#B7600A;--naranja-claro:#FEF3E2;--lila:#6B3FA0;--lila-claro:#F0EBF8;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'DM Sans',sans-serif;background:var(--arena);color:var(--gris);min-height:100vh;}
+.topbar{background:var(--oceano);padding:12px 24px;display:flex;justify-content:space-between;align-items:center;}
+.topbar-logo{font-family:'Fraunces',serif;font-size:.95rem;font-weight:600;color:var(--blanco);}
+.topbar-logo em{color:var(--sol);font-style:italic;font-weight:300;}
+.topbar-alumna{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:rgba(255,255,255,.6);}
+.progress-wrap{background:rgba(255,255,255,.15);height:5px;}
+.progress-bar{height:5px;background:var(--sol);transition:width .5s ease;}
+.layout{display:grid;grid-template-columns:240px 1fr;min-height:calc(100vh - 57px);}
+@media(max-width:800px){.layout{grid-template-columns:1fr;}}
+.sidebar{background:var(--blanco);border-right:1px solid #EBEBEB;padding:20px 0;position:sticky;top:0;height:calc(100vh - 57px);overflow-y:auto;}
+.sidebar-bloque{font-family:'JetBrains Mono',monospace;font-size:.65rem;letter-spacing:2px;text-transform:uppercase;color:var(--gris-s);padding:0 18px 10px;}
+.sidebar-item{display:flex;align-items:center;gap:10px;padding:10px 18px;cursor:pointer;border-left:3px solid transparent;font-size:.85rem;transition:all .15s;color:var(--gris-s);}
+.sidebar-item:hover{background:#F5F7FA;color:var(--gris);}
+.sidebar-item.activo{background:#EFF3FA;border-left-color:var(--oceano);color:var(--oceano);font-weight:500;}
+.sidebar-item.hecho{color:var(--verde);}
+.sidebar-item.hecho .s-dot{background:var(--verde);}
+.s-dot{width:8px;height:8px;border-radius:50%;background:#D0D0D0;flex-shrink:0;}
+.sidebar-sep{height:1px;background:#F0F0F0;margin:10px 16px;}
+.sidebar-nav-btns{padding:12px 18px;display:flex;flex-direction:column;gap:8px;}
+.btn-nav{width:100%;padding:9px;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:.82rem;font-weight:500;cursor:pointer;border:1.5px solid transparent;transition:all .2s;text-align:center;}
+.btn-nav.anterior{background:var(--blanco);border-color:#D0D0D0;color:var(--gris-s);}
+.btn-nav.anterior:hover{border-color:var(--oceano);color:var(--oceano);}
+.btn-nav.siguiente{background:var(--oceano);color:var(--blanco);}
+.btn-nav.siguiente:hover{background:var(--oceano-medio);}
+.btn-nav.volver{background:transparent;border-color:transparent;color:var(--gris-s);font-size:.78rem;padding:6px;}
+.btn-nav.volver:hover{color:var(--oceano);text-decoration:underline;}
+.main{padding:36px 40px;max-width:820px;}
+@media(max-width:680px){.main{padding:20px 16px;}}
+.modulo-eyebrow{font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:2px;text-transform:uppercase;color:var(--gris-s);margin-bottom:8px;}
+.modulo-titulo{font-family:'Fraunces',serif;font-size:2rem;font-weight:700;color:var(--oceano);line-height:1.2;margin-bottom:6px;}
+.modulo-desc{font-size:.9rem;color:var(--gris-s);line-height:1.6;margin-bottom:32px;}
+.seccion{display:none;}
+.seccion.visible{display:block;}
+.nav-modulos{display:flex;gap:10px;margin-bottom:28px;flex-wrap:wrap;}
+.nm-btn{padding:7px 16px;border-radius:8px;font-size:.82rem;cursor:pointer;border:1.5px solid #E0E0E0;background:var(--blanco);font-family:'DM Sans',sans-serif;color:var(--gris-s);transition:all .15s;}
+.nm-btn:hover{border-color:var(--oceano-medio);color:var(--oceano);}
+.nm-btn.nm-activo{background:var(--oceano);color:var(--blanco);border-color:var(--oceano);}
+.nm-btn.nm-ok{border-color:var(--verde);color:var(--verde);}
+.teoria-intro{background:var(--oceano);border-radius:14px;padding:24px 28px;margin-bottom:24px;color:var(--blanco);}
+.teoria-intro p{font-size:.9rem;line-height:1.7;opacity:.9;}
+.teoria-intro strong{color:var(--sol);}
+.concepto-card{background:var(--blanco);border-radius:14px;padding:28px 30px;box-shadow:0 2px 12px rgba(26,74,122,.07);margin-bottom:20px;}
+.concepto-card h3{font-family:'Fraunces',serif;font-size:1.05rem;font-weight:600;color:var(--oceano);margin-bottom:16px;}
+.concepto-body{font-size:.9rem;line-height:1.85;color:var(--gris);}
+.concepto-body p{margin-bottom:10px;}
+.formula-box{background:#F0F4FA;border-radius:10px;padding:16px 20px;margin:14px 0;text-align:center;border:1px solid #D0DFF0;font-size:1rem;}
+.formula-box.verde{background:var(--verde-claro);border-color:#9FD4C0;}
+.formula-box.naranja{background:var(--naranja-claro);border-color:#E8C07A;}
+.ejemplo-resuelto{background:var(--sol-claro);border-left:4px solid var(--sol);border-radius:0 10px 10px 0;padding:16px 20px;margin:16px 0;font-size:.88rem;}
+.ejemplo-resuelto .ej-titulo{font-weight:600;color:#7A5500;margin-bottom:8px;font-size:.82rem;text-transform:uppercase;letter-spacing:.5px;}
+.ejemplo-resuelto .paso{display:flex;gap:12px;align-items:flex-start;margin-bottom:6px;}
+.ejemplo-resuelto .paso-num{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--sol);font-weight:600;min-width:20px;margin-top:3px;}
+.alerta-card{background:var(--rojo-claro);border-left:4px solid var(--rojo);border-radius:0 10px 10px 0;padding:14px 18px;margin:14px 0;font-size:.86rem;color:var(--gris);}
+.alerta-card .al-titulo{font-weight:600;color:var(--rojo);margin-bottom:4px;}
+.resumen-tabla{width:100%;border-collapse:collapse;margin:16px 0;font-size:.85rem;}
+.resumen-tabla th{background:#EFF3FA;color:var(--oceano);padding:9px 14px;text-align:left;font-weight:600;border-bottom:2px solid #D0DFF0;}
+.resumen-tabla td{padding:9px 14px;border-bottom:1px solid #F0F0F0;}
+.resumen-tabla tr:nth-child(even) td{background:#FAFCFF;}
+.nivel-header{display:flex;align-items:center;gap:14px;margin-bottom:24px;padding:18px 22px;border-radius:12px;}
+.nivel-header.n1{background:#EFF3FA;border-left:4px solid var(--oceano-medio);}
+.nivel-header.n2{background:var(--naranja-claro);border-left:4px solid var(--naranja);}
+.nivel-header.n3{background:var(--lila-claro);border-left:4px solid var(--lila);}
+.nivel-header.ntest{background:var(--verde-claro);border-left:4px solid var(--verde);}
+.nivel-icon{font-size:1.6rem;}
+.nivel-info h3{font-family:'Fraunces',serif;font-size:1rem;font-weight:600;margin-bottom:2px;}
+.nivel-info p{font-size:.8rem;color:var(--gris-s);}
+.n1 .nivel-info h3{color:var(--oceano-medio);}
+.n2 .nivel-info h3{color:var(--naranja);}
+.n3 .nivel-info h3{color:var(--lila);}
+.ntest .nivel-info h3{color:var(--verde);}
+.ejercicio-card{background:var(--blanco);border-radius:12px;padding:24px 26px;box-shadow:0 1px 8px rgba(0,0,0,.05);margin-bottom:14px;border-top:3px solid transparent;}
+.ejercicio-card.n1-color{border-top-color:var(--oceano-medio);}
+.ejercicio-card.n2-color{border-top-color:var(--naranja);}
+.ejercicio-card.n3-color{border-top-color:var(--lila);}
+.ejercicio-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
+.ej-num{font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--gris-s);letter-spacing:1px;}
+.ej-dificultad{font-family:'JetBrains Mono',monospace;font-size:.65rem;padding:2px 9px;border-radius:10px;font-weight:600;}
+.dif-basico{background:#EFF3FA;color:var(--oceano-medio);}
+.dif-medio{background:var(--naranja-claro);color:var(--naranja);}
+.dif-avanzado{background:var(--lila-claro);color:var(--lila);}
+.ej-enunciado{font-size:.93rem;line-height:1.75;margin-bottom:20px;}
+.opciones-ej{display:grid;grid-template-columns:1fr 1fr;gap:9px;}
+@media(max-width:520px){.opciones-ej{grid-template-columns:1fr;}}
+.op-btn{background:var(--arena);border:2px solid #E8E8E8;border-radius:9px;padding:12px 15px;font-size:.88rem;cursor:pointer;transition:all .15s;text-align:left;font-family:'DM Sans',sans-serif;color:var(--gris);display:flex;align-items:center;gap:9px;}
+.op-btn:hover:not(:disabled){border-color:var(--oceano-medio);background:#EFF3FA;}
+.op-letra{font-family:'JetBrains Mono',monospace;font-size:.68rem;font-weight:600;color:var(--gris-s);min-width:16px;}
+.op-btn.ok{border-color:var(--verde);background:var(--verde-claro);}
+.op-btn.ok .op-letra{color:var(--verde);}
+.op-btn.mal{border-color:var(--rojo);background:var(--rojo-claro);}
+.op-btn.mal .op-letra{color:var(--rojo);}
+.fb-ej{font-size:.83rem;line-height:1.65;padding:11px 15px;border-radius:8px;margin-top:10px;display:none;border-left:3px solid transparent;}
+.fb-ej.ok{display:block;background:var(--verde-claro);border-left-color:var(--verde);color:var(--gris);}
+.fb-ej.ok .fb-titulo{color:var(--verde);font-weight:600;margin-bottom:3px;}
+.fb-ej.mal{display:block;background:var(--rojo-claro);border-left-color:var(--rojo);color:var(--gris);}
+.fb-ej.mal .fb-titulo{color:var(--rojo);font-weight:600;margin-bottom:3px;}
+.minitest-barra{background:#F0F0F0;border-radius:6px;height:8px;margin-bottom:20px;overflow:hidden;}
+.minitest-fill{height:8px;background:var(--verde);border-radius:6px;transition:width .4s;}
+.test-pregunta{background:var(--blanco);border-radius:14px;padding:28px 30px;box-shadow:0 2px 14px rgba(26,74,122,.08);margin-bottom:16px;}
+.test-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;}
+.test-num{font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--gris-s);}
+.test-enunciado{font-size:1rem;line-height:1.75;margin-bottom:22px;}
+.btn-siguiente-nivel{background:var(--oceano);color:var(--blanco);border:none;border-radius:10px;padding:13px 32px;font-family:'DM Sans',sans-serif;font-size:.95rem;font-weight:500;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:8px;margin-top:20px;}
+.btn-siguiente-nivel:hover{background:var(--oceano-medio);transform:translateY(-1px);}
+.btn-siguiente-nivel:disabled{background:#A0B8D0;cursor:not-allowed;transform:none;}
+.bloque-accion{text-align:right;padding:20px 0 8px;border-top:1px dashed #D8D8D8;margin-top:24px;}
+.resultado-minitest{text-align:center;padding:40px 24px;background:var(--blanco);border-radius:16px;box-shadow:0 2px 16px rgba(0,0,0,.08);}
+.resultado-minitest .res-nota{font-family:'Fraunces',serif;font-size:4rem;font-weight:700;line-height:1;}
+.resultado-minitest .res-label{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:2px;text-transform:uppercase;color:var(--gris-s);margin-bottom:16px;}
+.resultado-minitest h3{font-family:'Fraunces',serif;font-size:1.4rem;font-weight:600;margin-bottom:8px;}
+.resultado-minitest p{font-size:.9rem;color:var(--gris-s);line-height:1.6;max-width:420px;margin:0 auto 24px;}
+.btn-res{display:inline-block;border-radius:10px;padding:12px 28px;font-family:'DM Sans',sans-serif;font-size:.92rem;font-weight:500;cursor:pointer;border:none;transition:all .2s;margin:4px;}
+.btn-res.ok{background:var(--verde);color:var(--blanco);}
+.btn-res.ok:hover{background:#166B50;}
+.btn-res.repetir{background:var(--naranja-claro);color:var(--naranja);border:2px solid var(--naranja);}
+.btn-res.volver{background:var(--rojo-claro);color:var(--rojo);border:2px solid var(--rojo);}
+.repaso-errores{background:var(--blanco);border-radius:12px;padding:22px 26px;box-shadow:0 1px 8px rgba(0,0,0,.05);margin-top:20px;}
+.repaso-titulo{font-family:'Fraunces',serif;font-size:.95rem;font-weight:600;color:var(--gris);margin-bottom:14px;}
+.error-item{border-left:3px solid var(--rojo-claro);padding:10px 14px;margin-bottom:10px;border-radius:0 8px 8px 0;background:#FDF7F7;font-size:.84rem;line-height:1.6;}
+.error-correcta{color:var(--verde);font-weight:600;}
+</style>
+</head>
+<body>
+<div class="topbar"><div class="topbar-logo">Puente a <em>Bachillerato</em></div><div class="topbar-alumna" id="topbar-alumna">Análisis · Continuidad</div></div>
+<div class="progress-wrap"><div class="progress-bar" id="progress-bar" style="width:0%"></div></div>
+<div class="layout">
+<aside class="sidebar">
+  <div class="sidebar-bloque">Análisis · Módulo 4 de 5</div>
+  <div class="sidebar-item activo" id="s-teoria" onclick="irSeccion('teoria')"><span class="s-dot"></span> Teoría</div>
+  <div class="sidebar-item" id="s-n1" onclick="irSeccion('n1')"><span class="s-dot"></span> Nivel 1</div>
+  <div class="sidebar-item" id="s-n2" onclick="irSeccion('n2')"><span class="s-dot"></span> Nivel 2</div>
+  <div class="sidebar-item" id="s-n3" onclick="irSeccion('n3')"><span class="s-dot"></span> Nivel 3</div>
+  <div class="sidebar-item" id="s-test" onclick="irSeccion('test')"><span class="s-dot"></span> Mini-test</div>
+  <div class="sidebar-sep"></div>
+  <div class="sidebar-nav-btns">
+    <button class="btn-nav anterior" onclick="window.location.href='analisis3-limites.html'">← Módulo 3</button>
+    <button class="btn-nav siguiente" onclick="window.location.href='analisis5-representacion.html'">Módulo 5 →</button>
+    <button class="btn-nav volver" onclick="window.location.href='ruta-a-analisis.html'">📋 Volver a Análisis</button>
+  </div>
+</aside>
+<main class="main" id="main-area"></main>
+</div>
+<script>
+// ══════════════════════════════════════════════════════════
+//  MOTOR DE MÓDULOS — Ruta A · Puente a Bachillerato
+//  Lee el objeto global MODULO_CONFIG y construye toda la
+//  interfaz: cabecera, navegación, teoría, niveles y mini-test.
+// ══════════════════════════════════════════════════════════
+
+let alumna = {};
+try { alumna = JSON.parse(sessionStorage.getItem('alumna') || '{}'); } catch(e){}
+const APPS_SCRIPT_URL_MOD = 'https://script.google.com/macros/s/AKfycbx63xvLtRnJYFQBr7AelcusmRLFzlCN6CyqPQWtjtdZ-IVuDr6RX2v850qTnZPr19LpVA/exec';
+function enviarResultadoModulo(modulo, correctas, superado) {
+  if (!APPS_SCRIPT_URL_MOD || APPS_SCRIPT_URL_MOD.includes('TU_')) return;
+  try {
+    const params = new URLSearchParams({
+      tipo: 'modulo_rutaA',
+      modulo: modulo,
+      nombre: alumna.nombre || '',
+      apellidos: alumna.apellidos || '',
+      grupo: alumna.grupo || '',
+      itinerario: alumna.itinerario || '',
+      correctas: correctas,
+      total: 5,
+      superado: superado ? '1' : '0',
+      fecha: new Date().toISOString()
+    });
+    new Image().src = APPS_SCRIPT_URL_MOD + '?' + params.toString();
+  } catch(e) {}
+}
+
+
+const estadoNiveles = {
+  n1: { respondidas: new Set(), correctas: new Set() },
+  n2: { respondidas: new Set(), correctas: new Set() },
+  n3: { respondidas: new Set(), correctas: new Set() }
+};
+let testPreguntas = [];
+let testActual = 0;
+let testRespuestas = [];
+const SECCIONES = ['teoria','n1','n2','n3','test'];
+
+function iniciarModulo() {
+  const C = MODULO_CONFIG;
+
+  if (alumna.nombre) {
+    document.getElementById('topbar-alumna').textContent = `${alumna.nombre} · ${C.titulo}`;
+  }
+
+  const main = document.getElementById('main-area');
+  main.innerHTML = `
+    <div class="modulo-eyebrow">${C.eyebrow}</div>
+    <div class="modulo-titulo">${C.titulo}</div>
+    <div class="modulo-desc">${C.desc}</div>
+
+    <div class="nav-modulos">
+      <button class="nm-btn nm-activo" onclick="irSeccion('teoria')">📖 Teoría</button>
+      <button class="nm-btn" onclick="irSeccion('n1')">🔵 Nivel 1</button>
+      <button class="nm-btn" onclick="irSeccion('n2')">🟠 Nivel 2</button>
+      <button class="nm-btn" onclick="irSeccion('n3')">🟣 Nivel 3</button>
+      <button class="nm-btn" onclick="irSeccion('test')">✅ Mini-test</button>
+    </div>
+
+    <div class="seccion visible" id="sec-teoria">
+      ${C.teoria}
+      <div class="bloque-accion">
+        <button class="btn-siguiente-nivel" onclick="irSeccion('n1')">Ir a los ejercicios →</button>
+      </div>
+    </div>
+
+    <div class="seccion" id="sec-n1">
+      <div class="nivel-header n1"><div class="nivel-icon">🔵</div><div class="nivel-info"><h3>Nivel 1 — Básico</h3><p>Aplicación directa de definiciones y conversiones.</p></div></div>
+      <div id="ejercicios-n1"></div>
+      <div class="bloque-accion"><button class="btn-siguiente-nivel" id="btn-a-n2" onclick="irSeccion('n2')" disabled>Nivel 2 →</button></div>
+    </div>
+
+    <div class="seccion" id="sec-n2">
+      <div class="nivel-header n2"><div class="nivel-icon">🟠</div><div class="nivel-info"><h3>Nivel 2 — Intermedio</h3><p>Combinación de varias técnicas.</p></div></div>
+      <div id="ejercicios-n2"></div>
+      <div class="bloque-accion"><button class="btn-siguiente-nivel" id="btn-a-n3" onclick="irSeccion('n3')" disabled>Nivel 3 →</button></div>
+    </div>
+
+    <div class="seccion" id="sec-n3">
+      <div class="nivel-header n3"><div class="nivel-icon">🟣</div><div class="nivel-info"><h3>Nivel 3 — Avanzado</h3><p>Resolución de triángulos y ecuaciones trigonométricas.</p></div></div>
+      <div id="ejercicios-n3"></div>
+      <div class="bloque-accion"><button class="btn-siguiente-nivel" id="btn-a-test" onclick="iniciarMinitest()" disabled>Hacer el mini-test →</button></div>
+    </div>
+
+    <div class="seccion" id="sec-test">
+      <div class="nivel-header ntest"><div class="nivel-icon">✅</div><div class="nivel-info"><h3>Mini-test de superación</h3><p>5 preguntas aleatorias. Necesitas 4/5 para superar el módulo.</p></div></div>
+      <div class="minitest-barra"><div class="minitest-fill" id="mt-barra" style="width:0%"></div></div>
+      <div id="minitest-contenido"></div>
+    </div>
+  `;
+
+  renderNivel('n1');
+  renderNivel('n2');
+  renderNivel('n3');
+  MathJax && MathJax.typesetPromise();
+}
+
+// ══════════════════════════════════════════
+// NAVEGACIÓN
+// ══════════════════════════════════════════
+function irSeccion(id) {
+  if (id === 'test' && testPreguntas.length === 0) { iniciarMinitest(); return; }
+  SECCIONES.forEach(s => {
+    const sec = document.getElementById(`sec-${s}`);
+    if (sec) sec.classList.toggle('visible', s === id);
+    const si = document.getElementById(`s-${s}`);
+    if (si) si.classList.toggle('activo', s === id);
+  });
+  document.querySelectorAll('.nm-btn').forEach((btn,i) => btn.classList.toggle('nm-activo', SECCIONES[i] === id));
+  window.scrollTo(0,0);
+  MathJax && MathJax.typesetPromise();
+}
+
+// ══════════════════════════════════════════
+// EJERCICIOS POR NIVEL
+// ══════════════════════════════════════════
+function renderNivel(nivel) {
+  const cont = document.getElementById(`ejercicios-${nivel}`);
+  const letras = ['A','B','C','D'];
+  const banco = MODULO_CONFIG.banco[nivel];
+
+  cont.innerHTML = banco.map((ej, i) => {
+    const dif = nivel === 'n1' ? 'Básico' : (nivel === 'n2' ? 'Intermedio' : 'Avanzado');
+    const difCls = nivel === 'n1' ? 'dif-basico' : (nivel === 'n2' ? 'dif-medio' : 'dif-avanzado');
+    return `<div class="ejercicio-card ${nivel}-color" id="ej-${nivel}-${i}">
+      <div class="ejercicio-meta">
+        <span class="ej-num">Ejercicio ${i+1}</span>
+        <span class="ej-dificultad ${difCls}">${dif}</span>
+      </div>
+      <div class="ej-enunciado">${ej.enunciado}</div>
+      <div class="opciones-ej">
+        ${ej.opciones.map((op,oi) => `<button class="op-btn" onclick="responderEj('${nivel}',${i},${oi})"><span class="op-letra">${letras[oi]}</span><span>${op}</span></button>`).join('')}
+      </div>
+      <div class="fb-ej" id="fb-${nivel}-${i}"></div>
+    </div>`;
+  }).join('');
+}
+
+function responderEj(nivel, idx, opIdx) {
+  if (estadoNiveles[nivel].respondidas.has(idx)) return;
+  estadoNiveles[nivel].respondidas.add(idx);
+
+  const ej = MODULO_CONFIG.banco[nivel][idx];
+  const ok = opIdx === ej.correcta;
+  if (ok) estadoNiveles[nivel].correctas.add(idx);
+
+  document.getElementById(`ej-${nivel}-${idx}`).querySelectorAll('.op-btn').forEach((btn, oi) => {
+    btn.disabled = true;
+    if (oi === ej.correcta) btn.classList.add('ok');
+    else if (oi === opIdx && !ok) btn.classList.add('mal');
+  });
+
+  const fb = document.getElementById(`fb-${nivel}-${idx}`);
+  fb.className = `fb-ej ${ok ? 'ok' : 'mal'}`;
+  fb.innerHTML = `<div class="fb-titulo">${ok ? '✓ Correcto' : '✗ No es correcto'}</div>${ej.feedback}`;
+
+  if (estadoNiveles[nivel].respondidas.size === MODULO_CONFIG.banco[nivel].length) {
+    const si = document.getElementById(`s-${nivel}`);
+    if (si) si.classList.add('hecho');
+    const btns = { n1:'btn-a-n2', n2:'btn-a-n3', n3:'btn-a-test' };
+    const b = document.getElementById(btns[nivel]);
+    if (b) b.disabled = false;
+  }
+
+  actualizarProgreso();
+  MathJax && MathJax.typesetPromise();
+}
+
+// ══════════════════════════════════════════
+// MINI-TEST
+// ══════════════════════════════════════════
+function iniciarMinitest() {
+  testPreguntas = [...MODULO_CONFIG.bancoTest].sort(() => Math.random() - 0.5).slice(0,5);
+  testActual = 0;
+  testRespuestas = new Array(5).fill(null);
+  irSeccion('test');
+  mostrarPreguntaTest(0);
+}
+
+function mostrarPreguntaTest(idx) {
+  const p = testPreguntas[idx];
+  const letras = ['A','B','C','D'];
+  document.getElementById('mt-barra').style.width = ((idx/5)*100) + '%';
+  document.getElementById('minitest-contenido').innerHTML = `
+    <div class="test-pregunta">
+      <div class="test-meta"><span class="test-num">Pregunta ${idx+1} de 5</span></div>
+      <div class="test-enunciado">${p.enunciado}</div>
+      <div class="opciones-ej" id="ops-test">
+        ${p.opciones.map((op,oi) => `<button class="op-btn" onclick="responderTest(${oi})"><span class="op-letra">${letras[oi]}</span><span>${op}</span></button>`).join('')}
+      </div>
+    </div>
+    <div style="text-align:right;margin-top:8px;">
+      <button class="btn-siguiente-nivel" id="btn-test-sig" style="display:none" onclick="siguienteTest()">${idx<4 ? 'Siguiente →' : 'Ver resultado →'}</button>
+    </div>`;
+  MathJax && MathJax.typesetPromise();
+}
+
+function responderTest(opIdx) {
+  testRespuestas[testActual] = opIdx;
+  document.querySelectorAll('#ops-test .op-btn').forEach((btn,i) => {
+    btn.disabled = true;
+    if (i === opIdx) { btn.style.borderColor = 'var(--oceano-medio)'; btn.style.background = '#EFF3FA'; }
+  });
+  document.getElementById('btn-test-sig').style.display = 'inline-flex';
+}
+
+function siguienteTest() {
+  testActual++;
+  if (testActual < 5) mostrarPreguntaTest(testActual);
+  else mostrarResultadoTest();
+}
+
+function mostrarResultadoTest() {
+  document.getElementById('mt-barra').style.width = '100%';
+  const correctas = testRespuestas.filter((r,i) => r === testPreguntas[i].correcta).length;
+  const superado = correctas >= 4;
+  enviarResultadoModulo(MODULO_CONFIG.clave, correctas, superado);
+  const color = superado ? 'var(--verde)' : (correctas >= 3 ? 'var(--naranja)' : 'var(--rojo)');
+  const titulo = superado ? '¡Módulo superado!' : (correctas >= 3 ? 'Por poco…' : 'Hay que repasar');
+  const C = MODULO_CONFIG;
+  const texto = superado
+    ? `Dominas ${C.titulo.toLowerCase()}. Avanza al siguiente módulo de Ruta A.`
+    : (correctas >= 3 ? 'Estás cerca. Repasa los errores y vuelve a intentarlo.' : 'Repasa la teoría y los ejercicios antes de repetir el test.');
+
+  if (superado) {
+    const m = JSON.parse(sessionStorage.getItem('modulos_analisis') || '[]');
+    if (!m.includes(C.clave)) m.push(C.clave);
+    sessionStorage.setItem('modulos_analisis', JSON.stringify(m));
+    const si = document.getElementById('s-test');
+    if (si) si.classList.add('hecho');
+  }
+
+  const errores = testPreguntas.map((p,i) => ({...p, elegida: testRespuestas[i]})).filter(p => p.elegida !== p.correcta);
+  const letras = ['A','B','C','D'];
+
+  document.getElementById('minitest-contenido').innerHTML = `
+    <div class="resultado-minitest">
+      <div class="res-nota" style="color:${color}">${correctas}/5</div>
+      <div class="res-label">respuestas correctas</div>
+      <h3>${titulo}</h3>
+      <p>${texto}</p>
+      ${superado
+        ? `<button class="btn-res ok" onclick="window.location.href='${C.siguiente}'">${C.siguiente.includes('test-final') ? 'Ir al test final →' : 'Siguiente módulo →'}</button>
+           <button class="btn-res repetir" onclick="iniciarMinitest()">↻ Repetir test</button>`
+        : `<button class="btn-res volver" onclick="irSeccion('teoria')">← Repasar teoría</button>
+           <button class="btn-res repetir" onclick="iniciarMinitest()">↻ Intentar de nuevo</button>`
+      }
+    </div>
+    ${errores.length > 0 ? `<div class="repaso-errores"><div class="repaso-titulo">Repaso de errores</div>${errores.map(p => `
+      <div class="error-item">
+        <div>${p.enunciado}</div>
+        <div>Tu respuesta: ${p.elegida !== null ? letras[p.elegida]+') '+p.opciones[p.elegida] : '—'}</div>
+        <div class="error-correcta">✓ Correcta: ${letras[p.correcta]}) ${p.opciones[p.correcta]}</div>
+        <div style="color:var(--gris-s);font-size:.82rem;margin-top:4px;">${p.feedback}</div>
+      </div>`).join('')}</div>` : ''}`;
+
+  actualizarProgreso();
+  MathJax && MathJax.typesetPromise();
+}
+
+// ══════════════════════════════════════════
+// PROGRESO
+// ══════════════════════════════════════════
+function actualizarProgreso() {
+  const C = MODULO_CONFIG;
+  const total = C.banco.n1.length + C.banco.n2.length + C.banco.n3.length;
+  const resp = estadoNiveles.n1.respondidas.size + estadoNiveles.n2.respondidas.size + estadoNiveles.n3.respondidas.size;
+  document.getElementById('progress-bar').style.width = Math.round((resp/(total+5))*100) + '%';
+}
+</script>
+<script>
+MODULO_CONFIG = {
+  num: 4, total: 5, clave: 'analisis-continuidad', titulo: 'Continuidad de Funciones',
+  eyebrow: 'Ruta A · Análisis · Módulo 4 de 5',
+  desc: 'Una función continua es aquella que se puede dibujar sin levantar el lápiz. En este módulo aprenderás a verificar la continuidad en un punto, clasificar discontinuidades y hallar parámetros para que una función sea continua.',
+  anterior: 'analisis3-limites.html', siguiente: 'analisis5-representacion.html',
+  teoria: `
+  <div class="teoria-intro"><p>Una función es <strong>continua en un punto</strong> \\(x=a\\) si se pueden "unir" los valores de alrededor sin salto ni agujero. Formalmente requiere tres condiciones que deben cumplirse simultáneamente.</p></div>
+
+  <div class="concepto-card"><h3>📐 1. Las tres condiciones de continuidad</h3><div class="concepto-body">
+  <div class="formula-box verde">\\(f\\) es continua en \\(x=a\\) si y solo si se cumplen las tres condiciones:<br><br>
+  1. \\(f(a)\\) <strong>existe</strong> (el punto está definido)<br>
+  2. \\(\\lim_{x\\to a}f(x)\\) <strong>existe</strong> (los límites laterales coinciden)<br>
+  3. \\(\\lim_{x\\to a}f(x) = f(a)\\) (el límite coincide con el valor)</div>
+  <div class="ejemplo-resuelto"><div class="ej-titulo">Ejemplo resuelto 1 — Función continua</div>
+  <div class="paso"><span class="paso-num">①</span><span>\\(f(x)=\\begin{cases}x^2+1 & x<2\\\\ 5 & x=2\\\\ 2x+1 & x>2\\end{cases}\\) en \\(x=2\\)</span></div>
+  <div class="paso"><span class="paso-num">②</span><span>\\(f(2)=5\\) ✓ (existe)</span></div>
+  <div class="paso"><span class="paso-num">③</span><span>\\(\\lim_{x\\to2^-}f(x)=4+1=5\\) y \\(\\lim_{x\\to2^+}f(x)=4+1=5\\) → límite \\(=5\\) ✓</span></div>
+  <div class="paso"><span class="paso-num">④</span><span>\\(\\lim_{x\\to2}f(x)=5=f(2)\\) ✓ → <strong>continua en \\(x=2\\)</strong></span></div>
+  </div>
+  <div class="ejemplo-resuelto"><div class="ej-titulo">Ejemplo resuelto 2 — Función discontinua</div>
+  <div class="paso"><span class="paso-num">①</span><span>\\(f(x)=\\begin{cases}x+1 & x\\leq1\\\\ x^2 & x>1\\end{cases}\\) en \\(x=1\\)</span></div>
+  <div class="paso"><span class="paso-num">②</span><span>\\(f(1)=2\\) ✓</span></div>
+  <div class="paso"><span class="paso-num">③</span><span>\\(\\lim_{x\\to1^-}=2\\) pero \\(\\lim_{x\\to1^+}=1\\) → el límite <strong>no existe</strong> ✗</span></div>
+  <div class="paso"><span class="paso-num">④</span><span>Falla la condición 2 → <strong>discontinua en \\(x=1\\)</strong></span></div>
+  </div>
+  </div></div>
+
+  <div class="concepto-card"><h3>📐 2. Tipos de discontinuidad</h3><div class="concepto-body">
+  <table class="resumen-tabla">
+  <tr><th>Tipo</th><th>Qué ocurre</th><th>¿Se puede "arreglar"?</th></tr>
+  <tr><td><strong>Evitable</strong></td><td>El límite existe pero \\(\\neq f(a)\\) (o \\(f(a)\\) no existe)</td><td>Sí — redefiniendo \\(f(a)\\)</td></tr>
+  <tr><td><strong>1ª especie</strong> (salto)</td><td>Los dos límites laterales existen pero son distintos</td><td>No</td></tr>
+  <tr><td><strong>2ª especie</strong></td><td>Algún límite lateral es \\(\\pm\\infty\\) o no existe</td><td>No</td></tr>
+  </table>
+  <div class="ejemplo-resuelto"><div class="ej-titulo">Ejemplo resuelto 3 — Discontinuidad evitable</div>
+  <div class="paso"><span class="paso-num">①</span><span>\\(f(x)=\\begin{cases}2x-1 & x<2\\\\ 1 & x=2\\\\ x^2-1 & x>2\\end{cases}\\) en \\(x=2\\)</span></div>
+  <div class="paso"><span class="paso-num">②</span><span>\\(\\lim_{x\\to2^-}=3\\), \\(\\lim_{x\\to2^+}=3\\) → límite \\(=3\\) ✓</span></div>
+  <div class="paso"><span class="paso-num">③</span><span>Pero \\(f(2)=1\\neq3\\) → <strong>discontinuidad evitable</strong> (bastaría definir \\(f(2)=3\\))</span></div>
+  </div>
+  </div></div>
+
+  <div class="concepto-card"><h3>📐 3. Hallar parámetros para que una función sea continua</h3><div class="concepto-body">
+  <p>Si una función a trozos tiene un parámetro \\(k\\) desconocido, para que sea continua en el punto de unión los dos trozos deben coincidir en ese punto:</p>
+  <div class="formula-box verde">\\(\\lim_{x\\to a^-}f(x) = \\lim_{x\\to a^+}f(x) = f(a)\\)</div>
+  <div class="ejemplo-resuelto"><div class="ej-titulo">Ejemplo resuelto 4</div>
+  <div class="paso"><span class="paso-num">①</span><span>\\(f(x)=\\begin{cases}x^2+k & x<1\\\\ 3x-1 & x\\geq1\\end{cases}\\). Halla \\(k\\) para que sea continua en \\(x=1\\).</span></div>
+  <div class="paso"><span class="paso-num">②</span><span>\\(\\lim_{x\\to1^-}=1+k\\) y \\(\\lim_{x\\to1^+}=f(1)=3-1=2\\)</span></div>
+  <div class="paso"><span class="paso-num">③</span><span>Para continuidad: \\(1+k=2\\Rightarrow k=1\\)</span></div>
+  </div>
+  </div></div>`,
+
+  banco:{
+    n1:[
+      {enunciado:'¿Cuántas condiciones deben cumplirse para que \\(f\\) sea continua en \\(x=a\\)?',opciones:['3','1','2','4'],correcta:0,feedback:'Las tres condiciones son: (1) f(a) existe, (2) el límite existe, (3) el límite coincide con f(a).'},
+      {enunciado:'Si \\(\\lim_{x\\to2}f(x)=5\\) y \\(f(2)=5\\), ¿qué podemos decir sobre la continuidad en \\(x=2\\)?',opciones:['Es continua si además \\(f(2)\\) existe (que sí existe)','No podemos saberlo','Es discontinua','Falta comprobar el límite lateral'],correcta:0,feedback:'Tenemos: (1) f(2)=5 existe ✓, (2) el límite existe (vale 5) ✓, (3) límite=f(2) ✓. Las tres condiciones se cumplen → continua.'},
+      {enunciado:'\\(f(x)=\\begin{cases}x+1 & x<2\\\\ 5 & x\\geq2\\end{cases}\\). ¿Es continua en \\(x=2\\)?',opciones:['No: \\(\\lim_{x\\to2^-}=3\\neq5=f(2)\\)','Sí: el límite existe','No: \\(f(2)\\) no existe','Sí: \\(f(2)=5\\)'],correcta:0,feedback:'\\(\\lim_{x\\to2^-}=3\\), \\(\\lim_{x\\to2^+}=5\\), \\(f(2)=5\\). Los límites laterales son distintos → límite no existe → discontinua.'},
+      {enunciado:'Una función tiene \\(\\lim_{x\\to3}f(x)=4\\) pero \\(f(3)\\) no está definida. ¿Qué tipo de discontinuidad es?',opciones:['Evitable','De 1ª especie (salto)','De 2ª especie','No hay discontinuidad'],correcta:0,feedback:'El límite existe (=4) pero f(3) no está definida → discontinuidad evitable (bastaría definir f(3)=4).'},
+      {enunciado:'\\(f(x)=\\begin{cases}2x-1 & x\\leq1\\\\ x^2 & x>1\\end{cases}\\). Calcula \\(\\lim_{x\\to1^-}f(x)\\)',opciones:['\\(1\\)','\\(2\\)','\\(-1\\)','\\(0\\)'],correcta:0,feedback:'Por la izquierda (x<1) usamos 2x-1: \\(2(1)-1=1\\).'},
+      {enunciado:'\\(f(x)=\\begin{cases}2x-1 & x\\leq1\\\\ x^2 & x>1\\end{cases}\\). Calcula \\(\\lim_{x\\to1^+}f(x)\\)',opciones:['\\(1\\)','\\(2\\)','\\(-1\\)','\\(0\\)'],correcta:0,feedback:'Por la derecha (x>1) usamos x²: \\(1^2=1\\).'},
+      {enunciado:'Continuando el ejercicio anterior: ¿es \\(f\\) continua en \\(x=1\\)?',opciones:['Sí: lím⁻=lím⁺=f(1)=1','No: los límites laterales son distintos','No: f(1) no existe','No: el límite no coincide con f(1)'],correcta:0,feedback:'\\(\\lim^-=1\\), \\(\\lim^+=1\\), \\(f(1)=2(1)-1=1\\). Las tres condiciones se cumplen → continua.'},
+      {enunciado:'¿Cuál es el tipo de discontinuidad cuando los dos límites laterales existen pero son distintos?',opciones:['De 1ª especie (salto)','Evitable','De 2ª especie','No hay discontinuidad'],correcta:0,feedback:'Cuando lím⁻ ≠ lím⁺ (ambos finitos) → discontinuidad de 1ª especie o de salto.'},
+      {enunciado:'\\(f(x)=\\dfrac{1}{x-3}\\). ¿Es continua en \\(x=3\\)?',opciones:['No: discontinuidad de 2ª especie','No: discontinuidad evitable','No: discontinuidad de 1ª especie','Sí'],correcta:0,feedback:'\\(\\lim_{x\\to3}\\dfrac{1}{x-3}=\\pm\\infty\\). Los límites laterales son infinitos → discontinuidad de 2ª especie.'},
+      {enunciado:'\\(f(x)=\\begin{cases}x^2+1 & x<2\\\\ 5 & x=2\\\\ 2x+1 & x>2\\end{cases}\\). ¿Es continua en \\(x=2\\)?',opciones:['Sí','No: \\(f(2)\\) no existe','No: el límite no existe','No: límite ≠ f(2)'],correcta:0,feedback:'\\(\\lim^-=5\\), \\(\\lim^+=5\\), \\(f(2)=5\\). Las tres condiciones se cumplen → continua.'}
+    ],
+    n2:[
+      {enunciado:'\\(f(x)=\\begin{cases}x^2+k & x<1\\\\ 3x-1 & x\\geq1\\end{cases}\\). ¿Para qué valor de \\(k\\) es continua en \\(x=1\\)?',opciones:['\\(k=1\\)','\\(k=2\\)','\\(k=0\\)','\\(k=-1\\)'],correcta:0,feedback:'\\(\\lim^-=1+k\\), \\(f(1)=3-1=2\\). Para continuidad: \\(1+k=2\\Rightarrow k=1\\).'},
+      {enunciado:'\\(f(x)=\\begin{cases}2x+k & x\\leq3\\\\ x^2-k & x>3\\end{cases}\\). ¿Para qué valor de \\(k\\) es continua en \\(x=3\\)?',opciones:['\\(k=\\dfrac{3}{2}\\)','\\(k=3\\)','\\(k=0\\)','\\(k=\\dfrac{1}{2}\\)'],correcta:0,feedback:'\\(\\lim^-=6+k\\), \\(\\lim^+=9-k\\). Para continuidad: \\(6+k=9-k\\Rightarrow2k=3\\Rightarrow k=\\dfrac{3}{2}\\).'},
+      {enunciado:'Estudia la continuidad de \\(f(x)=\\begin{cases}2x-1 & x<2\\\\ 1 & x=2\\\\ x^2-1 & x>2\\end{cases}\\) en \\(x=2\\)',opciones:['Discontinuidad evitable: lím=3≠f(2)=1','Discontinuidad de salto','Continua','Discontinuidad de 2ª especie'],correcta:0,feedback:'\\(\\lim^-=3\\), \\(\\lim^+=3\\), lím=3. Pero f(2)=1≠3 → discontinuidad evitable (si definiéramos f(2)=3 sería continua).'},
+      {enunciado:'\\(f(x)=\\begin{cases}x+3 & x\\leq2\\\\ x^2-1 & x>2\\end{cases}\\). ¿Es continua en \\(x=2\\)?',opciones:['No: lím⁻=5≠lím⁺=3','No: f(2) no existe','Sí','No: discontinuidad de 2ª especie'],correcta:0,feedback:'\\(\\lim^-=2+3=5\\), \\(\\lim^+=4-1=3\\). Los límites laterales son distintos → discontinuidad de 1ª especie (salto).'},
+      {enunciado:'¿Cuál es la diferencia entre discontinuidad evitable y de 1ª especie?',opciones:['En la evitable el límite existe; en la de 1ª especie, no','En la de 1ª especie el límite existe; en la evitable, no','No hay diferencia','En la evitable f(a) no existe; en la de 1ª especie, sí'],correcta:0,feedback:'En la discontinuidad evitable el límite global existe (lím⁻=lím⁺) pero no coincide con f(a). En la de 1ª especie, los límites laterales son distintos → el límite global no existe.'},
+      {enunciado:'\\(f(x)=\\begin{cases}kx+3 & x\\leq2\\\\ x^2-1 & x>2\\end{cases}\\). Halla \\(k\\) para que sea continua en \\(x=2\\).',opciones:['\\(k=0\\)','\\(k=1\\)','\\(k=-1\\)','\\(k=2\\)'],correcta:0,feedback:'\\(\\lim^-=2k+3\\), \\(\\lim^+=4-1=3\\). Para continuidad: \\(2k+3=3\\Rightarrow k=0\\).'},
+      {enunciado:'Las funciones polinómicas, ¿son continuas en todos los puntos?',opciones:['Sí, en todo \\(\\mathbb{R}\\)','No, pueden tener discontinuidades','Solo en algunos puntos','Depende del grado'],correcta:0,feedback:'Las funciones polinómicas son continuas en todo \\(\\mathbb{R}\\). Nunca tienen discontinuidades.'},
+      {enunciado:'\\(f(x)=\\dfrac{x^2-4}{x-2}\\). ¿Qué tipo de discontinuidad tiene en \\(x=2\\)?',opciones:['Evitable: lím=4 pero f(2) no existe','De 1ª especie','De 2ª especie','Ninguna, es continua'],correcta:0,feedback:'\\(f(2)\\) no existe (denominador 0). Pero \\(\\lim_{x\\to2}\\dfrac{x^2-4}{x-2}=\\lim(x+2)=4\\). El límite existe → discontinuidad evitable.'}
+    ],
+    n3:[
+      {enunciado:'\\(f(x)=\\begin{cases}x^2-1 & x<0\\\\ k & x=0\\\\ 2x+3 & x>0\\end{cases}\\). ¿Para qué valor de \\(k\\) es continua en \\(x=0\\)?',opciones:['No es posible: lím⁻=-1≠lím⁺=3','\\(k=-1\\)','\\(k=3\\)','\\(k=1\\)'],correcta:0,feedback:'\\(\\lim^-=0-1=-1\\) y \\(\\lim^+=0+3=3\\). Los límites laterales son distintos → discontinuidad de salto. Ningún valor de \\(k\\) puede hacerla continua.'},
+      {enunciado:'\\(f(x)=\\begin{cases}ax+b & x<1\\\\ 2 & x=1\\\\ bx+a & x>1\\end{cases}\\). Halla \\(a\\) y \\(b\\) para que sea continua en \\(x=1\\) y \\(f(1)=2\\).',opciones:['\\(a+b=2\\) y \\(b+a=2\\): cualquier \\(a\\),\\(b\\) con \\(a+b=2\\)','\\(a=1,b=1\\)','\\(a=2,b=0\\)','No es posible'],correcta:0,feedback:'Continuidad en \\(x=1\\): \\(a+b=2\\) (por la izquierda) y \\(b+a=2\\) (por la derecha). Ambas dan la misma condición \\(a+b=2\\). Hay infinitas soluciones: \\(a=1,b=1\\) o \\(a=0,b=2\\), etc.'},
+      {enunciado:'Estudia todos los puntos de discontinuidad de \\(f(x)=\\dfrac{x+3}{x^2-9}\\)',opciones:['\\(x=3\\): discontinuidad evitable; \\(x=-3\\): discontinuidad de 2ª especie','\\(x=\\pm3\\): ambas de 2ª especie','\\(x=3\\): de 2ª especie; \\(x=-3\\): evitable','\\(x=\\pm3\\): ambas evitables'],correcta:0,feedback:'\\(x^2-9=(x-3)(x+3)\\). En \\(x=-3\\): numerador \\((-3+3)=0\\) y denominador 0 → \\(\\dfrac{0}{0}\\). Cancelando: \\(\\dfrac{x+3}{(x+3)(x-3)}=\\dfrac{1}{x-3}\\Rightarrow\\lim_{x\\to-3}=\\dfrac{1}{-6}\\) → discontinuidad evitable. En \\(x=3\\): numerador ≠0, denominador=0 → límite \\(=\\pm\\infty\\) → discontinuidad de 2ª especie.'},
+      {enunciado:'\\(f(x)=\\begin{cases}x^2+1 & x<a\\\\ 3x-1 & x\\geq a\\end{cases}\\). ¿Para qué valor de \\(a\\) es continua?',opciones:['\\(a=1\\) o \\(a=2\\)','\\(a=1\\)','\\(a=2\\)','No existe tal \\(a\\)'],correcta:0,feedback:'Para continuidad: \\(a^2+1=3a-1\\Rightarrow a^2-3a+2=0\\Rightarrow(a-1)(a-2)=0\\Rightarrow a=1\\) o \\(a=2\\).'},
+      {enunciado:'\\(f(x)=\\begin{cases}\\dfrac{x^2-1}{x-1} & x\\neq1\\\\ k & x=1\\end{cases}\\). ¿Para qué valor de \\(k\\) es continua en \\(x=1\\)?',opciones:['\\(k=2\\)','\\(k=1\\)','\\(k=0\\)','No puede ser continua'],correcta:0,feedback:'\\(\\lim_{x\\to1}\\dfrac{x^2-1}{x-1}=\\lim(x+1)=2\\). Para continuidad: \\(k=2\\).'},
+      {enunciado:'¿Es \\(f(x)=|x|\\) continua en \\(x=0\\)?',opciones:['Sí: lím⁻=0=lím⁺=f(0)=0','No: los límites laterales son distintos','No: f(0) no existe','No: la función no tiene límite en 0'],correcta:0,feedback:'\\(\\lim_{x\\to0^-}|x|=-x\\big|_0=0\\), \\(\\lim_{x\\to0^+}|x|=x\\big|_0=0\\), \\(f(0)=0\\). Las tres condiciones se cumplen → continua en \\(x=0\\).'}
+    ]
+  },
+
+  bancoTest:[
+    {enunciado:'¿Cuántas condiciones necesita la continuidad en un punto?',opciones:['3','2','1','4'],correcta:0,feedback:'(1) f(a) existe, (2) el límite existe, (3) límite=f(a).'},
+    {enunciado:'\\(f(x)=\\begin{cases}x+2 & x<1\\\\ 3 & x\\geq1\\end{cases}\\). ¿Es continua en \\(x=1\\)?',opciones:['No: lím⁻=3=lím⁺... espera: lím⁻=3 y f(1)=3, ¿lím⁺=3? Sí → continua','No: discontinuidad de salto','No: discontinuidad evitable','No: f(1) no existe'],correcta:0,feedback:'lím⁻=1+2=3, lím⁺=3 (constante), f(1)=3. Las tres condiciones ✓ → continua.'},
+    {enunciado:'\\(f(x)=\\begin{cases}2x & x<2\\\\ x^2 & x\\geq2\\end{cases}\\). ¿Es continua en \\(x=2\\)?',opciones:['Sí: lím⁻=4=lím⁺=f(2)=4','No: lím⁻≠lím⁺','No: f(2) no existe','No: lím≠f(2)'],correcta:0,feedback:'lím⁻=4, lím⁺=4, f(2)=4. Las tres condiciones ✓ → continua.'},
+    {enunciado:'Halla \\(k\\) para que \\(f(x)=\\begin{cases}x^2+k & x<1\\\\ 3x-1 & x\\geq1\\end{cases}\\) sea continua',opciones:['\\(k=1\\)','\\(k=0\\)','\\(k=2\\)','\\(k=-1\\)'],correcta:0,feedback:'lím⁻=1+k, f(1)=2. Condición: 1+k=2 → k=1.'},
+    {enunciado:'Una función tiene lím⁻=3 y lím⁺=5 en x=a. ¿Qué tipo de discontinuidad es?',opciones:['1ª especie (salto)','Evitable','2ª especie','No hay discontinuidad'],correcta:0,feedback:'Los límites laterales son finitos pero distintos → discontinuidad de 1ª especie.'},
+    {enunciado:'¿Son las funciones polinómicas siempre continuas?',opciones:['Sí, en todo \\(\\mathbb{R}\\)','Solo en algunos puntos','Depende del grado','No, tienen discontinuidades'],correcta:0,feedback:'Las funciones polinómicas son continuas en todo \\(\\mathbb{R}\\).'},
+    {enunciado:'\\(f(x)=\\begin{cases}x+3 & x<2\\\\ 1 & x=2\\\\ x^2 & x>2\\end{cases}\\). Tipo de discontinuidad en \\(x=2\\)',opciones:['Evitable: lím=5≠f(2)=1','De salto: lím⁻≠lím⁺','De 2ª especie','No hay discontinuidad'],correcta:0,feedback:'lím⁻=5, lím⁺=4. Límites distintos → discontinuidad de 1ª especie (salto), no evitable.'},
+    {enunciado:'Halla \\(k\\) para que \\(f(x)=\\begin{cases}2x+k & x\\leq3\\\\ x^2-k & x>3\\end{cases}\\) sea continua',opciones:['\\(k=\\dfrac{3}{2}\\)','\\(k=3\\)','\\(k=1\\)','\\(k=0\\)'],correcta:0,feedback:'6+k=9-k → 2k=3 → k=3/2.'},
+    {enunciado:'\\(f(x)=\\dfrac{x^2-9}{x-3}\\). ¿Qué tipo de discontinuidad tiene en \\(x=3\\)?',opciones:['Evitable: lím=6 pero f(3) no existe','De 2ª especie','De 1ª especie','Ninguna'],correcta:0,feedback:'lím=x+3→6 (factorizando). Pero f(3) no existe. El límite existe → discontinuidad evitable.'},
+    {enunciado:'Si \\(f\\) es continua en \\(x=a\\), ¿qué relación tienen el límite y f(a)?',opciones:['\\(\\lim_{x\\to a}f(x)=f(a)\\)','\\(\\lim_{x\\to a}f(x)\\neq f(a)\\)','El límite no existe','\\(f(a)=0\\)'],correcta:0,feedback:'Si f es continua en a, entonces necesariamente lím=f(a) (condición 3).'},
+    {enunciado:'\\(f(x)=\\begin{cases}x^2 & x\\leq2\\\\ 4 & x>2\\end{cases}\\). ¿Es continua en \\(x=2\\)?',opciones:['Sí: lím⁻=4=lím⁺=f(2)=4','No: lím⁻≠lím⁺','No: f(2) no existe','No: lím≠f(2)'],correcta:0,feedback:'lím⁻=4, lím⁺=4, f(2)=4 ✓ → continua.'},
+    {enunciado:'¿Cuándo una discontinuidad se llama "evitable"?',opciones:['Cuando el límite existe pero no coincide con f(a)','Cuando los límites laterales son distintos','Cuando f(a) no existe y el límite tampoco','Cuando el límite es infinito'],correcta:0,feedback:'Discontinuidad evitable: el límite global existe (finito) pero f(a) no existe o f(a)≠límite. "Evitable" porque bastaría redefinir f(a) para hacerla continua.'}
+  ]
+};
+iniciarModulo();
+</script>
+</body>
+</html>

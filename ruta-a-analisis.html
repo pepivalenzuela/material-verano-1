@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Geometría Analítica · Ruta A · Puente a Bachillerato</title>
+<title>Análisis · Ruta A · Puente a Bachillerato</title>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,600;0,700;1,300&family=DM+Sans:wght@300;400;500&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <style>
 :root{--sol:#F5A623;--sol-claro:#FDF3E0;--oceano:#1A4A7A;--oceano-medio:#2A6BAD;--verde:#1E7B5E;--verde-claro:#E8F5F0;--arena:#FAF7F2;--blanco:#FFFFFF;--gris:#2C2C2C;--gris-s:#7A7A7A;}
@@ -15,7 +15,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--arena);color:var(--gris);
 .topbar-info{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:rgba(255,255,255,.6);}
 .progress-wrap{background:rgba(255,255,255,.15);height:5px;}
 .progress-bar{height:5px;background:var(--sol);transition:width .5s ease;}
-.contenedor{max-width:900px;margin:0 auto;padding:40px 24px 60px;}
+.contenedor{max-width:960px;margin:0 auto;padding:40px 24px 60px;}
 .cabecera{text-align:center;margin-bottom:36px;}
 .badge{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;background:#E8F0FA;color:var(--oceano);padding:5px 14px;border-radius:20px;display:inline-block;margin-bottom:16px;font-weight:600;}
 .cabecera h1{font-family:'Fraunces',serif;font-size:2.2rem;font-weight:700;color:var(--oceano);margin-bottom:10px;line-height:1.2;}
@@ -30,18 +30,18 @@ body{font-family:'DM Sans',sans-serif;background:var(--arena);color:var(--gris);
 .resumen-barra{background:#F0F0F0;border-radius:8px;height:10px;overflow:hidden;margin-bottom:6px;}
 .resumen-barra-fill{height:10px;background:var(--verde);border-radius:8px;transition:width .6s ease;}
 .resumen-barra-label{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--gris-s);text-align:right;}
-.modulos-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;}
+.modulos-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
 @media(max-width:680px){.modulos-grid{grid-template-columns:1fr;}}
-.modulo-card{background:var(--blanco);border-radius:14px;padding:24px 26px;box-shadow:0 2px 12px rgba(0,0,0,.06);text-decoration:none;color:inherit;display:block;transition:transform .15s,box-shadow .15s;border-top:4px solid var(--oceano);position:relative;}
+.modulo-card{background:var(--blanco);border-radius:14px;padding:22px 24px;box-shadow:0 2px 12px rgba(0,0,0,.06);text-decoration:none;color:inherit;display:block;transition:transform .15s,box-shadow .15s;border-top:4px solid var(--oceano);position:relative;}
 .modulo-card:hover{transform:translateY(-2px);box-shadow:0 4px 20px rgba(26,74,122,.12);}
 .modulo-card.superado{border-top-color:var(--verde);background:linear-gradient(135deg,var(--blanco) 0%,#F4FBF8 100%);}
 .modulo-num{font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:2px;text-transform:uppercase;color:var(--gris-s);margin-bottom:8px;}
-.modulo-nombre{font-family:'Fraunces',serif;font-size:1.05rem;font-weight:600;color:var(--oceano);margin-bottom:8px;line-height:1.3;}
+.modulo-nombre{font-family:'Fraunces',serif;font-size:1rem;font-weight:600;color:var(--oceano);margin-bottom:8px;line-height:1.3;}
 .modulo-desc{font-size:.8rem;color:var(--gris-s);line-height:1.5;margin-bottom:12px;}
 .modulo-estado{display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:.7rem;font-weight:600;padding:4px 12px;border-radius:20px;}
 .estado-superado{background:var(--verde-claro);color:var(--verde);}
 .estado-pendiente{background:#EFF3FA;color:var(--oceano-medio);}
-.modulo-flecha{position:absolute;top:24px;right:24px;font-size:1.2rem;color:#D0D0D0;transition:color .15s;}
+.modulo-flecha{position:absolute;top:22px;right:22px;font-size:1.2rem;color:#D0D0D0;transition:color .15s;}
 .modulo-card:hover .modulo-flecha{color:var(--oceano);}
 .nav-inferior{display:flex;gap:12px;margin-top:28px;flex-wrap:wrap;}
 .btn-nav-inf{padding:11px 22px;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:.88rem;font-weight:500;cursor:pointer;text-decoration:none;transition:all .2s;border:none;}
@@ -54,19 +54,19 @@ body{font-family:'DM Sans',sans-serif;background:var(--arena);color:var(--gris);
 <body>
 <div class="topbar">
   <div class="topbar-logo">Puente a <em>Bachillerato</em></div>
-  <div class="topbar-info" id="topbar-info">Ruta A · Geometría Analítica</div>
+  <div class="topbar-info" id="topbar-info">Ruta A · Análisis</div>
 </div>
 <div class="progress-wrap"><div class="progress-bar" id="progress-bar" style="width:0%"></div></div>
 
 <div class="contenedor">
   <div class="cabecera">
     <div class="badge">Ruta A · Matemáticas I</div>
-    <h1>Geometría <em>Analítica</em></h1>
-    <p>3 módulos para dominar vectores, ecuaciones de rectas, posición relativa y problemas de triángulos. El bloque final de la Ruta A.</p>
+    <h1>Análisis <em>de Funciones</em></h1>
+    <p>5 módulos que cubren desde el dominio hasta la representación gráfica. El bloque más extenso de la Ruta A — trabájalos en orden.</p>
   </div>
 
   <div class="resumen-progreso">
-    <div class="resumen-num" id="resumen-num">0/3</div>
+    <div class="resumen-num" id="resumen-num">0/5</div>
     <div class="resumen-texto">
       <h3>Módulos superados</h3>
       <p id="resumen-detalle">Completa el mini-test de cada módulo para avanzar.</p>
@@ -80,32 +80,33 @@ body{font-family:'DM Sans',sans-serif;background:var(--arena);color:var(--gris);
   <div class="modulos-grid" id="modulos-grid"></div>
 
   <div class="nav-inferior">
-    <a href="ruta-a-trigonometria.html" class="btn-nav-inf volver">← Trigonometría</a>
-    <a href="ruta-a-analisis.html" class="btn-nav-inf inicio">Análisis →</a>
-    <a href="index.html" class="btn-nav-inf volver">🏠 Inicio</a>
+    <a href="ruta-a-geometria.html" class="btn-nav-inf volver">← Geometría</a>
+    <a href="index.html" class="btn-nav-inf inicio">🏠 Inicio</a>
   </div>
 </div>
 
 <script>
 let alumna = {};
 try { alumna = JSON.parse(sessionStorage.getItem('alumna') || '{}'); } catch(e){}
-if (alumna.nombre) document.getElementById('topbar-info').textContent = `${alumna.nombre} · Geometría Analítica`;
+if (alumna.nombre) document.getElementById('topbar-info').textContent = `${alumna.nombre} · Análisis`;
 
 const MODULOS = [
-  { key:'geo-vectores',  nombre:'Vectores y Ecuaciones de la Recta', desc:'Vectores, punto medio y las cinco formas de la ecuación de la recta.', archivo:'geo1-vectores.html' },
-  { key:'geo-posicion',  nombre:'Posición Relativa de Rectas',        desc:'Paralelas, secantes, coincidentes, rectas paralelas e intersección.', archivo:'geo2-posicion.html' },
-  { key:'geo-problemas', nombre:'Problemas de Aplicación',            desc:'Medianas, baricentro y problemas tipo 1º Bachillerato.',             archivo:'geo3-problemas.html' },
+  { key:'analisis-dominio',        nombre:'Dominio de Funciones',              desc:'Polinómica, racional, irracional, logarítmica, exponencial y a trozos.',  archivo:'analisis1-dominio.html' },
+  { key:'analisis-compuesta',      nombre:'Función Compuesta e Inversa',       desc:'Composición de funciones, descomposición y cálculo de la función inversa.', archivo:'analisis2-compuesta.html' },
+  { key:'analisis-limites',        nombre:'Límites de Funciones',              desc:'Límites laterales, sustitución directa, indeterminaciones 0/0 e ∞/∞.',     archivo:'analisis3-limites.html' },
+  { key:'analisis-continuidad',    nombre:'Continuidad',                       desc:'Las tres condiciones, tipos de discontinuidad y parámetros.',               archivo:'analisis4-continuidad.html' },
+  { key:'analisis-representacion', nombre:'Representación: Rectas y Parábolas', desc:'Pendiente, vértice, raíces y discriminante para funciones lineales y cuadráticas.', archivo:'analisis5-representacion.html' },
 ];
 
 function renderHub() {
-  const superados = JSON.parse(sessionStorage.getItem('modulos_geometria') || '[]');
+  const superados = JSON.parse(sessionStorage.getItem('modulos_analisis') || '[]');
   const grid = document.getElementById('modulos-grid');
 
   grid.innerHTML = MODULOS.map((m, i) => {
     const ok = superados.includes(m.key);
     return `<a href="${m.archivo}" class="modulo-card ${ok ? 'superado' : ''}">
       <span class="modulo-flecha">→</span>
-      <div class="modulo-num">Módulo ${i+1} de 3</div>
+      <div class="modulo-num">Módulo ${i+1} de 5</div>
       <div class="modulo-nombre">${m.nombre}</div>
       <div class="modulo-desc">${m.desc}</div>
       <span class="modulo-estado ${ok ? 'estado-superado' : 'estado-pendiente'}">${ok ? 'Superado ✓' : 'Pendiente'}</span>
@@ -113,14 +114,14 @@ function renderHub() {
   }).join('');
 
   const total = superados.filter(k => MODULOS.some(m => m.key === k)).length;
-  const pct = Math.round((total/3)*100);
-  document.getElementById('resumen-num').textContent = `${total}/3`;
+  const pct = Math.round((total/5)*100);
+  document.getElementById('resumen-num').textContent = `${total}/5`;
   document.getElementById('resumen-barra-fill').style.width = pct + '%';
   document.getElementById('resumen-barra-label').textContent = `${pct}% completado`;
   document.getElementById('progress-bar').style.width = pct + '%';
-  document.getElementById('resumen-detalle').textContent = total === 3
-    ? '¡Has completado toda la Geometría Analítica! Ruta A terminada.'
-    : `Te ${3-total === 1 ? 'falta 1 módulo' : `faltan ${3-total} módulos`} para completar el bloque.`;
+  document.getElementById('resumen-detalle').textContent = total === 5
+    ? '¡Has completado todo el bloque de Análisis! Ruta A terminada.'
+    : `Te ${5-total === 1 ? 'falta 1 módulo' : `faltan ${5-total} módulos`} para completar el bloque.`;
 }
 
 renderHub();
