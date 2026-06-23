@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Estadística Bidimensional · Ruta B · Puente a Bachillerato</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,600;0,700;1,300&family=DM+Sans:wght@300;400;500&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml.min.js"></script>
+<style>
+:root{--sol:#F5A623;--sol-claro:#FDF3E0;--oceano:#1A4A7A;--oceano-medio:#2A6BAD;--verde:#1E7B5E;--verde-claro:#E8F5F0;--arena:#FAF7F2;--blanco:#FFFFFF;--gris:#2C2C2C;--gris-s:#7A7A7A;--rojo:#C0392B;--rojo-claro:#FEF0EF;--naranja:#B7600A;--naranja-claro:#FEF3E2;--lila:#6B3FA0;--lila-claro:#F0EBF8;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'DM Sans',sans-serif;background:var(--arena);color:var(--gris);min-height:100vh;}
+.topbar{background:var(--oceano);padding:12px 24px;display:flex;justify-content:space-between;align-items:center;}
+.topbar-logo{font-family:'Fraunces',serif;font-size:.95rem;font-weight:600;color:var(--blanco);}
+.topbar-logo em{color:var(--sol);font-style:italic;font-weight:300;}
+.topbar-alumna{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:rgba(255,255,255,.6);}
+.progress-wrap{background:rgba(255,255,255,.15);height:5px;}
+.progress-bar{height:5px;background:var(--sol);transition:width .5s ease;}
+.layout{display:grid;grid-template-columns:240px 1fr;min-height:calc(100vh - 57px);}
+@media(max-width:800px){.layout{grid-template-columns:1fr;}}
+.sidebar{background:var(--blanco);border-right:1px solid #EBEBEB;padding:20px 0;position:sticky;top:0;height:calc(100vh - 57px);overflow-y:auto;}
+.sidebar-bloque{font-family:'JetBrains Mono',monospace;font-size:.65rem;letter-spacing:2px;text-transform:uppercase;color:var(--gris-s);padding:0 18px 10px;}
+.sidebar-item{display:flex;align-items:center;gap:10px;padding:10px 18px;cursor:pointer;border-left:3px solid transparent;font-size:.85rem;transition:all .15s;color:var(--gris-s);}
+.sidebar-item:hover{background:#F5F7FA;color:var(--gris);}
+.sidebar-item.activo{background:#EFF3FA;border-left-color:var(--oceano);color:var(--oceano);font-weight:500;}
+.sidebar-item.hecho{color:var(--verde);}
+.sidebar-item.hecho .s-dot{background:var(--verde);}
+.s-dot{width:8px;height:8px;border-radius:50%;background:#D0D0D0;flex-shrink:0;}
+.sidebar-sep{height:1px;background:#F0F0F0;margin:10px 16px;}
+.sidebar-nav-btns{padding:12px 18px;display:flex;flex-direction:column;gap:8px;}
+.btn-nav{width:100%;padding:9px;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:.82rem;font-weight:500;cursor:pointer;border:1.5px solid transparent;transition:all .2s;text-align:center;}
+.btn-nav.anterior{background:var(--blanco);border-color:#D0D0D0;color:var(--gris-s);}
+.btn-nav.anterior:hover{border-color:var(--oceano);color:var(--oceano);}
+.btn-nav.siguiente{background:var(--oceano);color:var(--blanco);}
+.btn-nav.siguiente:hover{background:var(--oceano-medio);}
+.btn-nav.volver{background:transparent;border-color:transparent;color:var(--gris-s);font-size:.78rem;padding:6px;}
+.btn-nav.volver:hover{color:var(--oceano);text-decoration:underline;}
+.main{padding:36px 40px;max-width:820px;}
+@media(max-width:680px){.main{padding:20px 16px;}}
+.modulo-eyebrow{font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:2px;text-transform:uppercase;color:var(--gris-s);margin-bottom:8px;}
+.modulo-titulo{font-family:'Fraunces',serif;font-size:2rem;font-weight:700;color:var(--oceano);line-height:1.2;margin-bottom:6px;}
+.modulo-desc{font-size:.9rem;color:var(--gris-s);line-height:1.6;margin-bottom:32px;}
+.seccion{display:none;}
+.seccion.visible{display:block;}
+.nav-modulos{display:flex;gap:10px;margin-bottom:28px;flex-wrap:wrap;}
+.nm-btn{padding:7px 16px;border-radius:8px;font-size:.82rem;cursor:pointer;border:1.5px solid #E0E0E0;background:var(--blanco);font-family:'DM Sans',sans-serif;color:var(--gris-s);transition:all .15s;}
+.nm-btn:hover{border-color:var(--oceano-medio);color:var(--oceano);}
+.nm-btn.nm-activo{background:var(--oceano);color:var(--blanco);border-color:var(--oceano);}
+.nm-btn.nm-ok{border-color:var(--verde);color:var(--verde);}
+.teoria-intro{background:var(--oceano);border-radius:14px;padding:24px 28px;margin-bottom:24px;color:var(--blanco);}
+.teoria-intro p{font-size:.9rem;line-height:1.7;opacity:.9;}
+.teoria-intro strong{color:var(--sol);}
+.concepto-card{background:var(--blanco);border-radius:14px;padding:28px 30px;box-shadow:0 2px 12px rgba(26,74,122,.07);margin-bottom:20px;}
+.concepto-card h3{font-family:'Fraunces',serif;font-size:1.05rem;font-weight:600;color:var(--oceano);margin-bottom:16px;}
+.concepto-body{font-size:.9rem;line-height:1.85;color:var(--gris);}
+.concepto-body p{margin-bottom:10px;}
+.formula-box{background:#F0F4FA;border-radius:10px;padding:16px 20px;margin:14px 0;text-align:center;border:1px solid #D0DFF0;font-size:1rem;}
+.formula-box.verde{background:var(--verde-claro);border-color:#9FD4C0;}
+.formula-box.naranja{background:var(--naranja-claro);border-color:#E8C07A;}
+.ejemplo-resuelto{background:var(--sol-claro);border-left:4px solid var(--sol);border-radius:0 10px 10px 0;padding:16px 20px;margin:16px 0;font-size:.88rem;}
+.ejemplo-resuelto .ej-titulo{font-weight:600;color:#7A5500;margin-bottom:8px;font-size:.82rem;text-transform:uppercase;letter-spacing:.5px;}
+.ejemplo-resuelto .paso{display:flex;gap:12px;align-items:flex-start;margin-bottom:6px;}
+.ejemplo-resuelto .paso-num{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--sol);font-weight:600;min-width:20px;margin-top:3px;}
+.alerta-card{background:var(--rojo-claro);border-left:4px solid var(--rojo);border-radius:0 10px 10px 0;padding:14px 18px;margin:14px 0;font-size:.86rem;color:var(--gris);}
+.alerta-card .al-titulo{font-weight:600;color:var(--rojo);margin-bottom:4px;}
+.resumen-tabla{width:100%;border-collapse:collapse;margin:16px 0;font-size:.85rem;}
+.resumen-tabla th{background:#EFF3FA;color:var(--oceano);padding:9px 14px;text-align:left;font-weight:600;border-bottom:2px solid #D0DFF0;}
+.resumen-tabla td{padding:9px 14px;border-bottom:1px solid #F0F0F0;}
+.resumen-tabla tr:nth-child(even) td{background:#FAFCFF;}
+.nivel-header{display:flex;align-items:center;gap:14px;margin-bottom:24px;padding:18px 22px;border-radius:12px;}
+.nivel-header.n1{background:#EFF3FA;border-left:4px solid var(--oceano-medio);}
+.nivel-header.n2{background:var(--naranja-claro);border-left:4px solid var(--naranja);}
+.nivel-header.n3{background:var(--lila-claro);border-left:4px solid var(--lila);}
+.nivel-header.ntest{background:var(--verde-claro);border-left:4px solid var(--verde);}
+.nivel-icon{font-size:1.6rem;}
+.nivel-info h3{font-family:'Fraunces',serif;font-size:1rem;font-weight:600;margin-bottom:2px;}
+.nivel-info p{font-size:.8rem;color:var(--gris-s);}
+.n1 .nivel-info h3{color:var(--oceano-medio);}
+.n2 .nivel-info h3{color:var(--naranja);}
+.n3 .nivel-info h3{color:var(--lila);}
+.ntest .nivel-info h3{color:var(--verde);}
+.ejercicio-card{background:var(--blanco);border-radius:12px;padding:24px 26px;box-shadow:0 1px 8px rgba(0,0,0,.05);margin-bottom:14px;border-top:3px solid transparent;}
+.ejercicio-card.n1-color{border-top-color:var(--oceano-medio);}
+.ejercicio-card.n2-color{border-top-color:var(--naranja);}
+.ejercicio-card.n3-color{border-top-color:var(--lila);}
+.ejercicio-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
+.ej-num{font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--gris-s);letter-spacing:1px;}
+.ej-dificultad{font-family:'JetBrains Mono',monospace;font-size:.65rem;padding:2px 9px;border-radius:10px;font-weight:600;}
+.dif-basico{background:#EFF3FA;color:var(--oceano-medio);}
+.dif-medio{background:var(--naranja-claro);color:var(--naranja);}
+.dif-avanzado{background:var(--lila-claro);color:var(--lila);}
+.ej-enunciado{font-size:.93rem;line-height:1.75;margin-bottom:20px;}
+.opciones-ej{display:grid;grid-template-columns:1fr 1fr;gap:9px;}
+@media(max-width:520px){.opciones-ej{grid-template-columns:1fr;}}
+.op-btn{background:var(--arena);border:2px solid #E8E8E8;border-radius:9px;padding:12px 15px;font-size:.88rem;cursor:pointer;transition:all .15s;text-align:left;font-family:'DM Sans',sans-serif;color:var(--gris);display:flex;align-items:center;gap:9px;}
+.op-btn:hover:not(:disabled){border-color:var(--oceano-medio);background:#EFF3FA;}
+.op-letra{font-family:'JetBrains Mono',monospace;font-size:.68rem;font-weight:600;color:var(--gris-s);min-width:16px;}
+.op-btn.ok{border-color:var(--verde);background:var(--verde-claro);}
+.op-btn.ok .op-letra{color:var(--verde);}
+.op-btn.mal{border-color:var(--rojo);background:var(--rojo-claro);}
+.op-btn.mal .op-letra{color:var(--rojo);}
+.fb-ej{font-size:.83rem;line-height:1.65;padding:11px 15px;border-radius:8px;margin-top:10px;display:none;border-left:3px solid transparent;}
+.fb-ej.ok{display:block;background:var(--verde-claro);border-left-color:var(--verde);color:var(--gris);}
+.fb-ej.ok .fb-titulo{color:var(--verde);font-weight:600;margin-bottom:3px;}
+.fb-ej.mal{display:block;background:var(--rojo-claro);border-left-color:var(--rojo);color:var(--gris);}
+.fb-ej.mal .fb-titulo{color:var(--rojo);font-weight:600;margin-bottom:3px;}
+.minitest-barra{background:#F0F0F0;border-radius:6px;height:8px;margin-bottom:20px;overflow:hidden;}
+.minitest-fill{height:8px;background:var(--verde);border-radius:6px;transition:width .4s;}
+.test-pregunta{background:var(--blanco);border-radius:14px;padding:28px 30px;box-shadow:0 2px 14px rgba(26,74,122,.08);margin-bottom:16px;}
+.test-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;}
+.test-num{font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--gris-s);}
+.test-enunciado{font-size:1rem;line-height:1.75;margin-bottom:22px;}
+.btn-siguiente-nivel{background:var(--oceano);color:var(--blanco);border:none;border-radius:10px;padding:13px 32px;font-family:'DM Sans',sans-serif;font-size:.95rem;font-weight:500;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:8px;margin-top:20px;}
+.btn-siguiente-nivel:hover{background:var(--oceano-medio);transform:translateY(-1px);}
+.btn-siguiente-nivel:disabled{background:#A0B8D0;cursor:not-allowed;transform:none;}
+.bloque-accion{text-align:right;padding:20px 0 8px;border-top:1px dashed #D8D8D8;margin-top:24px;}
+.resultado-minitest{text-align:center;padding:40px 24px;background:var(--blanco);border-radius:16px;box-shadow:0 2px 16px rgba(0,0,0,.08);}
+.resultado-minitest .res-nota{font-family:'Fraunces',serif;font-size:4rem;font-weight:700;line-height:1;}
+.resultado-minitest .res-label{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:2px;text-transform:uppercase;color:var(--gris-s);margin-bottom:16px;}
+.resultado-minitest h3{font-family:'Fraunces',serif;font-size:1.4rem;font-weight:600;margin-bottom:8px;}
+.resultado-minitest p{font-size:.9rem;color:var(--gris-s);line-height:1.6;max-width:420px;margin:0 auto 24px;}
+.btn-res{display:inline-block;border-radius:10px;padding:12px 28px;font-family:'DM Sans',sans-serif;font-size:.92rem;font-weight:500;cursor:pointer;border:none;transition:all .2s;margin:4px;}
+.btn-res.ok{background:var(--verde);color:var(--blanco);}
+.btn-res.ok:hover{background:#166B50;}
+.btn-res.repetir{background:var(--naranja-claro);color:var(--naranja);border:2px solid var(--naranja);}
+.btn-res.volver{background:var(--rojo-claro);color:var(--rojo);border:2px solid var(--rojo);}
+.repaso-errores{background:var(--blanco);border-radius:12px;padding:22px 26px;box-shadow:0 1px 8px rgba(0,0,0,.05);margin-top:20px;}
+.repaso-titulo{font-family:'Fraunces',serif;font-size:.95rem;font-weight:600;color:var(--gris);margin-bottom:14px;}
+.error-item{border-left:3px solid var(--rojo-claro);padding:10px 14px;margin-bottom:10px;border-radius:0 8px 8px 0;background:#FDF7F7;font-size:.84rem;line-height:1.6;}
+.error-correcta{color:var(--verde);font-weight:600;}
+</style>
+</head>
+<body>
+<div class="topbar"><div class="topbar-logo">Puente a <em>Bachillerato</em></div><div class="topbar-alumna" id="topbar-alumna">Estadística · Bidimensional y regresión</div></div>
+<div class="progress-wrap"><div class="progress-bar" id="progress-bar" style="width:0%"></div></div>
+<div class="layout">
+<aside class="sidebar">
+  <div class="sidebar-bloque">Estadística · Módulo 4 de 4</div>
+  <div class="sidebar-item activo" id="s-teoria" onclick="irSeccion('teoria')"><span class="s-dot"></span> Teoría</div>
+  <div class="sidebar-item" id="s-n1" onclick="irSeccion('n1')"><span class="s-dot"></span> Nivel 1</div>
+  <div class="sidebar-item" id="s-n2" onclick="irSeccion('n2')"><span class="s-dot"></span> Nivel 2</div>
+  <div class="sidebar-item" id="s-n3" onclick="irSeccion('n3')"><span class="s-dot"></span> Nivel 3</div>
+  <div class="sidebar-item" id="s-test" onclick="irSeccion('test')"><span class="s-dot"></span> Mini-test</div>
+  <div class="sidebar-sep"></div>
+  <div class="sidebar-nav-btns">
+    <button class="btn-nav anterior" onclick="window.location.href='est3-parametros.html'">← Módulo 3</button>
+    <button class="btn-nav siguiente" onclick="window.location.href='ruta-b-estadistica.html'">Volver al índice →</button>
+    <button class="btn-nav volver" onclick="window.location.href='ruta-b-estadistica.html'">📋 Volver a Estadística</button>
+  </div>
+</aside>
+<main class="main" id="main-area"></main>
+</div>
+<script>
+// ══════════════════════════════════════════════════════════
+//  MOTOR DE MÓDULOS — Ruta A · Puente a Bachillerato
+//  Lee el objeto global MODULO_CONFIG y construye toda la
+//  interfaz: cabecera, navegación, teoría, niveles y mini-test.
+// ══════════════════════════════════════════════════════════
+
+let alumna = {};
+try { alumna = JSON.parse(sessionStorage.getItem('alumna') || '{}'); } catch(e){}
+const APPS_SCRIPT_URL_MOD = 'https://script.google.com/macros/s/AKfycbx63xvLtRnJYFQBr7AelcusmRLFzlCN6CyqPQWtjtdZ-IVuDr6RX2v850qTnZPr19LpVA/exec';
+function enviarResultadoModulo(modulo, correctas, superado) {
+  if (!APPS_SCRIPT_URL_MOD || APPS_SCRIPT_URL_MOD.includes('TU_')) return;
+  try {
+    const params = new URLSearchParams({
+      tipo: 'modulo_rutaA',
+      modulo: modulo,
+      nombre: alumna.nombre || '',
+      apellidos: alumna.apellidos || '',
+      grupo: alumna.grupo || '',
+      itinerario: alumna.itinerario || '',
+      correctas: correctas,
+      total: 5,
+      superado: superado ? '1' : '0',
+      fecha: new Date().toISOString()
+    });
+    new Image().src = APPS_SCRIPT_URL_MOD + '?' + params.toString();
+  } catch(e) {}
+}
+
+
+const estadoNiveles = {
+  n1: { respondidas: new Set(), correctas: new Set() },
+  n2: { respondidas: new Set(), correctas: new Set() },
+  n3: { respondidas: new Set(), correctas: new Set() }
+};
+let testPreguntas = [];
+let testActual = 0;
+let testRespuestas = [];
+const SECCIONES = ['teoria','n1','n2','n3','test'];
+
+function iniciarModulo() {
+  const C = MODULO_CONFIG;
+
+  if (alumna.nombre) {
+    document.getElementById('topbar-alumna').textContent = `${alumna.nombre} · ${C.titulo}`;
+  }
+
+  const main = document.getElementById('main-area');
+  main.innerHTML = `
+    <div class="modulo-eyebrow">${C.eyebrow}</div>
+    <div class="modulo-titulo">${C.titulo}</div>
+    <div class="modulo-desc">${C.desc}</div>
+
+    <div class="nav-modulos">
+      <button class="nm-btn nm-activo" onclick="irSeccion('teoria')">📖 Teoría</button>
+      <button class="nm-btn" onclick="irSeccion('n1')">🔵 Nivel 1</button>
+      <button class="nm-btn" onclick="irSeccion('n2')">🟠 Nivel 2</button>
+      <button class="nm-btn" onclick="irSeccion('n3')">🟣 Nivel 3</button>
+      <button class="nm-btn" onclick="irSeccion('test')">✅ Mini-test</button>
+    </div>
+
+    <div class="seccion visible" id="sec-teoria">
+      ${C.teoria}
+      <div class="bloque-accion">
+        <button class="btn-siguiente-nivel" onclick="irSeccion('n1')">Ir a los ejercicios →</button>
+      </div>
+    </div>
+
+    <div class="seccion" id="sec-n1">
+      <div class="nivel-header n1"><div class="nivel-icon">🔵</div><div class="nivel-info"><h3>Nivel 1 — Básico</h3><p>Aplicación directa de definiciones y conversiones.</p></div></div>
+      <div id="ejercicios-n1"></div>
+      <div class="bloque-accion"><button class="btn-siguiente-nivel" id="btn-a-n2" onclick="irSeccion('n2')" disabled>Nivel 2 →</button></div>
+    </div>
+
+    <div class="seccion" id="sec-n2">
+      <div class="nivel-header n2"><div class="nivel-icon">🟠</div><div class="nivel-info"><h3>Nivel 2 — Intermedio</h3><p>Combinación de varias técnicas.</p></div></div>
+      <div id="ejercicios-n2"></div>
+      <div class="bloque-accion"><button class="btn-siguiente-nivel" id="btn-a-n3" onclick="irSeccion('n3')" disabled>Nivel 3 →</button></div>
+    </div>
+
+    <div class="seccion" id="sec-n3">
+      <div class="nivel-header n3"><div class="nivel-icon">🟣</div><div class="nivel-info"><h3>Nivel 3 — Avanzado</h3><p>Resolución de triángulos y ecuaciones trigonométricas.</p></div></div>
+      <div id="ejercicios-n3"></div>
+      <div class="bloque-accion"><button class="btn-siguiente-nivel" id="btn-a-test" onclick="iniciarMinitest()" disabled>Hacer el mini-test →</button></div>
+    </div>
+
+    <div class="seccion" id="sec-test">
+      <div class="nivel-header ntest"><div class="nivel-icon">✅</div><div class="nivel-info"><h3>Mini-test de superación</h3><p>5 preguntas aleatorias. Necesitas 4/5 para superar el módulo.</p></div></div>
+      <div class="minitest-barra"><div class="minitest-fill" id="mt-barra" style="width:0%"></div></div>
+      <div id="minitest-contenido"></div>
+    </div>
+  `;
+
+  renderNivel('n1');
+  renderNivel('n2');
+  renderNivel('n3');
+  MathJax && MathJax.typesetPromise();
+}
+
+// ══════════════════════════════════════════
+// NAVEGACIÓN
+// ══════════════════════════════════════════
+function irSeccion(id) {
+  if (id === 'test' && testPreguntas.length === 0) { iniciarMinitest(); return; }
+  SECCIONES.forEach(s => {
+    const sec = document.getElementById(`sec-${s}`);
+    if (sec) sec.classList.toggle('visible', s === id);
+    const si = document.getElementById(`s-${s}`);
+    if (si) si.classList.toggle('activo', s === id);
+  });
+  document.querySelectorAll('.nm-btn').forEach((btn,i) => btn.classList.toggle('nm-activo', SECCIONES[i] === id));
+  window.scrollTo(0,0);
+  MathJax && MathJax.typesetPromise();
+}
+
+// ══════════════════════════════════════════
+// EJERCICIOS POR NIVEL
+// ══════════════════════════════════════════
+function renderNivel(nivel) {
+  const cont = document.getElementById(`ejercicios-${nivel}`);
+  const letras = ['A','B','C','D'];
+  const banco = MODULO_CONFIG.banco[nivel];
+
+  cont.innerHTML = banco.map((ej, i) => {
+    const dif = nivel === 'n1' ? 'Básico' : (nivel === 'n2' ? 'Intermedio' : 'Avanzado');
+    const difCls = nivel === 'n1' ? 'dif-basico' : (nivel === 'n2' ? 'dif-medio' : 'dif-avanzado');
+    return `<div class="ejercicio-card ${nivel}-color" id="ej-${nivel}-${i}">
+      <div class="ejercicio-meta">
+        <span class="ej-num">Ejercicio ${i+1}</span>
+        <span class="ej-dificultad ${difCls}">${dif}</span>
+      </div>
+      <div class="ej-enunciado">${ej.enunciado}</div>
+      <div class="opciones-ej">
+        ${ej.opciones.map((op,oi) => `<button class="op-btn" onclick="responderEj('${nivel}',${i},${oi})"><span class="op-letra">${letras[oi]}</span><span>${op}</span></button>`).join('')}
+      </div>
+      <div class="fb-ej" id="fb-${nivel}-${i}"></div>
+    </div>`;
+  }).join('');
+}
+
+function responderEj(nivel, idx, opIdx) {
+  if (estadoNiveles[nivel].respondidas.has(idx)) return;
+  estadoNiveles[nivel].respondidas.add(idx);
+
+  const ej = MODULO_CONFIG.banco[nivel][idx];
+  const ok = opIdx === ej.correcta;
+  if (ok) estadoNiveles[nivel].correctas.add(idx);
+
+  document.getElementById(`ej-${nivel}-${idx}`).querySelectorAll('.op-btn').forEach((btn, oi) => {
+    btn.disabled = true;
+    if (oi === ej.correcta) btn.classList.add('ok');
+    else if (oi === opIdx && !ok) btn.classList.add('mal');
+  });
+
+  const fb = document.getElementById(`fb-${nivel}-${idx}`);
+  fb.className = `fb-ej ${ok ? 'ok' : 'mal'}`;
+  fb.innerHTML = `<div class="fb-titulo">${ok ? '✓ Correcto' : '✗ No es correcto'}</div>${ej.feedback}`;
+
+  if (estadoNiveles[nivel].respondidas.size === MODULO_CONFIG.banco[nivel].length) {
+    const si = document.getElementById(`s-${nivel}`);
+    if (si) si.classList.add('hecho');
+    const btns = { n1:'btn-a-n2', n2:'btn-a-n3', n3:'btn-a-test' };
+    const b = document.getElementById(btns[nivel]);
+    if (b) b.disabled = false;
+  }
+
+  actualizarProgreso();
+  MathJax && MathJax.typesetPromise();
+}
+
+// ══════════════════════════════════════════
+// MINI-TEST
+// ══════════════════════════════════════════
+function iniciarMinitest() {
+  testPreguntas = [...MODULO_CONFIG.bancoTest].sort(() => Math.random() - 0.5).slice(0,5);
+  testActual = 0;
+  testRespuestas = new Array(5).fill(null);
+  irSeccion('test');
+  mostrarPreguntaTest(0);
+}
+
+function mostrarPreguntaTest(idx) {
+  const p = testPreguntas[idx];
+  const letras = ['A','B','C','D'];
+  document.getElementById('mt-barra').style.width = ((idx/5)*100) + '%';
+  document.getElementById('minitest-contenido').innerHTML = `
+    <div class="test-pregunta">
+      <div class="test-meta"><span class="test-num">Pregunta ${idx+1} de 5</span></div>
+      <div class="test-enunciado">${p.enunciado}</div>
+      <div class="opciones-ej" id="ops-test">
+        ${p.opciones.map((op,oi) => `<button class="op-btn" onclick="responderTest(${oi})"><span class="op-letra">${letras[oi]}</span><span>${op}</span></button>`).join('')}
+      </div>
+    </div>
+    <div style="text-align:right;margin-top:8px;">
+      <button class="btn-siguiente-nivel" id="btn-test-sig" style="display:none" onclick="siguienteTest()">${idx<4 ? 'Siguiente →' : 'Ver resultado →'}</button>
+    </div>`;
+  MathJax && MathJax.typesetPromise();
+}
+
+function responderTest(opIdx) {
+  testRespuestas[testActual] = opIdx;
+  document.querySelectorAll('#ops-test .op-btn').forEach((btn,i) => {
+    btn.disabled = true;
+    if (i === opIdx) { btn.style.borderColor = 'var(--oceano-medio)'; btn.style.background = '#EFF3FA'; }
+  });
+  document.getElementById('btn-test-sig').style.display = 'inline-flex';
+}
+
+function siguienteTest() {
+  testActual++;
+  if (testActual < 5) mostrarPreguntaTest(testActual);
+  else mostrarResultadoTest();
+}
+
+function mostrarResultadoTest() {
+  document.getElementById('mt-barra').style.width = '100%';
+  const correctas = testRespuestas.filter((r,i) => r === testPreguntas[i].correcta).length;
+  const superado = correctas >= 4;
+  enviarResultadoModulo(MODULO_CONFIG.clave, correctas, superado);
+  const color = superado ? 'var(--verde)' : (correctas >= 3 ? 'var(--naranja)' : 'var(--rojo)');
+  const titulo = superado ? '¡Módulo superado!' : (correctas >= 3 ? 'Por poco…' : 'Hay que repasar');
+  const C = MODULO_CONFIG;
+  const texto = superado
+    ? `¡Has completado toda la Estadística! Vuelve al índice para ver tu progreso.`
+    : (correctas >= 3 ? 'Estás cerca. Repasa los errores y vuelve a intentarlo.' : 'Repasa la teoría y los ejercicios antes de repetir el test.');
+
+  if (superado) {
+    const m = JSON.parse(sessionStorage.getItem('modulos_estadistica') || '[]');
+    if (!m.includes(C.clave)) m.push(C.clave);
+    sessionStorage.setItem('modulos_estadistica', JSON.stringify(m));
+    const si = document.getElementById('s-test');
+    if (si) si.classList.add('hecho');
+  }
+
+  const errores = testPreguntas.map((p,i) => ({...p, elegida: testRespuestas[i]})).filter(p => p.elegida !== p.correcta);
+  const letras = ['A','B','C','D'];
+
+  document.getElementById('minitest-contenido').innerHTML = `
+    <div class="resultado-minitest">
+      <div class="res-nota" style="color:${color}">${correctas}/5</div>
+      <div class="res-label">respuestas correctas</div>
+      <h3>${titulo}</h3>
+      <p>${texto}</p>
+      ${superado
+        ? `<button class="btn-res ok" onclick="window.location.href='${C.siguiente}'">${C.siguiente.includes('test-final') ? 'Ir al test final →' : 'Siguiente módulo →'}</button>
+           <button class="btn-res repetir" onclick="iniciarMinitest()">↻ Repetir test</button>`
+        : `<button class="btn-res volver" onclick="irSeccion('teoria')">← Repasar teoría</button>
+           <button class="btn-res repetir" onclick="iniciarMinitest()">↻ Intentar de nuevo</button>`
+      }
+    </div>
+    ${errores.length > 0 ? `<div class="repaso-errores"><div class="repaso-titulo">Repaso de errores</div>${errores.map(p => `
+      <div class="error-item">
+        <div>${p.enunciado}</div>
+        <div>Tu respuesta: ${p.elegida !== null ? letras[p.elegida]+') '+p.opciones[p.elegida] : '—'}</div>
+        <div class="error-correcta">✓ Correcta: ${letras[p.correcta]}) ${p.opciones[p.correcta]}</div>
+        <div style="color:var(--gris-s);font-size:.82rem;margin-top:4px;">${p.feedback}</div>
+      </div>`).join('')}</div>` : ''}`;
+
+  actualizarProgreso();
+  MathJax && MathJax.typesetPromise();
+}
+
+// ══════════════════════════════════════════
+// PROGRESO
+// ══════════════════════════════════════════
+function actualizarProgreso() {
+  const C = MODULO_CONFIG;
+  const total = C.banco.n1.length + C.banco.n2.length + C.banco.n3.length;
+  const resp = estadoNiveles.n1.respondidas.size + estadoNiveles.n2.respondidas.size + estadoNiveles.n3.respondidas.size;
+  document.getElementById('progress-bar').style.width = Math.round((resp/(total+5))*100) + '%';
+}
+</script>
+<script>
+MODULO_CONFIG = {
+  num: 4, total: 4, clave: 'est-bidimensional', titulo: 'Estadística Bidimensional',
+  eyebrow: 'Ruta B · Estadística · Módulo 4 de 4',
+  desc: 'Cuando estudiamos dos variables a la vez en cada individuo, podemos descubrir si están relacionadas y predecir una a partir de la otra. La correlación y la recta de regresión son las herramientas clave.',
+  anterior: 'est3-parametros.html', siguiente: 'ruta-b-estadistica.html',
+  teoria: `
+  <div class="teoria-intro"><p>La <strong>estadística bidimensional</strong> estudia simultáneamente dos variables \\((X,Y)\\) medidas en los mismos individuos. El objetivo es detectar si existe relación entre ellas y, si existe, cuantificarla y usarla para hacer predicciones.</p></div>
+
+  <div class="concepto-card"><h3>📐 1. Variable bidimensional y nube de puntos</h3><div class="concepto-body">
+  <p>Los datos se representan como pares \\((x_i, y_i)\\) en un sistema de ejes. La representación gráfica se llama <strong>nube de puntos</strong> (o diagrama de dispersión) y permite ver a simple vista si hay relación entre las variables.</p>
+  <div class="formula-box verde">
+  Nube dispersa y sin forma → sin correlación<br>
+  Nube con tendencia ascendente → correlación positiva<br>
+  Nube con tendencia descendente → correlación negativa<br>
+  Nube muy ajustada a una recta → correlación fuerte
+  </div>
+  </div></div>
+
+  <div class="concepto-card"><h3>📐 2. Covarianza</h3><div class="concepto-body">
+  <p>La <strong>covarianza</strong> mide si las dos variables tienden a crecer juntas o en sentidos opuestos:</p>
+  <div class="formula-box verde">\\(\\sigma_{xy}=\\dfrac{\\sum(x_i-\\bar{x})(y_i-\\bar{y})}{n}=\\dfrac{\\sum x_i y_i}{n}-\\bar{x}\\cdot\\bar{y}\\)</div>
+  <div class="alerta-card"><div class="al-titulo">💡 Interpretación</div>
+  \\(\\sigma_{xy}>0\\) → cuando \\(X\\) crece, \\(Y\\) tiende a crecer (correlación positiva).<br>
+  \\(\\sigma_{xy}<0\\) → cuando \\(X\\) crece, \\(Y\\) tiende a decrecer (correlación negativa).<br>
+  \\(\\sigma_{xy}=0\\) → no hay correlación lineal.</div>
+  </div></div>
+
+  <div class="concepto-card"><h3>📐 3. Coeficiente de correlación de Pearson</h3><div class="concepto-body">
+  <div class="formula-box verde">\\(r=\\dfrac{\\sigma_{xy}}{\\sigma_x\\cdot\\sigma_y}\\qquad -1\\leq r\\leq 1\\)</div>
+  <table class="resumen-tabla">
+  <tr><th>Valor de \\(r\\)</th><th>Interpretación</th></tr>
+  <tr><td>\\(r=1\\)</td><td>Correlación lineal positiva perfecta</td></tr>
+  <tr><td>\\(0{,}7\\leq r<1\\)</td><td>Correlación positiva fuerte</td></tr>
+  <tr><td>\\(0<r<0{,}7\\)</td><td>Correlación positiva débil o moderada</td></tr>
+  <tr><td>\\(r=0\\)</td><td>Sin correlación lineal</td></tr>
+  <tr><td>\\(-0{,}7<r<0\\)</td><td>Correlación negativa débil o moderada</td></tr>
+  <tr><td>\\(-1<r\\leq-0{,}7\\)</td><td>Correlación negativa fuerte</td></tr>
+  <tr><td>\\(r=-1\\)</td><td>Correlación lineal negativa perfecta</td></tr>
+  </table>
+  </div></div>
+
+  <div class="concepto-card"><h3>📐 4. Recta de regresión de Y sobre X</h3><div class="concepto-body">
+  <p>Cuando hay correlación lineal fuerte, podemos ajustar una recta que "explique" la relación entre las variables y usarla para predicciones:</p>
+  <div class="formula-box verde">
+  \\(y-\\bar{y}=\\dfrac{\\sigma_{xy}}{\\sigma_x^2}(x-\\bar{x})\\)<br><br>
+  O en forma \\(y=ax+b\\) donde: \\(\\quad a=\\dfrac{\\sigma_{xy}}{\\sigma_x^2}\\qquad b=\\bar{y}-a\\cdot\\bar{x}\\)
+  </div>
+  <div class="ejemplo-resuelto"><div class="ej-titulo">Ejemplo resuelto — Horas de estudio vs. nota</div>
+  <div class="paso"><span class="paso-num">①</span><span>Datos: \\((1,3),(2,5),(3,6),(4,7),(5,9)\\). \\(n=5\\)</span></div>
+  <div class="paso"><span class="paso-num">②</span><span>\\(\\bar{x}=3\\), \\(\\bar{y}=6\\)</span></div>
+  <div class="paso"><span class="paso-num">③</span><span>\\(\\sigma_{xy}=\\dfrac{(1\\cdot3+2\\cdot5+3\\cdot6+4\\cdot7+5\\cdot9)}{5}-3\\cdot6=\\dfrac{3+10+18+28+45}{5}-18=\\dfrac{104}{5}-18=20{,}8-18=2{,}8\\)</span></div>
+  <div class="paso"><span class="paso-num">④</span><span>\\(\\sigma_x^2=\\dfrac{1+4+9+16+25}{5}-9=11-9=2\\)</span></div>
+  <div class="paso"><span class="paso-num">⑤</span><span>\\(a=\\dfrac{2{,}8}{2}=1{,}4\\quad b=6-1{,}4\\cdot3=6-4{,}2=1{,}8\\)</span></div>
+  <div class="paso"><span class="paso-num">⑥</span><span>Recta: \\(y=1{,}4x+1{,}8\\)</span></div>
+  <div class="paso"><span class="paso-num">⑦</span><span>Predicción para \\(x=6\\) horas: \\(y=1{,}4\\cdot6+1{,}8=8{,}4+1{,}8=10{,}2\\) (máx 10)</span></div>
+  </div>
+  </div></div>`,
+
+  banco:{
+    n1:[
+      {enunciado:'¿Qué es una variable estadística bidimensional?',opciones:['El estudio de dos variables medidas simultáneamente en los mismos individuos','El estudio de dos poblaciones distintas','Una variable que toma dos valores','La media de dos variables'],correcta:0,feedback:'En la estadística bidimensional estudiamos dos características (X, Y) sobre los mismos individuos, buscando relaciones entre ellas.'},
+      {enunciado:'Si la covarianza \\(\\sigma_{xy}>0\\), ¿qué indica?',opciones:['Cuando X crece, Y tiende a crecer','Cuando X crece, Y tiende a decrecer','No hay relación entre X e Y','La correlación es perfecta'],correcta:0,feedback:'Covarianza positiva → correlación positiva: ambas variables crecen o decrecen juntas.'},
+      {enunciado:'¿Entre qué valores oscila el coeficiente de correlación de Pearson \\(r\\)?',opciones:['\\(-1\\leq r\\leq1\\)','\\(0\\leq r\\leq1\\)','\\(-\\infty<r<+\\infty\\)','\\(0\\leq r\\leq100\\)'],correcta:0,feedback:'El coeficiente de Pearson siempre está entre \\(-1\\) y \\(1\\).'},
+      {enunciado:'¿Qué indica \\(r=1\\)?',opciones:['Correlación lineal positiva perfecta','Sin correlación','Correlación negativa perfecta','Correlación positiva débil'],correcta:0,feedback:'\\(r=1\\) indica correlación lineal positiva perfecta: todos los puntos están exactamente sobre una recta creciente.'},
+      {enunciado:'¿Qué indica \\(r=0\\)?',opciones:['No hay correlación lineal','Correlación perfecta','Todos los datos son iguales','La media es cero'],correcta:0,feedback:'\\(r=0\\) indica ausencia de correlación lineal entre las dos variables.'},
+      {enunciado:'En la recta de regresión \\(y=ax+b\\), ¿cómo se calcula \\(a\\)?',opciones:['\\(a=\\dfrac{\\sigma_{xy}}{\\sigma_x^2}\\)','\\(a=\\dfrac{\\sigma_x}{\\sigma_{xy}}\\)','\\(a=\\bar{y}-\\bar{x}\\)','\\(a=\\sigma_{xy}\\cdot\\sigma_x\\)'],correcta:0,feedback:'La pendiente de la recta de regresión es \\(a=\\dfrac{\\sigma_{xy}}{\\sigma_x^2}\\).'},
+      {enunciado:'La nube de puntos muestra una tendencia claramente descendente. ¿Qué tipo de correlación hay?',opciones:['Negativa','Positiva','Nula','Perfecta positiva'],correcta:0,feedback:'Tendencia descendente → cuando X crece, Y decrece → correlación negativa.'},
+      {enunciado:'¿Para qué sirve la recta de regresión?',opciones:['Para hacer predicciones de una variable a partir de la otra','Para calcular la media','Para construir la tabla de frecuencias','Para calcular la varianza'],correcta:0,feedback:'La recta de regresión permite predecir el valor de Y para un valor dado de X (o viceversa).'},
+      {enunciado:'Si \\(r=0{,}95\\), ¿cómo describirías la correlación?',opciones:['Positiva fuerte','Positiva débil','Negativa fuerte','Nula'],correcta:0,feedback:'\\(r=0{,}95\\) está entre 0,7 y 1 → correlación positiva fuerte.'},
+      {enunciado:'¿Qué representa cada punto \\((x_i,y_i)\\) en la nube de puntos?',opciones:['Los valores de las dos variables para un mismo individuo','La media de X e Y','Un error de medida','Un intervalo de confianza'],correcta:0,feedback:'Cada punto representa un individuo con sus dos valores medidos: \\(x_i\\) (variable X) e \\(y_i\\) (variable Y).'}
+    ],
+    n2:[
+      {enunciado:'Datos: \\((1,2),(2,4),(3,3),(4,5),(5,6)\\). \\(\\bar{x}=3\\), \\(\\bar{y}=4\\). ¿Cuánto vale \\(\\sigma_{xy}\\)?',opciones:['\\(1{,}8\\)','\\(2\\)','\\(0{,}9\\)','\\(3{,}6\\)'],correcta:0,feedback:'\\(\\sigma_{xy}=\\dfrac{1\\cdot2+2\\cdot4+3\\cdot3+4\\cdot5+5\\cdot6}{5}-3\\cdot4=\\dfrac{2+8+9+20+30}{5}-12=\\dfrac{69}{5}-12=13{,}8-12=1{,}8\\).'},
+      {enunciado:'Con \\(\\sigma_{xy}=1{,}8\\), \\(\\sigma_x=\\sqrt{2}\\), \\(\\sigma_y=\\sqrt{2}\\). ¿Cuánto vale \\(r\\)?',opciones:['\\(0{,}9\\)','\\(1{,}8\\)','\\(0{,}45\\)','\\(1\\)'],correcta:0,feedback:'\\(r=\\dfrac{1{,}8}{\\sqrt{2}\\cdot\\sqrt{2}}=\\dfrac{1{,}8}{2}=0{,}9\\). Correlación positiva fuerte.'},
+      {enunciado:'Con \\(\\sigma_{xy}=2{,}8\\), \\(\\sigma_x^2=2\\), \\(\\bar{x}=3\\), \\(\\bar{y}=6\\). Halla la recta de regresión \\(y=ax+b\\).',opciones:['\\(y=1{,}4x+1{,}8\\)','\\(y=1{,}4x-1{,}8\\)','\\(y=2{,}8x+1{,}8\\)','\\(y=0{,}7x+3{,}9\\)'],correcta:0,feedback:'\\(a=\\dfrac{2{,}8}{2}=1{,}4\\). \\(b=6-1{,}4\\cdot3=6-4{,}2=1{,}8\\). Recta: \\(y=1{,}4x+1{,}8\\).'},
+      {enunciado:'Con la recta \\(y=1{,}4x+1{,}8\\), ¿qué nota se predice para 4 horas de estudio?',opciones:['\\(7{,}4\\)','\\(5{,}6\\)','\\(8{,}2\\)','\\(6{,}2\\)'],correcta:0,feedback:'\\(y=1{,}4\\cdot4+1{,}8=5{,}6+1{,}8=7{,}4\\).'},
+      {enunciado:'¿Qué correlación describe mejor \\(r=-0{,}85\\)?',opciones:['Negativa fuerte','Negativa débil','Positiva fuerte','Nula'],correcta:0,feedback:'\\(r=-0{,}85\\): negativo → correlación negativa. \\(|r|=0{,}85>0{,}7\\) → fuerte.'},
+      {enunciado:'Si todos los puntos \\((x_i,y_i)\\) están exactamente sobre una recta decreciente, ¿cuánto vale \\(r\\)?',opciones:['\\(-1\\)','\\(1\\)','\\(0\\)','\\(0{,}5\\)'],correcta:0,feedback:'Correlación perfecta negativa → \\(r=-1\\).'},
+      {enunciado:'Calcula \\(\\sigma_{xy}\\) para \\((2,3),(4,5),(6,7),(8,9),(10,11)\\) con \\(\\bar{x}=6\\), \\(\\bar{y}=7\\).',opciones:['\\(8\\)','\\(4\\)','\\(16\\)','\\(2\\)'],correcta:0,feedback:'\\(\\sigma_{xy}=\\dfrac{6+20+42+72+110}{5}-6\\cdot7=\\dfrac{250}{5}-42=50-42=8\\).'},
+      {enunciado:'Con los datos anteriores \\(\\sigma_x^2=8\\), \\(\\sigma_{xy}=8\\). ¿Cuánto vale \\(a\\)?',opciones:['\\(1\\)','\\(8\\)','\\(2\\)','\\(0{,}5\\)'],correcta:0,feedback:'\\(a=\\dfrac{\\sigma_{xy}}{\\sigma_x^2}=\\dfrac{8}{8}=1\\). La recta es \\(y=x+1\\).'}
+    ],
+    n3:[
+      {enunciado:'Cinco alumnas: horas estudio \\(x\\): 2,3,4,5,6 y notas \\(y\\): 4,5,7,8,9. Calcula \\(\\bar{x}\\), \\(\\bar{y}\\) y \\(\\sigma_{xy}\\).',opciones:['\\(\\bar{x}=4\\), \\(\\bar{y}=6{,}6\\), \\(\\sigma_{xy}=2{,}6\\)','\\(\\bar{x}=4\\), \\(\\bar{y}=6{,}6\\), \\(\\sigma_{xy}=2\\)','\\(\\bar{x}=3\\), \\(\\bar{y}=6\\), \\(\\sigma_{xy}=2{,}8\\)','\\(\\bar{x}=4\\), \\(\\bar{y}=7\\), \\(\\sigma_{xy}=3\\)'],correcta:0,feedback:'\\(\\bar{x}=20/5=4\\). \\(\\bar{y}=33/5=6{,}6\\). \\(\\sigma_{xy}=\\dfrac{2\\cdot4+3\\cdot5+4\\cdot7+5\\cdot8+6\\cdot9}{5}-4\\cdot6{,}6=\\dfrac{8+15+28+40+54}{5}-26{,}4=29-26{,}4=2{,}6\\).'},
+      {enunciado:'Con \\(\\sigma_x^2=2\\) y \\(\\sigma_{xy}=2{,}6\\) del ejercicio anterior, halla la recta de regresión.',opciones:['\\(y=1{,}3x+1{,}4\\)','\\(y=1{,}3x+2{,}6\\)','\\(y=2{,}6x+1{,}4\\)','\\(y=1{,}3x-1{,}4\\)'],correcta:0,feedback:'\\(a=\\dfrac{2{,}6}{2}=1{,}3\\). \\(b=6{,}6-1{,}3\\cdot4=6{,}6-5{,}2=1{,}4\\). Recta: \\(y=1{,}3x+1{,}4\\).'},
+      {enunciado:'Con la recta \\(y=1{,}3x+1{,}4\\), ¿qué nota se predice para 7 horas de estudio?',opciones:['\\(10{,}5\\)','\\(9{,}1\\)','\\(8{,}4\\)','\\(11\\)'],correcta:0,feedback:'\\(y=1{,}3\\cdot7+1{,}4=9{,}1+1{,}4=10{,}5\\). (Topeado a 10 en la práctica.)'},
+      {enunciado:'¿Qué diferencia hay entre la recta de regresión de Y sobre X y la de X sobre Y?',opciones:['Son distintas: una minimiza errores en Y, la otra en X','Son la misma recta','Solo difieren cuando \\(r=0\\)','Solo difieren cuando \\(r=1\\)'],correcta:0,feedback:'La recta de Y sobre X minimiza las distancias verticales (errores en Y). La de X sobre Y minimiza las distancias horizontales. Son la misma solo cuando \\(r=\\pm1\\).'},
+      {enunciado:'Si \\(r=0{,}6\\), ¿sería apropiado usar la recta de regresión para hacer predicciones?',opciones:['Con precaución: correlación moderada, las predicciones serán aproximadas','Sí, perfectamente: la correlación es suficiente','No, porque r<0,7 implica que no hay relación','Solo si los datos son continuos'],correcta:0,feedback:'\\(r=0{,}6\\) indica correlación positiva moderada. Se puede usar la recta, pero las predicciones tendrán más incertidumbre que con una correlación fuerte (\\(|r|>0{,}7\\)).'},
+      {enunciado:'La recta de regresión pasa siempre por el punto...',opciones:['\\((\\bar{x},\\bar{y})\\)','\\((0,0)\\)','\\((1,1)\\)','Depende de los datos'],correcta:0,feedback:'La recta de regresión \\(y-\\bar{y}=a(x-\\bar{x})\\) pasa siempre por el punto \\((\\bar{x},\\bar{y})\\) (el centroide de la nube de puntos).'}
+    ]
+  },
+
+  bancoTest:[
+    {enunciado:'¿Qué estudia la estadística bidimensional?',opciones:['Dos variables medidas en los mismos individuos','Dos poblaciones distintas','Una variable en dos momentos distintos','Variables cualitativas'],correcta:0,feedback:'La estadística bidimensional estudia dos variables simultáneamente sobre los mismos individuos.'},
+    {enunciado:'¿Entre qué valores está \\(r\\)?',opciones:['\\(-1\\leq r\\leq1\\)','\\(0\\leq r\\leq1\\)','\\(r>0\\)','\\(r\\geq-1\\)'],correcta:0,feedback:'El coeficiente de Pearson siempre está entre -1 y 1.'},
+    {enunciado:'\\(r=-0{,}92\\) indica...',opciones:['Correlación negativa fuerte','Correlación positiva fuerte','Correlación nula','Correlación negativa débil'],correcta:0,feedback:'\\(r<0\\) → negativa. \\(|r|=0{,}92>0{,}7\\) → fuerte.'},
+    {enunciado:'La covarianza \\(\\sigma_{xy}<0\\) indica...',opciones:['Correlación negativa','Correlación positiva','Sin correlación','Error en los datos'],correcta:0,feedback:'\\(\\sigma_{xy}<0\\) → cuando X crece, Y tiende a decrecer → correlación negativa.'},
+    {enunciado:'Para calcular \\(a\\) en \\(y=ax+b\\):',opciones:['\\(a=\\dfrac{\\sigma_{xy}}{\\sigma_x^2}\\)','\\(a=\\dfrac{\\sigma_x^2}{\\sigma_{xy}}\\)','\\(a=\\bar{y}-\\bar{x}\\)','\\(a=\\sigma_{xy}\\)'],correcta:0,feedback:'La pendiente de la recta de regresión es \\(a=\\dfrac{\\sigma_{xy}}{\\sigma_x^2}\\).'},
+    {enunciado:'Si \\(a=2\\), \\(\\bar{x}=3\\), \\(\\bar{y}=8\\), ¿cuánto vale \\(b\\)?',opciones:['\\(2\\)','\\(8\\)','\\(-2\\)','\\(14\\)'],correcta:0,feedback:'\\(b=\\bar{y}-a\\cdot\\bar{x}=8-2\\cdot3=8-6=2\\).'},
+    {enunciado:'Con la recta \\(y=2x+2\\), ¿qué valor predice para \\(x=5\\)?',opciones:['\\(12\\)','\\(10\\)','\\(7\\)','\\(8\\)'],correcta:0,feedback:'\\(y=2\\cdot5+2=10+2=12\\).'},
+    {enunciado:'¿Qué gráfico se usa para visualizar la correlación entre dos variables?',opciones:['Nube de puntos (diagrama de dispersión)','Histograma','Diagrama de barras','Polígono de frecuencias'],correcta:0,feedback:'La nube de puntos (o diagrama de dispersión) representa cada individuo con sus dos valores \\((x_i,y_i)\\).'},
+    {enunciado:'La recta de regresión siempre pasa por...',opciones:['\\((\\bar{x},\\bar{y})\\)','El origen \\((0,0)\\)','El punto con mayor frecuencia','El punto extremo'],correcta:0,feedback:'La recta de regresión pasa siempre por el centroide \\((\\bar{x},\\bar{y})\\).'},
+    {enunciado:'Si \\(\\sigma_{xy}=0\\), ¿cuánto vale \\(r\\)?',opciones:['\\(0\\)','\\(1\\)','\\(-1\\)','\\(\\infty\\)'],correcta:0,feedback:'\\(r=\\dfrac{\\sigma_{xy}}{\\sigma_x\\cdot\\sigma_y}=\\dfrac{0}{\\sigma_x\\cdot\\sigma_y}=0\\). Sin correlación lineal.'},
+    {enunciado:'¿Qué valor de \\(r\\) indica correlación perfecta positiva?',opciones:['\\(1\\)','\\(-1\\)','\\(0\\)','\\(0{,}5\\)'],correcta:0,feedback:'\\(r=1\\) → correlación lineal positiva perfecta.'},
+    {enunciado:'Con \\(\\sigma_{xy}=3\\), \\(\\sigma_x=\\sqrt{3}\\), \\(\\sigma_y=2\\), ¿cuánto vale \\(r\\)?',opciones:['\\(\\dfrac{\\sqrt{3}}{2}\\approx0{,}866\\)','\\(\\dfrac{3}{2}=1{,}5\\)','\\(\\sqrt{6}\\)','\\(1\\)'],correcta:0,feedback:'\\(r=\\dfrac{3}{\\sqrt{3}\\cdot2}=\\dfrac{3}{2\\sqrt{3}}=\\dfrac{3}{2\\sqrt{3}}\\cdot\\dfrac{\\sqrt{3}}{\\sqrt{3}}=\\dfrac{3\\sqrt{3}}{6}=\\dfrac{\\sqrt{3}}{2}\\approx0{,}866\\).'}
+  ]
+};
+iniciarModulo();
+</script>
+</body>
+</html>
